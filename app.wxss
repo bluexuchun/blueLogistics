@@ -1,0 +1,3 @@
+/*引入weui样式*/
+@import 'resource/style/weui.wxss';
+

@@ -1,0 +1,24 @@
+/**index.wxss**/
+page{
+  width:100%;
+  height:100%;
+  background: #F2F7FA
+}
+
+.main{
+  width:100%;
+  height:100%;
+}
+.weui-search-bar{
+  border:none;
+}
+.silde-image{
+  width:100%;
+}
+swiper{
+  height:300rpx;
+}
+image{
+  width:100%;
+  height:300rpx;
+}
