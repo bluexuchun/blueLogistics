@@ -1,0 +1,24 @@
+.common-tabnav{
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  bottom:0px;
+  left:0px;
+  z-index:999;
+  border-top:1px solid rgba(0,0,0,0.1);
+}
+.tabnav-item{
+  height:100%;
+}
+.tabnav-item-content{
+  height:100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.tabnav-icon{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+}

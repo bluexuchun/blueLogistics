@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="main">
+<view class="main" style="height:{{mainHeight}}px;">
   <!--  搜索栏  -->
   <view class="page__bd">
       <view class="weui-search-bar">
@@ -47,16 +47,74 @@
       indicator-dots="{{banner.indicatorDots}}"
       autoplay="{{banner.autoplay}}" 
       interval="{{banner.interval}}" 
-      duration="{{banner.duration}}">
+      duration="{{banner.duration}}"
+      bindchange='swiperChange'
+      style="height:{{imgShowHeight}}px">
     <block wx:for="{{banner.imgUrls}}">
       <swiper-item>
-        <image bindload='imgInfo' data-id="{{index}}" src="{{item}}" class="slide-image" mode="aspectFill"/>
+        <image bindload='imgInfo' data-id="{{index}}" src="{{item}}" class="slide-image" mode="aspectFit"/>
       </swiper-item>
     </block>
   </swiper>
 
   <!--  导航栏  -->
   <view class="nav">
-    <view class="nav-item"></view>
+    <view class="nav-content">
+
+      <view class="nav-item" wx:for="{{navsLists}}">
+        <view class="nav-icon">
+          <image mode="aspectFit" class="nav-icon-img" src="{{item.icon}}"></image>
+        </view>
+        <view class="nav-word">{{item.text}}</view>
+      </view>
+
+    </view>
+  </view>
+
+  <!--  热门路线  -->
+  <view class="hotline">
+
+    <!--  路线标题  -->
+    <view class="hotline-title">
+      <view class="hotline-icon">
+        <image mode="widthFix" class="icon-img" src="/resource/images/icon-fire.png"></image>
+        <view class="hotline-word">热门路线</view>
+      </view>
+      <view class="hotline-more">
+        <image mode="widthFix" class="icon-more" src="/resource/images/icon-more.png"></image>
+      </view>
+    </view>
+
+    <!--  路线数组  -->
+    <view class="hotline-lists">
+      <view class="hotline-item">
+        <!--  left-content  -->
+        <view class="hotline-item-left">
+          <!--  company-pic  -->
+          <view class='hotline-img'>
+            <image src="/resource/images/test.png"></image>
+          </view>
+          <!--  company-info  -->
+          <view class="hotline-info">
+            <!--  from & to  -->
+            <view class="hotline-direction">
+              <view class="from">北京</view>
+              <view class="line">
+                <image class="hotline-arrow" src="/resource/images/arrow.png"></image>
+              </view>
+              <view class="to">深圳</view>
+            </view>
+          </view>
+        </view>
+        <!--  right-content  -->
+        <view class="hotline-item-right">
+          <view class="hotline-icon-phone">
+            <image mode="widthFix" src="/resource/images/icon-phone.png"></image>
+          </view>
+        </view>
+      </view>
+    </view>
   </view>
 </view>
+<!--  公共底部组件  -->
+<common-tabnav tabnavs="{{tabnavs}}"></common-tabnav>

@@ -2,12 +2,17 @@
 page{
   width:100%;
   height:100%;
-  background: #F2F7FA
+  background: #FFFFFF;
 }
 
 .main{
   width:100%;
   height:100%;
+  font-size:26rpx;
+  overflow: hidden;
+  overflow-y: auto;
+  background: #F2F7FA;
+  -webkit-overflow-scrolling: touch;
 }
 .weui-search-bar{
   border:none;
@@ -16,9 +21,113 @@ page{
   width:100%;
 }
 swiper{
-  height:300rpx;
+  min-height:300rpx;
 }
 image{
   width:100%;
-  height:300rpx;
+}
+.nav{
+  padding:15px 0px 5px 0px;
+  width:100%;
+  background: #FFFFFF;
+  box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+}
+.nav-content{
+  padding:15px 12px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.nav-item{
+  width:25%;
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+.nav-icon{
+  
+}
+.nav-icon-img{
+  width:80rpx;
+  height:64rpx;
+}
+.hotline{
+  width:100%;
+  margin-top:30rpx;
+  background: #FFFFFF;
+  box-shadow: 0px -1px 4px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hotline-title{
+  width:100%;
+  height:100rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-bottom:1px solid rgba(0,0,0,0.1);
+}
+.hotline-icon{
+  width:55%;
+  height:100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.hotline-icon .icon-img{
+  width:36rpx;
+  margin-right:12rpx;
+}
+.hotline-word{
+  color:#898989;
+  font-size:28rpx;
+}
+.hotline-more{
+  width:35%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+.hotline-more .icon-more{
+  width:28rpx;
+}
+.hotline-lists{
+  width:100%;
+  display: flex;
+  flex-direction: column;
+}
+.hotline-item{
+  width:100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding:20rpx 0rpx;
+}
+.hotline-item-left{
+  width:75%;
+}
+.hotline-item-left .hotline-img{
+  width:30%;
+}
+.hotline-img image{
+  width:80rpx;
+  height:80rpx;
+  object-fit: cover;
+}
+.hotline-item-right{
+  width:15%;
+}
+.hotline-icon-phone{
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.hotline-icon-phone image{
+  width:60rpx;
 }
