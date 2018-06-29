@@ -109,9 +109,22 @@ image{
 }
 .hotline-item-left{
   width:75%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 .hotline-item-left .hotline-img{
   width:30%;
+}
+.hotline-item-left .hotline-info{
+  width:70%;
+  
+}
+.hotline-info .hotline-direction{
+  width:100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 .hotline-img image{
   width:80rpx;
@@ -130,4 +143,7 @@ image{
 }
 .hotline-icon-phone image{
   width:60rpx;
+}
+.hotline-arrow{
+  width:40rpx;
 }

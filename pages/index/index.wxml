@@ -100,7 +100,7 @@
             <view class="hotline-direction">
               <view class="from">北京</view>
               <view class="line">
-                <image class="hotline-arrow" src="/resource/images/arrow.png"></image>
+                <image mode="widthFix" class="hotline-arrow" src="/resource/images/arrow.png"></image>
               </view>
               <view class="to">深圳</view>
             </view>
