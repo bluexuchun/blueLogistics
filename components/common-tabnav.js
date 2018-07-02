@@ -4,23 +4,30 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    tabnavs: Object
+    tabnavs: {
+      type: Object,
+      observer: function (newData, oldData) {
+        this._propertyChange(newData, oldData);
+      }
+    }
   },
 
   /**
    * 组件的初始数据
    */
   data: {
-    navWidth:100
+    navWidth:100,
+    tabnavLists:[]
   },
   attached:function(){
-    console.log(this.properties.tabnavs);
-
-    let length = this.properties.tabnavs.navLists.length;
-    let navWidth = (100 / length).toFixed(1);
-    this.setData({
-      navWidth:navWidth
-    })
+    if(this.properties.tabnavs != null){
+      let length = this.properties.tabnavs.navLists.length;
+      let navWidth = (100 / length).toFixed(1);
+      this.setData({
+        navWidth: navWidth,
+        tabnavLists: this.properties.tabnavs.navLists
+      })
+    }
   },
   /**
    * 组件的方法列表
@@ -36,6 +43,18 @@ Component({
           url: url,
         })
       }
+    },
+    _propertyChange: function (newVal, oldVal) {
+      const newLists = newVal.navLists;
+      let navlists = [];
+      newLists.map((v,i)=>{
+        if(v.isShow){
+          navlists.push(v);
+        }
+      })
+      this.setData({
+        tabnavLists:navlists
+      })
     }
   }
 })

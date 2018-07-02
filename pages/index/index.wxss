@@ -17,15 +17,17 @@ page{
 .weui-search-bar{
   border:none;
 }
-.silde-image{
+
+/* 轮播图 */
+.slide-image{
   width:100%;
+  height:100%;
 }
 swiper{
   min-height:300rpx;
 }
-image{
-  width:100%;
-}
+
+/*  导航栏  */
 .nav{
   padding:15px 0px 5px 0px;
   width:100%;
@@ -40,6 +42,7 @@ image{
 }
 .nav-item{
   width:25%;
+  margin:20rpx 0rpx;
   display:flex;
   flex-direction: column;
   align-items: center;
@@ -51,6 +54,8 @@ image{
   width:80rpx;
   height:64rpx;
 }
+
+/*  热门路线  */
 .hotline{
   width:100%;
   margin-top:30rpx;
@@ -92,7 +97,7 @@ image{
   align-items: flex-end;
 }
 .hotline-more .icon-more{
-  width:28rpx;
+  width:20rpx;
 }
 .hotline-lists{
   width:100%;
@@ -105,34 +110,102 @@ image{
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding:20rpx 0rpx;
+  padding:40rpx 0rpx;
+  position:relative;
+  border-bottom:1px solid rgba(0,0,0,0.1);
+}
+.hotline-item:after{
+  content:'';
+  width:1px;
+  height:100%;
+  background: rgba(0,0,0,0.1);
+  position: absolute;
+  right:18%;
 }
 .hotline-item-left{
-  width:75%;
+  width:80%;
+  height:100%;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  position: relative;
 }
 .hotline-item-left .hotline-img{
-  width:30%;
+  width:35%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .hotline-item-left .hotline-info{
-  width:70%;
-  
+  width:64%;
+  height:100%;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  right:0px;
 }
 .hotline-info .hotline-direction{
   width:100%;
   display: flex;
   flex-direction: row;
   align-items: center;
+  font-size:36rpx;
+}
+.hotline-info .hotline-company{
+  color:#456286;
+  font-size:26rpx;
+}
+.hotline-info .hotline-position{
+  width:100%;
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+}
+.hotline-position .icon-position{
+  width:26rpx;
+  margin-right:14rpx;
+}
+.hotline-position .position-word{
+  color:#C2C2C2;
+  font-size:24rpx;
+  width:80%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hotline-info .hotline-cost{
+  width:100%;
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+}
+.hotline-cost .cost-name{
+  font-size:24rpx;
+  color:#456286;
+}
+.hotline-cost .yd{
+  color:#D0021B;
+  font-size:26rpx;
+}
+.hotline-cost .yf{
+  color:#D0021B;
+  font-size:26rpx;
+  margin-left:14rpx;
+}
+.hotline-direction .line{
+  height:100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin:0rpx 20rpx;
 }
 .hotline-img image{
-  width:80rpx;
-  height:80rpx;
+  width:200rpx;
+  height:200rpx;
   object-fit: cover;
 }
 .hotline-item-right{
-  width:15%;
+  width:16%;
 }
 .hotline-icon-phone{
   width:100%;
@@ -144,6 +217,49 @@ image{
 .hotline-icon-phone image{
   width:60rpx;
 }
+.hotline-icon-phone .phone-word{
+  width:100%;
+  text-align: center;
+  color:#298CFF;
+  font-size:24rpx;
+  margin-top:14rpx;
+}
 .hotline-arrow{
   width:40rpx;
+}
+
+/*  商家分类  */
+.shopCate{
+  width:100%;
+  margin-top:30rpx;
+  background: #FFFFFF;
+  box-shadow: 0px -1px 4px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+} 
+.shopCate-content{
+  width:95%;
+  padding:30rpx 0rpx;
+}
+.shopCate-scroll{
+  white-space: nowrap;
+}
+.shopCate-scroll-item{
+  width: 200px; 
+  display: inline-block;
+}
+.shopCate-scroll-item .shopCate-item-content{
+  width:95%;
+  display: flex;
+  flex-direction: column;
+}
+.shopCate-item-content image{
+  width:100%;
+}
+.shopCate-item-content .scroll-item-word{
+  margin-top:16rpx;
+  font-size:26rpx;
+  color:#323232;
 }

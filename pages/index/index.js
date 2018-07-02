@@ -6,13 +6,16 @@ Page({
   data: {
     // 设备的基础信息
     systemInfo:null,
+
+    // 整体页面高度
     mainHeight:null,
+
     // 轮播图的信息
     banner:{
       imgUrls: [
-        'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-        'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
-        'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
+        '/resource/images/banner.png',
+        '/resource/images/banner.png',
+        '/resource/images/banner.png'
       ],
       indicatorDots: false,
       autoplay: false,
@@ -39,49 +42,65 @@ Page({
       text: '保险',
       path: 'pages/index/index'
     },{
-      id: 2,
+      id: 4,
+      icon: '/resource/images/icon-shangjia.png',
+      text: '商家',
+      path: 'pages/index/index'
+    }, {
+      id: 5,
+      icon: '/resource/images/icon-wuliu.png',
+      text: '物流',
+      path: 'pages/index/index'
+    }, {
+      id: 6,
+      icon: '/resource/images/icon-rencai.png',
+      text: '人才',
+      path: 'pages/index/index'
+    }, {
+      id: 7,
+      icon: '/resource/images/icon-baoxian.png',
+      text: '保险',
+      path: 'pages/index/index'
+    }, {
+      id: 8,
       icon: '/resource/images/icon-shangjia.png',
       text: '商家',
       path: 'pages/index/index'
     }],
-    // 底部导航栏的信息
-    tabnavs:{
-      option:{
-        backgroundColor:'#FFFFFF',
-        selectedColor:'#298CFF',
-        defaultColor:'#888888',
-        fontSize:'24',//rpx
-        widthPx:'100',//%
-        heightPx:'120'//rpx
-      },
-      navLists:[
-        {
-          id: '1',
-          text: '物流',
-          selectedIcon: '/resource/images/icon-tabnav-wuliu-active.png',
-          icon: '/resource/images/icon-tabnav-wuliu.png',
-          path: 'pages/index/index',
-          widthPx: '66',//rpx
-          heightPx: '66',//rpx
-          mode: 'aspectFit',
-          isSelected: true
-        }, {
-          id: '2',
-          text: '我的',
-          selectedIcon: '/resource/images/icon-tabnav-me-active.png',
-          icon: '/resource/images/icon-tabnav-me.png',
-          path: 'pages/index/index',
-          widthPx: '60',//rpx
-          heightPx: '60',//rpx
-          mode: 'aspectFit',
-          isSelected: false
-        }
-      ]
-    }
+
+    tabnavs: null,
+
+    // 热门路线
+    hotlineLists:[{
+      id:1,
+      cover:'/resource/images/test.png',
+      fromName:'北京',
+      toName:'深圳',
+      company:'北京远洋物流有限公司',
+      location:'北京市大兴区旧宫镇啊啊',
+      distance:20,
+      yd:400,
+      yf:130
+    }, {
+      id: 2,
+      cover: '/resource/images/test.png',
+      fromName: '北京',
+      toName: '深圳',
+      company: '北京远洋物流有限公司',
+      location: '北京市大兴区旧宫镇啊啊',
+      distance: 20,
+      yd: 400,
+      yf: 130
+    }]
+
   },
   onLoad: function () {
     // 获取设备的信息
     const that = this;
+
+    // 判断有没有设置底部导航栏 否则调用全局导航栏
+    const tabNavOrign = app.globalData.tabnavs;
+
     wx.getSystemInfo({
       success: function(res) {
         that.setData({
@@ -89,16 +108,20 @@ Page({
         })
       },
     })
-    // console.log(this.data.systemInfo);
-    let mainHeight = this.data.systemInfo.windowHeight - this.data.tabnavs.option.heightPx / this.data.systemInfo.pixelRatio;
+    
+    let mainHeight = this.data.systemInfo.windowHeight - tabNavOrign.option.heightPx / (750 / this.data.systemInfo.windowWidth);
+    tabNavOrign.navLists[1].isShow = false;
     this.setData({
-      mainHeight:mainHeight
+      mainHeight:mainHeight,
+      tabnavs:tabNavOrign
     })
+
+    
   },
   imgInfo: function(e) {
 
     let imgWidth = e.detail.width;
-    // 计算比例
+    // 计算比例（16：9）
     let radio = 16 / 9;
     // 计算高度
     let imgHeight = this.data.systemInfo.windowWidth / radio ;
@@ -115,9 +138,10 @@ Page({
       imgsInfo:imgsList,
       imgShowHeight:imgsList[0].height
     });
-    console.log(imgsList[0].height)
 
   },
+
+  // 
   swiperChange:function(e){
     let height = this.data.imgsInfo[e.detail.current].height;
     this.setData({

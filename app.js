@@ -34,6 +34,53 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    // 底部导航栏的信息
+    tabnavs: {
+      option: {
+        backgroundColor: '#FFFFFF',
+        selectedColor: '#298CFF',
+        defaultColor: '#888888',
+        fontSize: '24',//rpx
+        widthPx: '100',//%
+        heightPx: '120'//rpx
+      },
+      navLists: [
+        {
+          id: '1',
+          text: '物流',
+          selectedIcon: '/resource/images/icon-tabnav-wuliu-active.png',
+          icon: '/resource/images/icon-tabnav-wuliu.png',
+          path: 'pages/index/index',
+          widthPx: '66',//rpx
+          heightPx: '66',//rpx
+          mode: 'aspectFit',
+          isShow:true,
+          isSelected: true
+        }, {
+          id: '2',
+          text: '发布路线',
+          selectedIcon: '/resource/images/icon-tabnav-line-active.png',
+          icon: '/resource/images/icon-tabnav-line.png',
+          path: 'pages/index/index',
+          widthPx: '60',//rpx
+          heightPx: '60',//rpx
+          mode: 'aspectFit',
+          isShow: true,
+          isSelected: false
+        }, {
+          id: '3',
+          text: '我的',
+          selectedIcon: '/resource/images/icon-tabnav-me-active.png',
+          icon: '/resource/images/icon-tabnav-me.png',
+          path: 'pages/index/index',
+          widthPx: '60',//rpx
+          heightPx: '60',//rpx
+          mode: 'aspectFit',
+          isShow: true,
+          isSelected: false
+        }
+      ]
+    }
   }
 })
