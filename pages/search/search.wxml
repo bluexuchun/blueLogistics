@@ -1,4 +1,104 @@
-<!--pages/search/search.wxml-->
-<text>pages/search/search.wxml</text>
+<view class="search">
+  <view class="search-header">
+    <view class="search-content">
+      <view class="search-detail">
+        <view class="search-from">
+          <picker mode="region" bindchange="bindinitArea" value="{{areaInfo.initArea}}" custom-item="{{customItem}}">
+            <view class="picker">
+              {{areaInfo.initArea}}
+            </view>
+          </picker>
+        </view>
+        <image mode='widthFix' class="search-icon" src="/resource/images/search-icon.png"></image>
+        <view class="search-to" data-type="targetArea" bindtap="chooseArea">
+          <picker mode="region" bindchange="bindtargetArea" value="{{areaInfo.targetArea}}" custom-item="{{customItem}}">
+            <view class="picker">
+              {{areaInfo.targetArea}}
+            </view>
+          </picker>
+        </view>
+      </view>
+      <view class="search-btn">搜索路线</view>
+    </view>
+  </view>
+  <view class="search-hotline">
+    <!--  热门路线  -->
+    <view class="hotline">
+
+      <!--  路线标题  -->
+      <!-- <view class="hotline-title">
+        <view class="hotline-icon">
+          <image mode="widthFix" class="icon-img" src="/resource/images/icon-biglocation.png"></image>
+          <view class="hotline-word">北京</view>
+        </view>
+      </view> -->
+
+      <!--  路线数组  -->
+      <view class="hotline-lists">
+        <scroll-view scroll-y style="height: {{scrollHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+          <view class="hotline-item" wx:for="{{hotlineLists}}">
+            <!--  left-content  -->
+            <view class="hotline-item-left">
+              <!--  company-pic  -->
+              <view class='hotline-img'>
+                <image src="{{item.cover}}"></image>
+              </view>
+              <!--  company-info  -->
+              <view class="hotline-info">
+                <!--  from & to  -->
+                <view class="hotline-direction">
+                  <view class="from">{{item.fromName}}</view>
+                  <view class="line">
+                    <image mode="widthFix" class="hotline-arrow" src="/resource/images/arrow.png"></image>
+                  </view>
+                  <view class="to">{{item.toName}}</view>
+                </view>
+
+                <!--  公司名字  -->
+                <view class="hotline-company">{{item.company}}</view>
+
+                <!--  地址  -->
+                <view class="hotline-position">
+                  <image mode='widthFix' class="icon-position" src="/resource/images/icon-location.png"></image>
+                  <view class="position-word">{{item.distance}}km {{item.location}}</view>
+                </view>
+
+                <!--  运费  -->
+                <view class="hotline-cost">
+                  <view class="cost-name">运费：</view>
+                  <view class="yd">¥ {{item.yd}}元/吨</view>
+                  <view class="yf">¥ {{item.yf}}元/方</view>
+                </view>
+
+              </view>
+            </view>
+            <!--  right-content  -->
+            <view class="hotline-item-right">
+              <view class="hotline-icon-phone">
+                <image mode="widthFix" src="/resource/images/icon-phone.png"></image>
+                <view class="phone-word">打电话</view>
+              </view>
+            </view>
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!--  省市区联动  -->
+
+
+<import src="../../template/index.wxml"/>
+<view class="areaContent {{areaInfo.dirAnimation == 'up' ? 'upAnimation' : ''}} {{areaInfo.dirAnimation == 'down' ? 'downAnimation' : ''}}" >
+  <view class="areaTools">
+    <view class="cancel" bindtap="cancel">取消</view>
+    <view class="confrim" bindtap="getSelecedData">确认</view>
+  </view>
+  <template is="areaPicker" data="{{...areaPicker}}" />
+</view>
+
+
+
 <!--  公共底部组件  -->
 <common-tabnav tabnavs="{{tabnavs}}"></common-tabnav>

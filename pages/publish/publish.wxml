@@ -1,0 +1,103 @@
+<view class="publish">
+
+  <view class="publish-item">
+    <view class="icon-item">
+      <view class="item-img">
+        <image mode='widthFix' class="icon-img" src="/resource/images/icon-start.png"></image>
+      </view>
+      <view class="item-input">
+        <view class="item-label">
+          <view class="label-word">起始地</view>
+          <picker mode="region" class="picker-content-area" bindchange="bindinitArea" value="{{areaInfo.initArea}}" custom-item="{{customItem}}">
+            <view class="picker-detail">
+              <view class="picker">
+                {{areaInfo.initArea}}
+              </view>
+              <view class="item-more">
+                <image mode='widthFix' class="icon-img-more" src="/resource/images/icon-more.png"></image>
+              </view>
+            </view>
+          </picker>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="publish-item">
+    <view class="icon-item">
+      <view class="item-img">
+        <image mode='widthFix' class="icon-img" src="/resource/images/icon-end.png"></image>
+      </view>
+      <view class="item-input">
+        <view class="item-label">
+          <view class="label-word">目的地</view>
+          <picker mode="region" class="picker-content-area" bindchange="bindtargetArea" value="{{areaInfo.targetArea}}" custom-item="{{customItem}}">
+            <view class="picker-detail">
+              <view class="picker">
+                {{areaInfo.targetArea}}
+              </view>
+              <view class="item-more">
+                <image mode='widthFix' class="icon-img-more" src="/resource/images/icon-more.png"></image>
+              </view>
+            </view>
+          </picker>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="publish-item">
+    <view class="icon-item">
+      <view class="item-img">
+        <image mode='widthFix' class="icon-img" src="/resource/images/icon-height.png"></image>
+      </view>
+      <view class="item-input">
+        <view class="item-label">
+          <view class="label-word">载重</view>
+          <input placeholder-style="color:#C3CAD3" placeholder="元/吨" />
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="publish-item">
+    <view class="icon-item">
+      <view class="item-img">
+        <image mode='widthFix' style="width:40rpx;margin-left:5rpx;" class="icon-img" src="/resource/images/icon-spend.png"></image>
+      </view>
+      <view class="item-input">
+        <view class="item-label">
+          <view class="label-word">费用</view>
+          <input placeholder-style="color:#C3CAD3" placeholder="元/方" />
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="publish-item">
+    <view class="icon-item">
+      <view class="item-img">
+        <image mode='widthFix' class="icon-img" src="/resource/images/icon-type.png"></image>
+      </view>
+      
+      <picker class="item-picker" bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+          <view class="picker-content">
+            <view class="item-label">
+              <view class="label-word">车辆类型</view>
+              <input placeholder-style="color:#C3CAD3" placeholder="点击选择" value="{{array[index]}}" />
+            </view>
+            <view class="item-more">
+              <image mode='widthFix' class="icon-img-more" src="/resource/images/icon-more.png"></image>
+            </view>
+          </view>
+      </picker>
+    </view>
+  </view>
+
+  <view class="publish-btn">
+    确定发布
+  </view>
+</view>
+
+<!--  公共底部组件  -->
+<common-tabnav tabnavs="{{tabnavs}}"></common-tabnav>

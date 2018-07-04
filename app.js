@@ -32,8 +32,16 @@ App({
         }
       }
     })
+
+    // 获取设备信息
+    wx.getSystemInfo({
+      success: res => {
+        this.globalData.systemInfo = res;
+      },
+    })
   },
   globalData: {
+    systemInfo: null,
     userInfo: null,
     // 底部导航栏的信息
     tabnavs: {
@@ -51,7 +59,7 @@ App({
           text: '物流',
           selectedIcon: '/resource/images/icon-tabnav-wuliu-active.png',
           icon: '/resource/images/icon-tabnav-wuliu.png',
-          path: 'pages/index/index',
+          path: '/pages/index/index',
           widthPx: '66',//rpx
           heightPx: '66',//rpx
           mode: 'aspectFit',
@@ -62,7 +70,7 @@ App({
           text: '发布路线',
           selectedIcon: '/resource/images/icon-tabnav-line-active.png',
           icon: '/resource/images/icon-tabnav-line.png',
-          path: 'pages/index/index',
+          path: '/pages/publish/publish',
           widthPx: '60',//rpx
           heightPx: '60',//rpx
           mode: 'aspectFit',
@@ -73,7 +81,7 @@ App({
           text: '我的',
           selectedIcon: '/resource/images/icon-tabnav-me-active.png',
           icon: '/resource/images/icon-tabnav-me.png',
-          path: 'pages/index/index',
+          path: '/pages/me/me',
           widthPx: '60',//rpx
           heightPx: '60',//rpx
           mode: 'aspectFit',

@@ -1,0 +1,143 @@
+.publish{
+  width:100%;
+  overflow-x: hidden;
+  background: #FFFFFF;
+  border-top:1px solid #F2F2F2;
+}
+.publish-item{
+  width:100%;
+}
+.icon-item{
+  padding:40rpx 35rpx;
+  display: flex;
+  flex-direction: row;
+  align-items:center;
+  font-size:32rpx;
+  color:#6B6B6B;
+  position: relative;
+}
+.icon-item:after{
+  content:"";
+  width:100%;
+  height:1px;
+  background: #F2F2F2;
+  position: absolute;
+  bottom:0px;
+  right:-17%;
+}
+.item-img{
+  width:15%;
+  height:100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+.icon-img{
+  width:50rpx;
+}
+.item-input{
+  width:85%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.item-label{
+  width:100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.item-more{
+  width:10%;
+  height:100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+.icon-img-more{
+  width:24rpx;
+}
+.label-word{
+  width:35%;
+}
+.item-label input{
+  width:65%;
+  font-size:30rpx;
+}
+.item-picker{
+  width:85%;
+}
+.picker-content{
+  width:100%;
+  display: flex;
+  flex-direction: row;
+}
+/*  省市区三级联动  */
+.areaContent{
+  width:100%;
+  position: fixed;
+  bottom:-472rpx;
+  left:0px;
+  background: #FFFFFF;
+  z-index:999;
+  border-top:1px solid #F2F2F2;
+}
+.areaTools{
+  height:70rpx;
+  margin:0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding:0rpx 30rpx;
+  border-bottom:2rpx solid #F2F2F2;
+  font-size:35rpx;
+}
+.areaTools .confrim{
+  color:#298CFF;
+}
+.upAnimation{
+  animation: upAnimate 0.5s ease forwards;
+}
+.downAnimation{
+  animation: downAnimate 0.5s ease forwards;
+}
+@keyframes upAnimate{
+  0%{
+    bottom:-472rpx;
+  }
+  100%{
+    bottom:0rpx;
+  }
+}
+
+@keyframes downAnimate{
+  0%{
+    bottom:0rpx;
+  }
+  100%{
+    bottom:-472rpx;
+  }
+}
+.publish-btn{
+  width:90%;
+  padding:20rpx 0rpx;
+  font-size:30rpx;
+  background: #298CFF;
+  text-align: center;
+  margin:60rpx auto;
+  color:#FFFFFF;
+  border-radius: 50px;
+}
+.picker-content-area{
+  width:65%;
+}
+.picker-detail{
+  width:100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}

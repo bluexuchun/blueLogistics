@@ -1,11 +1,12 @@
 //index.js
 //获取应用实例
-const app = getApp()
+const app = getApp();
+import fn from '../../utils/axios.js';
 
 Page({
   data: {
     // 设备的基础信息
-    systemInfo:null,
+    systemInfo:app.globalData.systemInfo,
 
     // 整体页面高度
     mainHeight:null,
@@ -17,7 +18,7 @@ Page({
         '/resource/images/banner.png',
         '/resource/images/banner.png'
       ],
-      indicatorDots: false,
+      indicatorDots: true,
       autoplay: false,
       interval: 5000,
       duration: 1000,
@@ -80,7 +81,8 @@ Page({
       location:'北京市大兴区旧宫镇啊啊',
       distance:20,
       yd:400,
-      yf:130
+      yf:130,
+      mobile:'15221757886'
     }, {
       id: 2,
       cover: '/resource/images/test.png',
@@ -90,32 +92,33 @@ Page({
       location: '北京市大兴区旧宫镇啊啊',
       distance: 20,
       yd: 400,
-      yf: 130
+      yf: 130,
+      mobile:'15221757886'
     }]
 
   },
   onLoad: function () {
-    // 获取设备的信息
-    const that = this;
 
     // 判断有没有设置底部导航栏 否则调用全局导航栏
     const tabNavOrign = app.globalData.tabnavs;
-
-    wx.getSystemInfo({
-      success: function(res) {
-        that.setData({
-          systemInfo:res
-        })
-      },
-    })
     
     let mainHeight = this.data.systemInfo.windowHeight - tabNavOrign.option.heightPx / (750 / this.data.systemInfo.windowWidth);
+
+    tabNavOrign.navLists[0].isShow = true;
     tabNavOrign.navLists[1].isShow = false;
+    tabNavOrign.navLists[2].isShow = true;
+    tabNavOrign.navLists[0].isSelected = true;
+    tabNavOrign.navLists[1].isSelected = false;
+    tabNavOrign.navLists[2].isSelected = false;
+    
     this.setData({
       mainHeight:mainHeight,
       tabnavs:tabNavOrign
     })
 
+    // 首页的获取信息
+    const indexInfo = fn.ajaxTo('api?entry=app&c=index&a=index', {});
+    console.log(indexInfo);
     
   },
   imgInfo: function(e) {
@@ -141,11 +144,34 @@ Page({
 
   },
 
-  // 
+  // 轮播图计算高度
   swiperChange:function(e){
     let height = this.data.imgsInfo[e.detail.current].height;
     this.setData({
       imgShowHeight:height
+    })
+  },
+
+  moreTab:function(){
+    wx.navigateTo({
+      url: '/pages/search/search',
+    })
+  },
+
+  // 跳转到详情页面
+  toDetail:function(e){
+    console.log(e);
+    const id = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '/pages/detail/detail?id='+id,
+    })
+  },
+
+  // 打电话
+  callTo:function(e){
+    const mobile = e.currentTarget.dataset.mobile;
+    wx.makePhoneCall({
+      phoneNumber: mobile
     })
   }
 })

@@ -1,8 +1,10 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/me/me",
+    "pages/publish/publish",
+    "pages/detail/detail",
     "pages/search/search"
-    
     
   ],
   "window": {

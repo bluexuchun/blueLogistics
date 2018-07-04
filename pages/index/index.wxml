@@ -11,40 +11,19 @@
                       <icon type="clear" size="14"></icon>
                   </view>
               </view>
-              <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+              <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="moreTab">
                   <icon class="weui-icon-search" type="search" size="14"></icon>
                   <view class="weui-search-bar__text">搜索</view>
               </label>
           </view>
-          <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
-      </view>
-      <view class="weui-cells searchbar-result" wx:if="{{inputVal.length > 0}}">
-          <navigator url="" class="weui-cell" hover-class="weui-cell_active">
-              <view class="weui-cell__bd">
-                  <view>实时搜索文本</view>
-              </view>
-          </navigator>
-          <navigator url="" class="weui-cell" hover-class="weui-cell_active">
-              <view class="weui-cell__bd">
-                  <view>实时搜索文本</view>
-              </view>
-          </navigator>
-          <navigator url="" class="weui-cell" hover-class="weui-cell_active">
-              <view class="weui-cell__bd">
-                  <view>实时搜索文本</view>
-              </view>
-          </navigator>
-          <navigator url="" class="weui-cell" hover-class="weui-cell_active">
-              <view class="weui-cell__bd">
-                  <view>实时搜索文本</view>
-              </view>
-          </navigator>
       </view>
   </view>
 
   <!--  轮播图  -->
   <swiper 
       indicator-dots="{{banner.indicatorDots}}"
+      indicator-color='#C3CAD3'
+      indicator-active-color='#FFFFFF'
       autoplay="{{banner.autoplay}}" 
       interval="{{banner.interval}}" 
       duration="{{banner.duration}}"
@@ -81,7 +60,7 @@
         <view class="hotline-word">热门路线</view>
       </view>
       <view class="hotline-more">
-        <image mode="widthFix" class="icon-more" src="/resource/images/icon-more.png"></image>
+        <image mode="widthFix" bindtap='moreTab' class="icon-more" src="/resource/images/icon-more.png"></image>
       </view>
     </view>
 
@@ -89,7 +68,7 @@
     <view class="hotline-lists">
       <view class="hotline-item" wx:for="{{hotlineLists}}">
         <!--  left-content  -->
-        <view class="hotline-item-left">
+        <view class="hotline-item-left" data-id="{{item.id}}" bindtap='toDetail'>
           <!--  company-pic  -->
           <view class='hotline-img'>
             <image src="{{item.cover}}"></image>
@@ -125,7 +104,7 @@
         </view>
         <!--  right-content  -->
         <view class="hotline-item-right">
-          <view class="hotline-icon-phone">
+          <view class="hotline-icon-phone" data-mobile="{{item.mobile}}" bindtap='callTo'>
             <image mode="widthFix" src="/resource/images/icon-phone.png"></image>
             <view class="phone-word">打电话</view>
           </view>

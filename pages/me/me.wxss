@@ -1,0 +1,87 @@
+.me{
+  width:100%;
+  background: #FFFFFF;
+}
+.me-header{
+  width:100%;
+  height:300rpx;
+  background-image: url('https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/mebak.png');
+  background-size: cover;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.me-ava{
+  width:25%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.icon-avatar{
+  width:140rpx;
+}
+.me-info{
+  width:65%;
+}
+.me-title{
+  width:100%;
+  display: flex;
+  flex-direction: row;
+  color:#FFFFFF;
+  align-items: center;
+  padding:6rpx 0rpx;
+}
+.me-name{
+  font-size:36rpx;
+}
+.me-sign{
+  font-size:26rpx;
+  margin:0rpx 10rpx 0rpx 8rpx;
+}
+.me-company{
+  font-size:26rpx;
+}
+.me-desc{
+  width:100%;
+  font-size:24rpx;
+  color:#FFFFFF;
+  display: -webkit-box; 
+  -webkit-box-orient: vertical; 
+  -webkit-line-clamp: 2; 
+  overflow: hidden; 
+  padding:8rpx 0rpx;
+}
+.me-ul{
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.me-item{
+  width:96%;
+  font-size:28rpx;
+  color:#6B6B6B;
+  border-bottom:1px solid #F2F2F2;
+}
+.item-detail{
+  padding:40rpx 36rpx 40rpx 6rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.item-icon{
+  width:70%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.item-icon-img{
+  width:40rpx;
+  margin-right:26rpx;
+}
+.item-icon-more{
+  width:16rpx;
+}

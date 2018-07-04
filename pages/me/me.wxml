@@ -1,0 +1,47 @@
+<view class="me" style="height:{{mainHeight}}px;">
+  
+  <view class="me-header">
+    <view class="me-ava">
+      <image mode='widthFix' class="icon-avatar" src="/resource/images/avatar.png"></image>
+    </view>
+    <view class="me-info">
+      <view class="me-title">
+        <view class="me-name">王茜茜 </view>
+        <view class="me-sign">|</view>
+        <view class="me-company">北京****科技有限公司</view>
+      </view>
+      <view class="me-desc">
+        公司以“专注网站，用心服务”为核心价值，为企业产品推广文化发展提供服务指导。
+      </view>
+    </view>
+  </view>
+
+  <view class="me-ul">
+
+    <view class="me-item">
+      <view class="item-detail">
+        <view class="item-icon">
+          <image mode='widthFix' src="/resource/images/icon-info.png" class="item-icon-img"></image>
+          <view class="item-word">我的公司信息</view>
+        </view>
+        <view class="item-confrim">*未认证</view>
+      </view>
+    </view>
+
+    <view class="me-item">
+      <view class="item-detail">
+        <view class="item-icon">
+          <image mode='widthFix' src="/resource/images/icon-publish.png" class="item-icon-img"></image>
+          <view class="item-word">我的发布</view>
+        </view>
+        <view class="item-confrim">
+          <image class="item-icon-more" mode='widthFix' src="/resource/images/icon-more.png"></image>
+        </view>
+      </view>
+    </view>
+
+  </view>
+</view>
+
+<!--  公共底部组件  -->
+<common-tabnav tabnavs="{{tabnavs}}"></common-tabnav>

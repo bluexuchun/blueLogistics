@@ -1,0 +1,77 @@
+<view class="detail">
+
+  <!--  banner  -->
+  <view class="detail-banner">
+    <!--  轮播图  -->
+    <swiper 
+        indicator-dots="{{banner.indicatorDots}}"
+        autoplay="{{banner.autoplay}}" 
+        interval="{{banner.interval}}" 
+        duration="{{banner.duration}}"
+        bindchange='swiperChange'
+        style="height:{{banner.imgShowHeight}}px">
+      <block wx:for="{{banner.imgUrls}}">
+        <swiper-item>
+          <image bindload='imgInfo' data-id="{{index}}" src="{{item}}" class="slide-image"/>
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class="picNum">
+      <image class="icon-pic" mode="widthFix" src="/resource/images/icon-pic.png"></image>
+      <view class="numContent">{{banner.currentPage}}/{{banner.totalPage}}</view>
+    </view>
+  </view>
+
+  <!--  信息  -->
+  <view class="detail-info">
+
+    <view class="detail-logo">
+      <image class="icon-logo" mode="widthFix" src="{{company.logo}}"></image>
+      <view>{{company.title}}</view>
+    </view>
+
+    <view class="detail-companyInfo">
+
+      <view class="area">
+        <view class="area-content">
+          <image class="icon-area" mode='widthFix' src="/resource/images/icon-start.png"></image>
+          <view class="area-word">{{company.initArea}}</view>
+        </view>
+        <image class="icon-arrow" mode="widthFix" src="/resource/images/arrow.png"></image>
+        <view class="area-content">
+          <image class="icon-area" mode='widthFix' src="/resource/images/icon-end.png"></image>
+          <view class="area-word">{{company.targetArea}}</view>
+        </view>
+      </view>
+
+      <view class="info-list">
+        <image mode='widthFix' class="icon-info" src="/resource/images/icon-info-phone.png"></image>
+        <view class="info-name">{{company.name}}</view>
+        <view class="info-phone">{{company.phone}}</view>
+      </view>
+      <view class="info-list">
+        <image mode='widthFix' class="icon-info" src="/resource/images/icon-info-location.png"></image>
+        <view class="info-phone">{{company.address}}</view>
+      </view>
+      <view class="info-list">
+        <image mode='widthFix' class="icon-info" src="/resource/images/icon-info-money.png"></image>
+        <view class="info-phone">{{company.money}}</view>
+      </view>
+
+    </view>
+
+  </view>
+
+  <!--  图文详情  -->
+  <view class="detail-rich">
+    <view class="rich-title">
+      <image mode='widthFix' src="/resource/images/icon-picture.png" class="icon-area"></image>
+      <view class="rich-word">图文详情</view>
+    </view>
+
+    <view class="rich-content">
+      {{company.richText}}
+    </view>
+  </view>
+  
+</view>

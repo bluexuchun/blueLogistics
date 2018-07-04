@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "路线发布",
+  "usingComponents": {
+    "common-tabnav": "/components/common-tabnav"
+  }
+}
