@@ -72,32 +72,12 @@ Page({
     tabnavs: null,
 
     // 热门路线
-    hotlineLists:[{
-      id:1,
-      cover:'/resource/images/test.png',
-      fromName:'北京',
-      toName:'深圳',
-      company:'北京远洋物流有限公司',
-      location:'北京市大兴区旧宫镇啊啊',
-      distance:20,
-      yd:400,
-      yf:130,
-      mobile:'15221757886'
-    }, {
-      id: 2,
-      cover: '/resource/images/test.png',
-      fromName: '北京',
-      toName: '深圳',
-      company: '北京远洋物流有限公司',
-      location: '北京市大兴区旧宫镇啊啊',
-      distance: 20,
-      yd: 400,
-      yf: 130,
-      mobile:'15221757886'
-    }]
+    hotlineLists:[]
 
   },
   onLoad: function () {
+
+    const that = this;
 
     // 判断有没有设置底部导航栏 否则调用全局导航栏
     const tabNavOrign = app.globalData.tabnavs;
@@ -116,9 +96,33 @@ Page({
       tabnavs:tabNavOrign
     })
 
+
     // 首页的获取信息
-    const indexInfo = fn.ajaxTo('api?entry=app&c=index&a=index', {});
-    console.log(indexInfo);
+    const hotlineLists = [ ...this.data.hotlineLists];
+
+    const indexInfo = fn.ajaxTo('api.php?entry=app&c=index&a=index', {});
+
+    indexInfo.then(function(res){
+
+      const data = res.data.data;
+      console.log(data);
+
+      if(res.statusCode == 200){
+
+        if(data.length > 0){
+          for(var i = 0;i < data.length;i++){
+            hotlineLists.push(data[i]);
+          }
+          that.setData({
+            hotlineLists: hotlineLists
+          })
+
+          console.log(that.data.hotlineLists);
+        }
+      }
+    })
+
+    
     
   },
   imgInfo: function(e) {
@@ -172,6 +176,13 @@ Page({
     const mobile = e.currentTarget.dataset.mobile;
     wx.makePhoneCall({
       phoneNumber: mobile
+    })
+  },
+
+  // 去地图
+  toMap:function(e){
+    wx.navigateTo({
+      url: '/pages/map/map',
     })
   }
 })

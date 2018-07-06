@@ -1,5 +1,5 @@
 // 默认地址
-const baseUrl = 'https://blue.widiazine.cn/';
+const baseUrl = 'https://blue.widiazine.cn/BLueLogistics/';
 
 
 function ajaxTo(url,data){
@@ -12,7 +12,6 @@ function ajaxTo(url,data){
         'content-type':'application/json'
       },
       success:function(res){
-        console.log(res);
         resolve(res)
       },
       fail:function(res){

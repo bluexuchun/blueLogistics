@@ -263,3 +263,23 @@ swiper{
   font-size:26rpx;
   color:#323232;
 }
+
+.weui-search-bar{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center
+}
+.weui-search-bar__form{
+  width:90%;
+}
+.location-icon{
+  width:10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.location-icon image{
+  width:30rpx;
+}

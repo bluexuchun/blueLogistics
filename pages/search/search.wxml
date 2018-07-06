@@ -18,7 +18,7 @@
           </picker>
         </view>
       </view>
-      <view class="search-btn">搜索路线</view>
+      <view class="search-btn" bindtap='searchLine'>搜索路线</view>
     </view>
   </view>
   <view class="search-hotline">

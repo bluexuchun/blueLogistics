@@ -1,5 +1,6 @@
 // pages/search/search.js
 const app = getApp();
+import fn from '../../utils/axios.js';
 Page({
   /**
    * 页面的初始数据
@@ -111,5 +112,21 @@ Page({
     this.setData({
       areaInfo: areaInfo
     })
+  },
+  searchLine: function(){
+    const areaInfo = {...this.data.areaInfo};
+    const dataObject = {
+      origin_province : areaInfo.initDetail[0],
+      origin_city:areaInfo.initDetail[1],
+      origin_district:areaInfo.initDetail[2],
+      dest_province: areaInfo.targetDetail[0],
+      dest_city:areaInfo.targetDetail[1],
+      dest_district:areaInfo.targetDetail[2]
+    };
+    const searchResult = fn.ajaxTo('api.php?entry=app&c=route&a=route',dataObject);
+    searchResult.then(function(res){
+      console.log(res);
+    })
+
   }
 })
