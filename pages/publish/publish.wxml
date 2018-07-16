@@ -54,7 +54,7 @@
       <view class="item-input">
         <view class="item-label">
           <view class="label-word">载重</view>
-          <input placeholder-style="color:#C3CAD3" placeholder="元/吨" />
+          <input placeholder-style="color:#C3CAD3" bindinput='changeForm' data-name="weight_price" bind placeholder="元/吨" value="{{weight_price}}" />
         </view>
       </view>
     </view>
@@ -68,7 +68,7 @@
       <view class="item-input">
         <view class="item-label">
           <view class="label-word">费用</view>
-          <input placeholder-style="color:#C3CAD3" placeholder="元/方" />
+          <input placeholder-style="color:#C3CAD3" bindinput='changeForm' data-name="area_price" placeholder="元/方" value="{{area_price}}"/>
         </view>
       </view>
     </view>
@@ -79,8 +79,13 @@
       <view class="item-img">
         <image mode='widthFix' class="icon-img" src="/resource/images/icon-type.png"></image>
       </view>
-      
-      <picker class="item-picker" bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+      <view class="item-input">
+        <view class="item-label">
+          <view class="label-word">车辆类型</view>
+          <input placeholder-style="color:#C3CAD3" placeholder="请输入车辆类型" bindinput='changeForm' data-name="vehicle_type" value="{{vehicle_type}}"/>
+        </view>
+      </view>
+      <!-- <picker class="item-picker" bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
           <view class="picker-content">
             <view class="item-label">
               <view class="label-word">车辆类型</view>
@@ -90,11 +95,11 @@
               <image mode='widthFix' class="icon-img-more" src="/resource/images/icon-more.png"></image>
             </view>
           </view>
-      </picker>
+      </picker> -->
     </view>
   </view>
 
-  <view class="publish-btn">
+  <view class="publish-btn" bindtap='submitForm'>
     确定发布
   </view>
 </view>

@@ -1,11 +1,12 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/map/map",
+    "pages/comfrim/comfrim",
     "pages/me/me",
+    "pages/map/map",
+    "pages/search/search",
     "pages/publish/publish",
-    "pages/detail/detail",
-    "pages/search/search"
+    "pages/detail/detail"
     
   ],
   "window": {

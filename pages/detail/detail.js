@@ -1,5 +1,7 @@
 // pages/detail/detail.js
 const app = getApp();
+import fn from '../../utils/axios.js';
+var WxParse = require('../../wxParse/wxParse.js');
 Page({
 
   /**
@@ -9,11 +11,7 @@ Page({
     systemInfo:app.globalData.systemInfo,
     // 轮播图的信息
     banner: {
-      imgUrls: [
-        '/resource/images/banner.png',
-        '/resource/images/banner.png',
-        '/resource/images/banner.png'
-      ],
+      imgUrls: [],
       indicatorDots: false,
       autoplay: false,
       interval: 5000,
@@ -25,33 +23,63 @@ Page({
     },
 
     // 公司信息
-    company: {
-      logo:'/resource/images/icon-logo.png',
-      title:'北京远洋物流有限公司',
-      initArea:'北京',
-      targetArea:'深圳',
-      name:'刘大壮',
-      phone:'176****8225',
-      address:'北京市大兴区旧宫镇268号仓库',
-      money:'400元/吨 130元/方',
-      richText:'图文详情'
-    }
+    company: null,
+
+    // 路线信息
+    lineInfo: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options);
+
+    const that = this;
 
     // 获取id 并请求数据
+    const id = options.id;
+    const detail = fn.ajaxTo('api.php?entry=app&c=company&a=display',{
+      id:id
+    });
+    detail.then(function(res){
+      console.log(res);
+      const data = res.data.data;
+      if(res.statusCode == 200){
 
+        // banner设置
+        const bannerInfo = { ...that.data.banner};
+        const bannerLists = data.companyInfo.banner;
+        if (bannerLists.length > 0){
+          for(var i = 0; i < bannerLists.length; i++){
+            bannerInfo.imgUrls.push(bannerLists[i].imgURL);
+          }
+        };
+
+        const companyRich = data.companyInfo.introduce;
+        WxParse.wxParse('content', 'html', companyRich,that, 5);
+
+        that.setData({
+          banner:bannerInfo,
+          company:data.companyInfo,
+          lineInfo:data.routeInfo
+        })
+
+        that.calculateBanner();
+
+      }
+    })
+
+    
+  },
+
+  calculateBanner: function(){
     // 获取banner图的总数量
 
-    const bannerInfo = {...this.data.banner};
+    const bannerInfo = { ...this.data.banner };
+    console.log(bannerInfo);
     bannerInfo.totalPage = bannerInfo.imgUrls.length;
     this.setData({
-      banner:bannerInfo
+      banner: bannerInfo
     })
   },
 

@@ -21,6 +21,7 @@
 }
 .icon-avatar{
   width:140rpx;
+  border-radius: 50%;
 }
 .me-info{
   width:65%;

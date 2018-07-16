@@ -9,6 +9,8 @@ Page({
     // 设备信息
     systemInfo:app.globalData.systemInfo,
 
+    locationInfo:app.globalData.locationInfo,
+
     // 底部导航栏
     tabnavs:app.globalData.tabnavs,
 
@@ -25,37 +27,7 @@ Page({
     },
     
     // 热门路线
-    hotlineLists: [{
-      id: 1,
-      cover: '/resource/images/test.png',
-      fromName: '北京',
-      toName: '深圳',
-      company: '北京远洋物流有限公司',
-      location: '北京市大兴区旧宫镇啊啊',
-      distance: 20,
-      yd: 400,
-      yf: 130
-    }, {
-      id: 2,
-      cover: '/resource/images/test.png',
-      fromName: '北京',
-      toName: '深圳',
-      company: '北京远洋物流有限公司',
-      location: '北京市大兴区旧宫镇啊啊',
-      distance: 20,
-      yd: 400,
-      yf: 130
-    }, {
-      id: 3,
-      cover: '/resource/images/test.png',
-      fromName: '北京',
-      toName: '深圳',
-      company: '北京远洋物流有限公司',
-      location: '北京市大兴区旧宫镇啊啊',
-      distance: 20,
-      yd: 400,
-      yf: 130
-    },]
+    hotlineLists: []
   },
 
   /**
@@ -63,6 +35,7 @@ Page({
    */
   onLoad: function (options) {
 
+    const that = this;
     // 改变底部导航栏
     const tabnavs = { ...app.globalData.tabnavs };
 
@@ -91,15 +64,45 @@ Page({
 
     // 滚动区域高度
     const scrollHeight = bodyHeight - headHeight - 30 / ratio - tabnavHeight / ratio;
-    console.log(scrollHeight);
+
+    // 首页的获取信息
+    const hotlineLists = [...this.data.hotlineLists];
+
+    const indexInfo = fn.ajaxTo('api.php?entry=app&c=index&a=index', {});
+
+    indexInfo.then(function (res) {
+
+      const data = res.data.data;
+
+      if (res.statusCode == 200) {
+
+        if (data.length > 0) {
+          for (var i = 0; i < data.length; i++) {
+            hotlineLists.push(data[i]);
+          }
+          that.setData({
+            hotlineLists: hotlineLists
+          })
+        }
+      }
+    })
+
+    // 更改初始位置
+    const locationInfo = app.globalData.locationInfo;
+    let areaInfo = {...this.data.areaInfo};
+    areaInfo.region = [locationInfo.province,locationInfo.city,locationInfo.district];
+    areaInfo.initArea = locationInfo.district;
+    areaInfo.initDetail = [locationInfo.province, locationInfo.city, locationInfo.district];
 
     this.setData({
-      scrollHeight:scrollHeight
+      areaInfo:areaInfo,
+      scrollHeight:scrollHeight,
+      locationInfo:locationInfo
     })
   },
   bindinitArea: function (e) {
     const areaInfo = { ...this.data.areaInfo };
-    areaInfo.initArea = e.detail.value[1];
+    areaInfo.initArea = e.detail.value[2];
     areaInfo.initDetail = e.detail.value;
     this.setData({
       areaInfo: areaInfo
@@ -107,13 +110,16 @@ Page({
   },
   bindtargetArea: function (e) {
     const areaInfo = { ...this.data.areaInfo };
-    areaInfo.targetArea = e.detail.value[1];
+    areaInfo.targetArea = e.detail.value[2];
     areaInfo.targetDetail = e.detail.value;
     this.setData({
       areaInfo: areaInfo
     })
   },
   searchLine: function(){
+
+    const that = this;
+
     const areaInfo = {...this.data.areaInfo};
     const dataObject = {
       origin_province : areaInfo.initDetail[0],
@@ -123,10 +129,34 @@ Page({
       dest_city:areaInfo.targetDetail[1],
       dest_district:areaInfo.targetDetail[2]
     };
+
+    const hotlineLists = [...this.data.hotlineLists];
+
+    // 搜索路线
     const searchResult = fn.ajaxTo('api.php?entry=app&c=route&a=route',dataObject);
     searchResult.then(function(res){
       console.log(res);
+      const data = res.data.data;
+      if(res.statusCode == 200){
+        if(data.length > 0){
+          for(var i = 0;i < data.length;i++){
+            hotlineLists.push(data[i]);
+          }
+          
+        }
+      }
+      console.log(hotlineLists);
+      that.setData({
+        hotlineLists:hotlineLists
+      })
     })
-
+  },
+  lower:function(e){
+    console.log('触碰底部了..');
+    console.log(e);
+  },
+  upper:function(e){
+    console.log('触碰顶部了..');
+    console.log(e);
   }
 })

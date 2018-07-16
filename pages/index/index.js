@@ -14,9 +14,10 @@ Page({
     // 轮播图的信息
     banner:{
       imgUrls: [
-        '/resource/images/banner.png',
-        '/resource/images/banner.png',
-        '/resource/images/banner.png'
+        'https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/BANNER-1.jpg',
+        'https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/BANNER-2.jpg',
+        'https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/BANNER-3.jpg',
+        'https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/BANNER-4.jpg'
       ],
       indicatorDots: true,
       autoplay: false,
@@ -31,48 +32,49 @@ Page({
       id:1,
       icon:'/resource/images/icon-wuliu.png',
       text:'物流',
-      path:'pages/index/index'
+      path:'/pages/search/search'
     },{
       id:2,
       icon:'/resource/images/icon-rencai.png',
       text:'人才',
-      path:'pages/index/index'
+      path:'/pages/index/index'
     },{
       id: 3,
       icon: '/resource/images/icon-baoxian.png',
       text: '保险',
-      path: 'pages/index/index'
+      path: '/pages/index/index'
     },{
       id: 4,
       icon: '/resource/images/icon-shangjia.png',
       text: '商家',
-      path: 'pages/index/index'
+      path: '/pages/index/index'
     }, {
       id: 5,
       icon: '/resource/images/icon-wuliu.png',
       text: '物流',
-      path: 'pages/index/index'
+      path: '/pages/index/index'
     }, {
       id: 6,
       icon: '/resource/images/icon-rencai.png',
       text: '人才',
-      path: 'pages/index/index'
+      path: '/pages/index/index'
     }, {
       id: 7,
       icon: '/resource/images/icon-baoxian.png',
       text: '保险',
-      path: 'pages/index/index'
+      path: '/pages/index/index'
     }, {
       id: 8,
       icon: '/resource/images/icon-shangjia.png',
       text: '商家',
-      path: 'pages/index/index'
+      path: '/pages/index/index'
     }],
 
     tabnavs: null,
 
     // 热门路线
-    hotlineLists:[]
+    hotlineLists:[],
+
 
   },
   onLoad: function () {
@@ -108,23 +110,29 @@ Page({
       console.log(data);
 
       if(res.statusCode == 200){
-
-        if(data.length > 0){
-          for(var i = 0;i < data.length;i++){
-            hotlineLists.push(data[i]);
+        // 路线
+        const route = data.route;
+        if (route.length > 0) {
+          for (var i = 0; i < route.length; i++) {
+            hotlineLists.push(route[i]);
           }
           that.setData({
             hotlineLists: hotlineLists
           })
-
           console.log(that.data.hotlineLists);
         }
+        // 公司
+        const companys = data.company;
+        that.setData({
+          companys:companys
+        })
+        console.log(that.data);
+        
       }
     })
-
-    
-    
   },
+
+  // 动态获取图片信息
   imgInfo: function(e) {
 
     let imgWidth = e.detail.width;
@@ -183,6 +191,15 @@ Page({
   toMap:function(e){
     wx.navigateTo({
       url: '/pages/map/map',
+    })
+  },
+
+  // 去导航栏
+  toNavs:function(e){
+    console.log(e);
+    const path = e.currentTarget.dataset.path;
+    wx.navigateTo({
+      url: path,
     })
   }
 })

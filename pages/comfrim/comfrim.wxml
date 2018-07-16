@@ -1,0 +1,90 @@
+<view class="comfrim">
+
+  <view class="comfrim-item">
+    <view class="comfrim-label">企业信息：</view>
+    <view class="comfrim-input" style="width:70%;display:flex;flex-direction:row;justify-content:space-between;">
+      <input style="width:80%;" data-name="info" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" auto-focus value="{{info}}"/>
+      <image class="icon-camera" mode='widthFix' src="/resource/images/camera.png" bindtap='scanCard'></image>
+    </view>
+  </view>
+
+  <view class="comfrim-item">
+    <view class="comfrim-label">企业名称：</view>
+    <view class="comfrim-input">
+      <input data-name="name" value="{{name}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+    </view>
+  </view>
+
+  <view class="comfrim-item">
+    <view class="comfrim-label">注册地址：</view>
+    <view class="comfrim-input">
+      <input data-name="re_address" value="{{re_address}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+    </view>
+  </view>
+
+  <view class="comfrim-item">
+    <view class="comfrim-label">公司地址：</view>
+    <view class="comfrim-input">
+      <input data-name="address" value="{{address}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+    </view>
+  </view>
+
+  <view class="comfrim-item">
+    <view class="comfrim-label">法人姓名：</view>
+    <view class="comfrim-input">
+      <input data-name="legal_person" value="{{legal_person}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+    </view>
+  </view>
+
+  <view class="comfrim-item">
+    <view class="comfrim-label">法人身份证号：</view>
+    <view class="comfrim-input">
+      <input data-name="identify_number" value="{{identify_number}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+    </view>
+  </view>
+
+  <view class="comfrim-item">
+    <view class="comfrim-label">联系人：</view>
+    <view class="comfrim-input">
+      <input data-name="linkman" value="{{linkman}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+    </view>
+  </view>
+
+  <view class="comfrim-item">
+    <view class="comfrim-label">联系电话：</view>
+    <view class="comfrim-input">
+      <input data-name="phone" value="{{phone}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入"/>
+    </view>
+  </view>
+
+  <view class="imgLists">
+    <view class="img-item">
+      <image class="icon-img" mode='widthFix' wx:if="{{logo_path == undefined || logo_path == ''}}" src="https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/logo.png" data-name="logo_path" bindtap='uploadImg'></image>
+      <image class="icon-img" mode='widthFix' data-name="logo_path" wx:else src="{{logo_path}}" bindtap='uploadImg'></image>
+    </view>
+    <view class="img-item">
+      <image class="icon-img" mode='widthFix' wx:if="{{license_path == undefined || license_path == ''}}" src="https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/yyzz.png" data-name="license_path" bindtap='uploadImg'></image>
+      <image class="icon-img" mode='widthFix' data-name="license_path" wx:else src="{{license_path}}" bindtap='uploadImg'></image>
+    </view>
+    <view class="img-item">
+      <image class="icon-img" mode='widthFix' wx:if="{{positive_path == undefined || positive_path == ''}}" src="https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/iden.png" data-name="positive_path" bindtap='uploadImg'></image>
+      <image class="icon-img" mode='widthFix' data-name="positive_path" wx:else src="{{positive_path}}" bindtap='uploadImg'></image>
+    </view>
+    <view class="img-item">
+      <image class="icon-img" mode='widthFix' wx:if="{{reverse_path == undefined || reverse_path == ''}}" src="https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/iden-fan.png" data-name="reverse_path" bindtap='uploadImg'></image>
+      <image class="icon-img" mode='widthFix' data-name="reverse_path" wx:else src="{{reverse_path}}" bindtap='uploadImg'></image>
+    </view>
+    <view class="img-item">
+      <image class="icon-img" mode='widthFix' wx:if="{{facade_path == undefined || facade_path == ''}}" src="https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/mt.png" data-name="facade_path" bindtap='uploadImg'></image>
+      <image class="icon-img" mode='widthFix' data-name="facade_path" wx:else src="{{facade_path}}" bindtap='uploadImg'></image>
+    </view>
+    <view class="img-item">
+      <image class="icon-img" mode='widthFix' wx:if="{{reception_path == undefined || reception_path == ''}}" src="https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/qt.png" data-name="reception_path" bindtap='uploadImg'></image>
+      <image class="icon-img" mode='widthFix' data-name="reception_path" wx:else src="{{reception_path}}" bindtap='uploadImg'></image>
+    </view>
+  </view>
+
+  <view class="btn">
+    <view class="btn-detail" bindtap='submitForm'>提交</view>
+  </view>
+</view>

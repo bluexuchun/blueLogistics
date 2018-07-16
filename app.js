@@ -1,4 +1,8 @@
 //app.js
+var QQMapWX = require('./utils/qqmap-wx-jssdk.js');
+var mapInfo = new QQMapWX({
+  key:'V4DBZ-RJREV-EULPZ-UR4BK-TOYU6-TXFTK'
+});
 App({
   onLaunch: function () {
     // 展示本地存储能力
@@ -38,11 +42,36 @@ App({
       success: res => {
         this.globalData.systemInfo = res;
       },
+    });
+
+    const that = this;
+
+    // 获取位置信息
+    wx.getLocation({
+      type: 'wgs84',
+      success: function (res) {
+        const latitude = res.latitude;
+        const longitude = res.longitude;
+        mapInfo.reverseGeocoder({
+          location:{
+            latitude: latitude,
+            longitude: longitude
+          },
+          success:function(res){
+            console.log(res);
+            if(res.status == 0){
+              const locationInfo = res.result.address_component;
+              that.globalData.locationInfo = locationInfo;
+            }
+          }
+        })
+      }
     })
   },
   globalData: {
     systemInfo: null,
     userInfo: null,
+    locationInfo:null,
     // 底部导航栏的信息
     tabnavs: {
       option: {
@@ -59,7 +88,7 @@ App({
           text: '物流',
           selectedIcon: '/resource/images/icon-tabnav-wuliu-active.png',
           icon: '/resource/images/icon-tabnav-wuliu.png',
-          path: '/pages/index/index',
+          path: 'pages/index/index',
           widthPx: '66',//rpx
           heightPx: '66',//rpx
           mode: 'aspectFit',
@@ -70,7 +99,7 @@ App({
           text: '发布路线',
           selectedIcon: '/resource/images/icon-tabnav-line-active.png',
           icon: '/resource/images/icon-tabnav-line.png',
-          path: '/pages/publish/publish',
+          path: 'pages/publish/publish',
           widthPx: '60',//rpx
           heightPx: '60',//rpx
           mode: 'aspectFit',
@@ -81,12 +110,13 @@ App({
           text: '我的',
           selectedIcon: '/resource/images/icon-tabnav-me-active.png',
           icon: '/resource/images/icon-tabnav-me.png',
-          path: '/pages/me/me',
+          path: 'pages/me/me',
           widthPx: '60',//rpx
           heightPx: '60',//rpx
           mode: 'aspectFit',
           isShow: true,
-          isSelected: false
+          isSelected: false,
+          loginBtn:true,
         }
       ]
     }

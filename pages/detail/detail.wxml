@@ -1,3 +1,4 @@
+<import src="../../wxParse/wxParse.wxml"/>
 <view class="detail">
 
   <!--  banner  -->
@@ -27,27 +28,27 @@
 
     <view class="detail-logo">
       <image class="icon-logo" mode="widthFix" src="{{company.logo}}"></image>
-      <view>{{company.title}}</view>
+      <view>{{company.name}}</view>
     </view>
 
     <view class="detail-companyInfo">
 
-      <view class="area">
+      <view class="area" wx:for="{{lineInfo}}">
         <view class="area-content">
           <image class="icon-area" mode='widthFix' src="/resource/images/icon-start.png"></image>
-          <view class="area-word">{{company.initArea}}</view>
+          <view class="area-word">{{item.origin_city}}</view>
         </view>
         <image class="icon-arrow" mode="widthFix" src="/resource/images/arrow.png"></image>
         <view class="area-content">
           <image class="icon-area" mode='widthFix' src="/resource/images/icon-end.png"></image>
-          <view class="area-word">{{company.targetArea}}</view>
+          <view class="area-word">{{item.dest_city}}</view>
         </view>
       </view>
 
-      <view class="info-list">
+      <view class="info-list" wx:for="{{company.contact}}">
         <image mode='widthFix' class="icon-info" src="/resource/images/icon-info-phone.png"></image>
-        <view class="info-name">{{company.name}}</view>
-        <view class="info-phone">{{company.phone}}</view>
+        <view class="info-name">{{item.contact}}</view>
+        <view class="info-phone">{{item.phone}}</view>
       </view>
       <view class="info-list">
         <image mode='widthFix' class="icon-info" src="/resource/images/icon-info-location.png"></image>
@@ -55,7 +56,7 @@
       </view>
       <view class="info-list">
         <image mode='widthFix' class="icon-info" src="/resource/images/icon-info-money.png"></image>
-        <view class="info-phone">{{company.money}}</view>
+        <view class="info-phone">{{company.weight_price}}元/吨 {{company.area_price}}元/方</view>
       </view>
 
     </view>
@@ -70,7 +71,7 @@
     </view>
 
     <view class="rich-content">
-      {{company.richText}}
+      <template is="wxParse" data="{{wxParseData:content.nodes}}"/>
     </view>
   </view>
   

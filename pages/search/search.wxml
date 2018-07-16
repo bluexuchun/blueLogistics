@@ -41,17 +41,17 @@
             <view class="hotline-item-left">
               <!--  company-pic  -->
               <view class='hotline-img'>
-                <image src="{{item.cover}}"></image>
+                <image src="{{item.img}}"></image>
               </view>
               <!--  company-info  -->
               <view class="hotline-info">
                 <!--  from & to  -->
                 <view class="hotline-direction">
-                  <view class="from">{{item.fromName}}</view>
+                  <view class="from">{{item.origin_city}}</view>
                   <view class="line">
                     <image mode="widthFix" class="hotline-arrow" src="/resource/images/arrow.png"></image>
                   </view>
-                  <view class="to">{{item.toName}}</view>
+                  <view class="to">{{item.dest_city}}</view>
                 </view>
 
                 <!--  公司名字  -->
@@ -60,14 +60,14 @@
                 <!--  地址  -->
                 <view class="hotline-position">
                   <image mode='widthFix' class="icon-position" src="/resource/images/icon-location.png"></image>
-                  <view class="position-word">{{item.distance}}km {{item.location}}</view>
+                  <view class="position-word">{{item.distance}}km {{item.address}}</view>
                 </view>
 
                 <!--  运费  -->
                 <view class="hotline-cost">
                   <view class="cost-name">运费：</view>
-                  <view class="yd">¥ {{item.yd}}元/吨</view>
-                  <view class="yf">¥ {{item.yf}}元/方</view>
+                  <view class="yd">¥ {{item.weight_price}}元/吨</view>
+                  <view class="yf">¥ {{item.area_price}}元/方</view>
                 </view>
 
               </view>

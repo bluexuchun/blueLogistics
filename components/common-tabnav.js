@@ -1,4 +1,6 @@
 // components/common-tabnav.js
+const app = getApp();
+import fn from '../utils/axios.js';
 Component({
   /**
    * 组件的属性列表
@@ -21,6 +23,7 @@ Component({
   },
   attached:function(){
     if(this.properties.tabnavs != null){
+      console.log(this.properties.tabnavs);
       let length = this.properties.tabnavs.navLists.length;
       let navWidth = (100 / length).toFixed(1);
       this.setData({
@@ -34,12 +37,13 @@ Component({
    */
   methods: {
     navigateTo:function(e){
-      const url = e.currentTarget.dataset.url;
+      let url = e.currentTarget.dataset.url;
       // 获取当前路由
       const p = getCurrentPages();
       const route = p.pop().__route__;
       if(url != route){
-        wx.navigateTo({
+        url = '/' + url;
+        wx.reLaunch({
           url: url,
         })
       }
@@ -55,6 +59,78 @@ Component({
       this.setData({
         tabnavLists:navlists
       })
+      console.log(this.data.tabnavLists)
+    },
+    
+    onGotUserInfo:function(e){
+      let userDetail = wx.getStorageSync('userInfo');
+      let userInfo = e.detail.userInfo;
+      let url = e.currentTarget.dataset.url;
+      if(!userDetail){
+        if (userInfo != undefined) {
+          // 获取code
+          wx.login({
+            success: function (res) {
+              const code = res.code;
+              const userId = fn.ajaxTo('api.php?entry=app&c=login&a=app_wechat_login', {
+                code: code
+              });
+
+              userId.then(function (res) {
+                console.log(res);
+                const data = res.data;
+                // 获取openid
+                const openidInfo = {
+                  'openid': data.openid,
+                  'session_key': data.session_key
+                };
+                userInfo = { ...userInfo, ...openidInfo };
+
+                // 保存用户信息
+                const result = fn.ajaxTo('api.php?entry=app&c=user&a=user&do=login', userInfo);
+                result.then(function (res) {
+                  console.log(res);
+                  const data = res.data.data;
+
+                  if (res.statusCode == 200) {
+                    // 将用户信息赋给全局变量
+                    app.globalData.userInfo = userInfo;
+                    userInfo = { ...userInfo, id: data.id, company_id: data.company_id }
+
+                    // 将用户信息设置成缓存
+                    wx.setStorage({
+                      key: 'userInfo',
+                      data: userInfo
+                    })
+
+                    // 保存用户信息 并跳转我的页面
+                    // 获取当前路由
+                    const p = getCurrentPages();
+                    const route = p.pop().__route__;
+                    if (url != route) {
+                      url = '/' + url;
+                      wx.reLaunch({
+                        url: url,
+                      })
+                    }
+
+                  }
+                })
+              })
+            }
+          });
+        }
+      }else{
+        // 获取当前路由
+        const p = getCurrentPages();
+        const route = p.pop().__route__;
+        if (url != route) {
+          url = '/' + url;
+          wx.reLaunch({
+            url: url,
+          })
+        }
+      }
     }
   }
 })

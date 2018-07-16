@@ -1,4 +1,5 @@
 const app = getApp();
+import fn from '../../utils/axios.js';
 
 Page({
   data: {
@@ -7,14 +8,7 @@ Page({
       longitude:0,
       latitude:0
     },
-    markers: [{
-      iconPath: "/resource/images/icon-biglocation.png",
-      id: 0,
-      latitude: 23.099994,
-      longitude: 113.324520,
-      width: 12,
-      height: 16
-    }],
+    markers: [],
   },
 
   /**
@@ -24,12 +18,49 @@ Page({
 
     // 获取地图坐标
     const that = this;
+
+    // 获取当前地理位置
     wx.getLocation({
       type: 'wgs84',
       success: function (res) {
+        console.log(res);
         const options = { ...that.data.options};
+
         options.latitude = res.latitude;
         options.longitude = res.longitude;
+
+        // 获取所有路线
+        const lineLists = fn.ajaxTo('api.php?entry=app&c=lbs&a=lbs', {
+          latitude: res.latitude,
+          longitude: res.longitude
+        });
+
+        lineLists.then(function (res) {
+          const data = res.data;
+          console.log(data);
+          if(res.statusCode == 200){
+            const markers = [...that.data.markers];
+            if(data.length > 0){
+              for(var i = 0;i < data.length;i++){
+
+                // 位置信息
+                let locationInfo = {
+                  iconPath: "/resource/images/icon-biglocation.png",
+                  id: data[i].id,
+                  latitude: data[i].latitude,
+                  longitude: data[i].longitude,
+                  width: 14,
+                  height: 20
+                }
+
+                markers.push(locationInfo);
+              }
+            }
+            that.setData({
+              markers: markers
+            })
+          }
+        })
 
         that.setData({
           options: options
@@ -37,4 +68,11 @@ Page({
       }
     })
   },
+  markertap:function(e){
+    console.log(e);
+    const id = e.markerId;
+    wx.navigateTo({
+      url: '/pages/detail/detail?id='+id,
+    })
+  }
 })

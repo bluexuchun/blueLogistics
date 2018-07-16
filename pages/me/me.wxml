@@ -2,34 +2,29 @@
   
   <view class="me-header">
     <view class="me-ava">
-      <image mode='widthFix' class="icon-avatar" src="/resource/images/avatar.png"></image>
+      <image mode='widthFix' class="icon-avatar" src="{{userInfo.avatarUrl}}"></image>
     </view>
     <view class="me-info">
       <view class="me-title">
-        <view class="me-name">王茜茜 </view>
-        <view class="me-sign">|</view>
-        <view class="me-company">北京****科技有限公司</view>
-      </view>
-      <view class="me-desc">
-        公司以“专注网站，用心服务”为核心价值，为企业产品推广文化发展提供服务指导。
+        <view class="me-name">{{userInfo.nickName}}</view>
       </view>
     </view>
   </view>
 
   <view class="me-ul">
 
-    <view class="me-item">
+    <view class="me-item" bindtap='toComfrim'>
       <view class="item-detail">
         <view class="item-icon">
           <image mode='widthFix' src="/resource/images/icon-info.png" class="item-icon-img"></image>
           <view class="item-word">我的公司信息</view>
         </view>
-        <view class="item-confrim">*未认证</view>
+        <view class="item-confrim" style="color:{{status.color}}">{{status.word}}</view>
       </view>
     </view>
 
     <view class="me-item">
-      <view class="item-detail">
+      <view class="item-detail" bindtap='toPublish'>
         <view class="item-icon">
           <image mode='widthFix' src="/resource/images/icon-publish.png" class="item-icon-img"></image>
           <view class="item-word">我的发布</view>

@@ -44,7 +44,7 @@
   <view class="nav">
     <view class="nav-content">
 
-      <view class="nav-item" wx:for="{{navsLists}}">
+      <view class="nav-item" wx:for="{{navsLists}}" bindtap='toNavs' data-path="{{item.path}}">
         <view class="nav-icon">
           <image mode="aspectFit" class="nav-icon-img" src="{{item.icon}}"></image>
         </view>
@@ -72,7 +72,7 @@
     <view class="hotline-lists">
       <view class="hotline-item" wx:for="{{hotlineLists}}">
         <!--  left-content  -->
-        <view class="hotline-item-left" data-id="{{item.id}}" bindtap='toDetail'>
+        <view class="hotline-item-left" data-id="{{item.company_id}}" bindtap='toDetail'>
           <!--  company-pic  -->
           <view class='hotline-img'>
             <image src="{{item.img}}"></image>
@@ -94,7 +94,7 @@
             <!--  地址  -->
             <view class="hotline-position">
               <image mode='widthFix' class="icon-position" src="/resource/images/icon-location.png"></image>
-              <view class="position-word">{{item.distance}}km {{item.location}}</view>
+              <view class="position-word">{{item.distance}}km {{item.address}}</view>
             </view>
 
             <!--  运费  -->
@@ -133,22 +133,10 @@
     <!--  分类内容  -->
     <view class="shopCate-content">
       <scroll-view class="shopCate-scroll" scroll-x="true" style="">
-        <view class="shopCate-scroll-item">
-          <view class="shopCate-item-content">
-            <image mode="widthFix" src="/resource/images/test1.png"></image>
-            <view class="scroll-item-word">意式风情小回顾</view>
-          </view>
-        </view>
-        <view class="shopCate-scroll-item">
-          <view class="shopCate-item-content">
-            <image mode="widthFix" src="/resource/images/test1.png"></image>
-            <view class="scroll-item-word">意式风情小回顾</view>
-          </view>
-        </view>
-        <view class="shopCate-scroll-item">
-          <view class="shopCate-item-content">
-            <image mode="widthFix" src="/resource/images/test1.png"></image>
-            <view class="scroll-item-word">意式风情小回顾</view>
+        <view class="shopCate-scroll-item" wx:for="{{companys}}">
+          <view class="shopCate-item-content" data-id="{{item.id}}" bindtap='toCompany'>
+            <image mode="widthFix" src="{{item.facade_path}}"></image>
+            <view class="scroll-item-word">{{item.name}}</view>
           </view>
         </view>
       </scroll-view>
