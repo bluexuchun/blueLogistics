@@ -2,19 +2,94 @@ import fn from '../../utils/axios.js';
 Page({
 
   data: {
-    ajaxUrl:'api.php?entry=app&c=authenticate&a=authenticate&do=add'
+    imgUrl:'https://blue.widiazine.cn/BLueLogistics',
+    ajaxUrl:'api.php?entry=app&c=authenticate&a=authenticate&do=add',
+    // 公司性质
+    propties:{
+      index:"0",
+      group:['专线','仓库','冷链','危化','网点']
+    },
+    // 专线
+    lineLists:[
+      {
+        areaInfo:{
+          init: null,
+          initArea: '请选择起始地',
+          target: null,
+          targetArea: '请选择目的地'
+        },
+        company_name:'',
+        name:'',
+        phone:'',
+        address:'',
+        // 选择 公斤&斤
+        unit: {
+          index: 0,
+          array: ['公斤', '斤']
+        },
+        //重货价
+        weightPrice: [
+          {
+            yl: '',
+            price: ''
+          }
+        ],
+        //轻货价
+        lightPrice: [
+          {
+            yl: '',
+            price: ''
+          }
+        ],
+        // 发车频率
+        carNum: {
+          day: '',
+          num: ''
+        }
+      }
+    ],
+
+    // 联系人
+    contactLists:[
+      {
+        linkman:'',
+        phone:''
+      }
+    ],
+    // 门头照片
+    mt_picture:[],
+    // 办公照片
+    bg_picture:[],
+    // 场地照片
+    cd_picture:[],
+    // 其他照片
+    other_picture:[]
+
   },
 
   onLoad: function (options) {
     const that = this;
-    const id = options.id;
+    let id = options.id;
+    if(!id){
+      id = wx.getStorageSync('userInfo')['id'];
+    }
     const infoList = fn.ajaxTo('api.php?entry=app&c=authenticate&a=authenticate&do=display',{
       uid:id
     }).then(function(res){
+      console.log(res);
       if(res.data.length == 0){
 
       }else{
         let ajaxUrl = 'api.php?entry=app&c=authenticate&a=authenticate&do=edit';
+        res.data.areaInfo = JSON.parse(res.data.areaInfo);
+        res.data.bg_picture = JSON.parse(res.data.bg_picture);
+        res.data.cd_picture = JSON.parse(res.data.cd_picture);
+        res.data.mt_picture = JSON.parse(res.data.mt_picture);
+        res.data.other_picture = JSON.parse(res.data.other_picture);
+        res.data.propties = {
+          index: res.data.propties - 1,
+          group: ['专线', '仓库', '冷链', '危化', '网点']
+        }
         that.setData({
           ajaxUrl:ajaxUrl,
           ...res.data
@@ -26,18 +101,29 @@ Page({
 
   //改变input内容 自动赋值给data 
   changeForm:function(e){
-    console.log(e)
+    console.log(e);
+
+    const index = e.currentTarget.dataset.index;
 
     const name = e.currentTarget.dataset.name;
 
     const value = e.detail.value;
 
-    this.setData({
-      [name]:value
-    })
-
+    // 区分是数组 还是 单个Input表单的填写
+    if(index == undefined){
+      this.setData({
+        [name]: value
+      })
+    }else{
+      let lineLists = [...this.data.lineLists];
+      lineLists[index][name] = value;
+      this.setData({
+        lineLists: lineLists
+      })
+    }
     console.log(this.data);
   },
+
 
   // 扫一扫名片
   scanCard:function(){
@@ -97,8 +183,9 @@ Page({
             console.log(res);
             if (res.statusCode == 200) {
               const data = JSON.parse(res.data);
+              let imgUrl = that.data.imgUrl + data.imgURL;
               that.setData({
-                [name]:data.imgURL
+                [name]: imgUrl
               })
               wx.hideLoading();
             }
@@ -110,44 +197,437 @@ Page({
 
   // 提交信息
   submitForm:function(){
+    const that = this;
     let userInfo = wx.getStorageSync('userInfo');
     let data = {...this.data};
+    data.propties = Number(data.propties.index) + 1;
+    data.areaInfo = JSON.stringify(data.areaInfo);
+    data.bg_picture = JSON.stringify(data.bg_picture);
+    data.cd_picture = JSON.stringify(data.cd_picture);
+    data.mt_picture = JSON.stringify(data.mt_picture);
+    data.other_picture = JSON.stringify(data.other_picture);
     // 删除多余的
     delete data.infoList;
     data = {...data,...this.data.infoList,uid:userInfo.id};
 
+
     // 获取动态的接口api
     const ajaxUrl = this.data.ajaxUrl;
 
-    const result = fn.ajaxTo(ajaxUrl,data);
-    result.then(function(res){
-      console.log(res)
-      const data = res.data;
-      if(res.statusCode == 200){
-        if(data.status == 1){
-          userInfo.company_id = data.data;
-          wx.setStorage({
-            key: 'userInfo',
-            data: userInfo,
-          })
-          setTimeout(() => {
-            wx.showToast({
-              title: '提交成功',
-              icon: 'success',
-              duration: 2000
-            })
-            // 2s后返回到我的页面
-            setTimeout(() => {
-              wx.navigateBack({
-                delta: 1
-              })
-            }, 2000)
-          },1000)
-          
-          
+    // wx.navigateTo({
+    //   url: '/pages/comfrim/next?type=' + that.data.propties.index,
+    // })
+
+    // const result = fn.ajaxTo(ajaxUrl,data);
+    // result.then(function(res){
+    //   const data = res.data;
+    //   if(res.statusCode == 200){
+    //     if(data.status == 1){
+    //       userInfo.company_id = data.data;
+    //       wx.setStorage({
+    //         key: 'userInfo',
+    //         data: userInfo,
+    //       })
+    //       setTimeout(() => {
+    //         wx.showToast({
+    //           title: '保存成功',
+    //           icon: 'success',
+    //           duration: 2000
+    //         })
+    //         wx.navigateTo({
+    //           url: 'pages/comfrim/next?id='+data.data,
+    //         })
+    //       },1000)
+    //     }
+    //   }
+    // })
+    wx.navigateTo({
+      url: '/pages/comfrim/next'
+    })
+  },
+
+  // 选择企业性质
+  bindPickerChangePro:function(e){
+    let name = e.target.dataset.name;
+    let chooseId = e.detail.value;
+    let propties = {...this.data.propties};
+    let data = {...this.data}
+    delete data.cc_area,
+           data.cc_type,
+           data.go_phone,
+           data.mass_goods,
+           data.ll_area,
+           data.ll_type,
+           data.wh_area,
+           data.wh_type;
+    
+    propties.index = chooseId;
+    // 每次切换的时候 清楚专线 以及 其他独特的信息
+    this.setData({
+      propties: propties,
+      [name]:propties.group[chooseId]
+    })
+    console.log(this.data);
+  },
+
+  // 地址选择
+  bindArea:function(e){
+    console.log(e);
+    let index = e.target.dataset.index;
+    // 判断类型
+    let type = e.target.dataset.name;
+
+    let lineLists = [...this.data.lineLists ];
+    // 获取市
+    let city = e.detail.value[0];
+    // 详细信息
+    let detail = e.detail.value;
+    
+
+    if(type == 'init'){
+      lineLists[index].areaInfo.init = city;
+      lineLists[index].areaInfo.initArea = detail;
+    }else{
+      lineLists[index].areaInfo.target = city;
+      lineLists[index].areaInfo.targetArea = detail;
+    }
+    
+    this.setData({
+      lineLists: lineLists
+    })
+    
+    console.log(this.data);
+    
+  },
+
+  // 增加专线
+  addLineLists:function(){
+    let lineLists = [...this.data.lineLists];
+    let newLine = {
+      areaInfo: {
+        init: null,
+        initArea: '请选择起始地',
+        target: null,
+        targetArea: '请选择目的地'
+      },
+      company_name: '',
+      name: '',
+      phone: '',
+      address: '',
+      // 选择 公斤&斤
+      unit: {
+        index: 0,
+        array: ['公斤', '斤']
+      },
+      //重货价
+      weightPrice: [
+        {
+          yl: '',
+          price: ''
         }
+      ],
+      //轻货价
+      lightPrice: [
+        {
+          yl: '',
+          price: ''
+        }
+      ],
+      // 发车频率
+      carNum: {
+        day: '',
+        num: ''
+      }
+    }
+    lineLists.push(newLine);
+    this.setData({
+      lineLists: lineLists
+    }) 
+  },
+
+  // 删除专线
+  deleteLineLists:function(){
+    let lineLists = [...this.data.lineLists];
+    // 获取数组的长度 如果小于1则提示不能删除
+    let areaLength = lineLists.length;
+    if (areaLength <= 1){
+      wx.showToast({
+        title: '不能删除最后一个专线!',
+        icon: 'none',
+        duration: 2000
+      });
+      return false;
+    }
+    lineLists.pop();
+    this.setData({
+      lineLists: lineLists
+    })
+  },
+
+  // 照片数组的管理
+  uploadPic:function(e){
+    const that = this;
+    let name = e.currentTarget.dataset.name;
+    // 上传图片
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['original', 'compressed'],
+      sourceType: ['album', 'camera'],
+      success: function (res) {
+        var tempFilePaths = res.tempFilePaths;
+        wx.showLoading({
+          title: '正在上传中...',
+        });
+        wx.uploadFile({
+          url: 'https://blue.widiazine.cn/BLueLogistics/api.php?entry=sys&c=upload&a=upload',
+          filePath: tempFilePaths[0],
+          name: 'filename',
+          success: function (res) {
+            console.log(res);
+            if (res.statusCode == 200) {
+              const data = JSON.parse(res.data);
+              let imgUrl = that.data.imgUrl + data.imgURL
+              that.addPic(name, imgUrl);
+              wx.hideLoading();
+            }
+          }
+        })
       }
     })
-  }
+  },
+    
+  // 图片添加
+  addPic:function(name,imgUrl){
+    let dataAry;
+    switch (name) {
+      case 'mt_picture':
+        dataAry = [...this.data.mt_picture];
+        dataAry.push(imgUrl);
+        this.setData({
+          mt_picture: dataAry
+        })
+        break;
+      case 'bg_picture':
+        dataAry = [...this.data.bg_picture];
+        dataAry.push(imgUrl);
+        this.setData({
+          bg_picture: dataAry
+        })
+        break;
+      case 'cd_picture':
+        dataAry = [...this.data.cd_picture];
+        dataAry.push(imgUrl);
+        this.setData({
+          cd_picture: dataAry
+        })
+        break;
+      case 'other_picture':
+        dataAry = [...this.data.other_picture];
+        dataAry.push(imgUrl);
+        this.setData({
+          other_picture: dataAry
+        })
+        break;
+      default:
+        return false;
+    }
+  },
 
+  //删除照片
+  deletePic:function(e){
+    let index = e.target.dataset.index;
+    let name = e.target.dataset.name;
+    let dataAry;
+
+    switch(name){
+      case 'mt_picture':
+        dataAry = [...this.data.mt_picture];
+        dataAry.splice(index,1);
+        this.setData({
+          mt_picture: dataAry
+        })
+        break;
+      case 'bg_picture':
+        dataAry = [...this.data.bg_picture];
+        dataAry.splice(index, 1);
+        this.setData({
+          bg_picture: dataAry
+        })
+        break;
+      case 'cd_picture':
+        dataAry = [...this.data.cd_picture];
+        dataAry.splice(index, 1);
+        this.setData({
+          cd_picture: dataAry
+        })
+        break;
+      case 'other_picture':
+        dataAry = [...this.data.other_picture];
+        dataAry.splice(index, 1);
+        this.setData({
+          other_picture: dataAry
+        })
+        break;
+      default:
+        return false;
+    }
+  },
+
+  // 选择公斤&斤
+  bindPickerChange: function (e) {
+
+    const index = e.currentTarget.dataset.index;
+
+    const value = e.detail.value;
+
+    let lineLists = [...this.data.lineLists];
+    lineLists[index].unit.index = value;
+
+    this.setData({
+      lineLists: lineLists
+    })
+  },
+
+  // input价格区间 改变
+  inputChange: function (e) {
+    console.log(e);
+    let index = e.currentTarget.dataset.pindex;
+    let pindex = e.currentTarget.dataset.index;
+    let parent = e.currentTarget.dataset.parent;
+    let name = e.currentTarget.dataset.name;
+    let value = e.detail.value;
+    let lineLists = [...this.data.lineLists];
+
+    switch (parent) {
+      case 'weightPrice':
+        lineLists[index]['weightPrice'][pindex][name] = value;
+        break;
+      case 'lightPrice':
+        lineLists[index]['lightPrice'][pindex][name] = value;
+        break;
+      default:
+        return false;
+    }
+
+    this.setData({
+      lineLists: lineLists
+    })
+    console.log(this.data);
+  },
+
+  // 增加价格区间
+  addLine: function (e) {
+    let index = e.currentTarget.dataset.index;
+    let name = e.currentTarget.dataset.name;
+
+    let lineLists;
+    let newAry = {
+      yl: '',
+      price: ''
+    };
+    switch (name) {
+      case 'weightPrice':
+        lineLists = [...this.data.lineLists];
+        lineLists[index][name].push(newAry);
+        break;
+      case 'lightPrice':
+        lineLists = [...this.data.lineLists];
+        lineLists[index][name].push(newAry);
+        break;
+      default:
+        return false;
+    }
+    
+    this.setData({
+      lineLists: lineLists
+    })
+
+    console.log(this.data)
+  },
+
+  // 删除价格区间
+  deleteLine: function (e) {
+    let index = e.currentTarget.dataset.index;
+    let name = e.currentTarget.dataset.name;
+    let lineLists = [...this.data.lineLists];
+    let newLists;
+    if (lineLists[index][name].length <= 1) {
+      wx.showToast({
+        title: '不能删除最后一个价格区间!',
+        icon: 'none',
+        duration: 2000
+      });
+      return false;
+    }
+    lineLists[index][name].pop();
+        
+
+    this.setData({
+      lineLists: lineLists
+    })
+  },
+
+  // 发车频率填写
+  carNum: function (e) {
+    let index = e.currentTarget.dataset.index;
+    let name = e.currentTarget.dataset.name;
+    let value = e.detail.value;
+
+    let lineLists = [...this.data.lineLists];
+    lineLists[index]['carNum'][name] = value; 
+    this.setData({
+      lineLists: lineLists
+    })
+    console.log(this.data);
+  },
+
+  // 增加联系人
+  addcontact:function(){
+    let contactLists = [...this.data.contactLists];
+    let newItem = {
+      linkman: '',
+      phone: ''
+    };
+    contactLists.push(newItem);
+    this.setData({
+      contactLists: contactLists
+    })
+  },
+
+  // 删除联系人
+  deletecontact:function(){
+    let contactLists = [...this.data.contactLists];
+    if (contactLists.length <= 1) {
+      wx.showToast({
+        title: '不能删除最后一个联系人!',
+        icon: 'none',
+        duration: 2000
+      });
+      return false;
+    }
+    contactLists.pop();
+    this.setData({
+      contactLists: contactLists
+    })
+  },
+
+  // 联系人input输入
+  changeConForm:function(e){
+
+    let index = e.currentTarget.dataset.index;
+
+    let name = e.currentTarget.dataset.name;
+
+    let value = e.detail.value;
+
+    let contactLists = [...this.data.contactLists];
+
+    contactLists[index][name] = value;
+
+    this.setData({
+      contactLists: contactLists
+    })
+
+    console.log(this.data);
+  }
 })

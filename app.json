@@ -1,13 +1,15 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/detailSearch/detailSearch",
+    "pages/list/list",
+    "pages/publish/publish",
     "pages/comfrim/comfrim",
+    "pages/comfrim/next",
     "pages/me/me",
     "pages/map/map",
     "pages/search/search",
-    "pages/publish/publish",
     "pages/detail/detail"
-    
   ],
   "window": {
     "backgroundTextStyle": "light",

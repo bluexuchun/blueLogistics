@@ -45,16 +45,18 @@ Page({
       console.log(res);
       const data = res.data.data;
       if(res.statusCode == 200){
-
+        console.log(data);
         // banner设置
         const bannerInfo = { ...that.data.banner};
         const bannerLists = data.companyInfo.banner;
-        if (bannerLists.length > 0){
+        if (bannerLists){
           for(var i = 0; i < bannerLists.length; i++){
             bannerInfo.imgUrls.push(bannerLists[i].imgURL);
           }
         };
-
+        wx.setNavigationBarTitle({
+          title: data.companyInfo.name
+        })
         const companyRich = data.companyInfo.introduce;
         WxParse.wxParse('content', 'html', companyRich,that, 5);
 

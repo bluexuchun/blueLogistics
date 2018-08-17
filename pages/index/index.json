@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "56有料",
   "usingComponents":{
     "common-tabnav":"/components/common-tabnav"
   }

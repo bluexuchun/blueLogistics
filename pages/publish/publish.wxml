@@ -1,4 +1,4 @@
-<view class="publish">
+<scroll-view scroll-y class="publish" style="height:{{mainHeight}}px">
 
   <view class="publish-item">
     <view class="icon-item">
@@ -24,7 +24,7 @@
   </view>
 
   <view class="publish-item">
-    <view class="icon-item">
+    <view class="icon-item-spe">
       <view class="item-img">
         <image mode='widthFix' class="icon-img" src="/resource/images/icon-end.png"></image>
       </view>
@@ -47,62 +47,188 @@
   </view>
 
   <view class="publish-item">
-    <view class="icon-item">
-      <view class="item-img">
-        <image mode='widthFix' class="icon-img" src="/resource/images/icon-height.png"></image>
-      </view>
-      <view class="item-input">
+    <view class="icon-item-spe1">
+      <view class="item-input-spe">
         <view class="item-label">
-          <view class="label-word">载重</view>
-          <input placeholder-style="color:#C3CAD3" bindinput='changeForm' data-name="weight_price" bind placeholder="元/吨" value="{{weight_price}}" />
+          <view class="label-word-spe">公司名称</view>
+          <input placeholder-style="color:#C3CAD3" bindinput='changeForm' data-name="company_name"  placeholder="请输入公司名称" value="{{company_name}}" />
         </view>
       </view>
     </view>
   </view>
 
   <view class="publish-item">
-    <view class="icon-item">
-      <view class="item-img">
-        <image mode='widthFix' style="width:40rpx;margin-left:5rpx;" class="icon-img" src="/resource/images/icon-spend.png"></image>
-      </view>
-      <view class="item-input">
+    <view class="icon-item-spe1">
+      <view class="item-input-spe">
         <view class="item-label">
-          <view class="label-word">费用</view>
-          <input placeholder-style="color:#C3CAD3" bindinput='changeForm' data-name="area_price" placeholder="元/方" value="{{area_price}}"/>
+          <view class="label-word-spe">联系人</view>
+          <input placeholder-style="color:#C3CAD3" bindinput='changeForm' data-name="name"  placeholder="请输入联系人" value="{{name}}" />
         </view>
       </view>
     </view>
   </view>
 
   <view class="publish-item">
-    <view class="icon-item">
-      <view class="item-img">
-        <image mode='widthFix' class="icon-img" src="/resource/images/icon-type.png"></image>
-      </view>
-      <view class="item-input">
+    <view class="icon-item-spe1">
+      <view class="item-input-spe">
         <view class="item-label">
-          <view class="label-word">车辆类型</view>
-          <input placeholder-style="color:#C3CAD3" placeholder="请输入车辆类型" bindinput='changeForm' data-name="vehicle_type" value="{{vehicle_type}}"/>
+          <view class="label-word-spe">手机号码</view>
+          <input placeholder-style="color:#C3CAD3" bindinput='changeForm' data-name="phone"  placeholder="请输入手机号码" value="{{phone}}" />
         </view>
       </view>
-      <!-- <picker class="item-picker" bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-          <view class="picker-content">
-            <view class="item-label">
-              <view class="label-word">车辆类型</view>
-              <input placeholder-style="color:#C3CAD3" placeholder="点击选择" value="{{array[index]}}" />
+    </view>
+  </view>
+
+  <view class="publish-item">
+    <view class="icon-item-spe">
+      <view class="item-input-spe">
+        <view class="item-label">
+          <view class="label-word-spe">公司地址</view>
+          <input placeholder-style="color:#C3CAD3" bindinput='changeForm' data-name="address"  placeholder="请输入公司地址" value="{{address}}" />
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 重货价 -->
+  <view class="publish-group">
+    <view class="pgroup-title">
+      <view class="pgroup-name">重货价</view>
+      <view class="pgroup-ques">什么是重货价？</view>
+    </view>
+    <view class="group-unit">
+      <view class="unit-word">单位：</view>
+      <view class="select-unit">
+        <view class="unit-picker">
+          <picker bindchange="bindPickerChange" value="{{unit.index}}" range="{{unit.array}}">
+            <view class="unitpicker">
+              <view class="picker">
+                {{unit.array[unit.index]}}
+              </view>
+              <view class="icon-down">
+                <image mode='widthFix' src="/resource/images/down.png"></image>
+              </view>
             </view>
-            <view class="item-more">
-              <image mode='widthFix' class="icon-img-more" src="/resource/images/icon-more.png"></image>
+          </picker>
+        </view>
+      </view>
+    </view>
+    <view class="group-between" wx:for="{{weightPrice}}">
+      <view class="between-head">
+        <view class="bhead-yl">运量</view>
+        <view class="bhead-bj">网上报价</view>
+      </view>
+
+      <view class="between-content">
+        <view class="bcontent-yl">
+          <input data-index="{{index}}" bindinput="inputChange" data-name="yl" data-parent="weightPrice" value="{{item.yl}}"/>
+          <view class="content-tail">{{unit.array[unit.index]}}以上</view>
+        </view>
+        <view class="bcontent-bj">
+          <input data-index="{{index}}" bindinput="inputChange" data-name="price" data-parent="weightPrice" value="{{item.price}}"/>
+          <view class="content-tail">元/{{unit.array[unit.index]}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="line-tools">
+      <view class="tols-add" data-name="weightPrice" bindtap='addLine'>
+        <image mode='widthFix' src="/resource/images/add.png"></image>
+        <view class="tools-word add-word">增加价格区间</view>
+      </view>
+      <view class="tols-delete" data-name="weightPrice" bindtap='deleteLine'>
+        <image mode='widthFix' src="/resource/images/delete.png"></image>
+        <view class="tools-word delete-word">删除</view>
+      </view>
+    </view>
+  </view>
+
+
+  <!-- 轻货价 -->
+  <view class="publish-group">
+    <view class="pgroup-title">
+      <view class="pgroup-name">轻货价</view>
+      <view class="pgroup-ques">什么是轻货价？</view>
+    </view>
+    <view class="group-between" wx:for="{{lightPrice}}">
+      <view class="between-head">
+        <view class="bhead-yl">运量</view>
+        <view class="bhead-bj">网上报价</view>
+      </view>
+
+      <view class="between-content">
+        <view class="bcontent-yl">
+          <input data-index="{{index}}" data-parent="lightPrice" data-name="yl" bindinput="inputChange" value="{{item.yl}}"/>
+          <view class="content-tail">立方以上</view>
+        </view>
+        <view class="bcontent-bj">
+          <input data-index="{{index}}" data-parent="lightPrice" data-name="price" bindinput="inputChange" value="{{item.price}}"/>
+          <view class="content-tail">元/立方</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="line-tools">
+      <view class="tols-add" data-name="lightPrice" bindtap='addLine'>
+        <image mode='widthFix' src="/resource/images/add.png"></image>
+        <view class="tools-word add-word">增加价格区间</view>
+      </view>
+      <view class="tols-delete" data-name="lightPrice" bindtap='deleteLine'>
+        <image mode='widthFix' src="/resource/images/delete.png"></image>
+        <view class="tools-word delete-word">删除</view>
+      </view>
+    </view>
+  </view>
+
+
+  <view class="publish-item">
+    <view class="icon-item-spe1">
+      <view class="item-input-spe">
+        <view class="item-label item-label-spe">
+          <view class="label-word-spe">最低一票价格：</view>
+          <input style="width:65%;" placeholder-style="color:#C3CAD3" bindinput='changeForm' data-name="low_price"  placeholder="请输入最低一票价格" value="{{low_price}}" />
+          <view class="label-tail">元</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="publish-item">
+    <view class="icon-item-spe">
+      <view class="item-input-spe">
+        <view class="item-label item-label-spe">
+          <view class="label-word-spe">运输时效：</view>
+          <input style="width:60%;" placeholder-style="color:#C3CAD3" bindinput='changeForm' data-name="tran_time"  placeholder="请输入运输时效" value="{{tran_time}}" />
+          <view class="label-tail">小时</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="publish-item">
+    <view class="icon-item-spe">
+      <view class="item-input-spe">
+        <view class="item-label item-label-spe">
+          <view class="label-word-spe">发车频率：</view>
+          <view class="label-special">
+            <view class="special-item">
+              <input bindinput="carNum" data-name="day" value="{{carNum.day}}"></input>
+              <view>天</view>
+            </view>
+            <view class="special-item">
+              <input bindinput="carNum" data-name="num" value="{{carNum.num}}"></input>
+              <view>次</view>
             </view>
           </view>
-      </picker> -->
+        </view>
+      </view>
     </view>
   </view>
 
   <view class="publish-btn" bindtap='submitForm'>
     确定发布
   </view>
-</view>
+</scroll-view>
 
 <!--  公共底部组件  -->
 <common-tabnav tabnavs="{{tabnavs}}"></common-tabnav>

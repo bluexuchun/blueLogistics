@@ -24,12 +24,10 @@ Page({
 
     let mainHeight = this.data.systemInfo.windowHeight - tabNavOrign.option.heightPx / (750 / this.data.systemInfo.windowWidth);
 
-    tabNavOrign.navLists[0].isShow = true;
-    tabNavOrign.navLists[1].isShow = true;
-    tabNavOrign.navLists[2].isShow = true;
     tabNavOrign.navLists[0].isSelected = false;
     tabNavOrign.navLists[1].isSelected = false;
-    tabNavOrign.navLists[2].isSelected = true;
+    tabNavOrign.navLists[2].isSelected = false;
+    tabNavOrign.navLists[3].isSelected = true;
 
     this.setData({
       userInfo: userInfo,

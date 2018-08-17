@@ -5,11 +5,6 @@ var mapInfo = new QQMapWX({
 });
 App({
   onLaunch: function () {
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
     // 登录
     wx.login({
       success: res => {
@@ -40,7 +35,9 @@ App({
     // 获取设备信息
     wx.getSystemInfo({
       success: res => {
-        this.globalData.systemInfo = res;
+        console.log(res);
+        const that = this;
+        that.globalData.systemInfo = res;
       },
     });
 
@@ -85,7 +82,7 @@ App({
       navLists: [
         {
           id: '1',
-          text: '物流',
+          text: '首页',
           selectedIcon: '/resource/images/icon-tabnav-wuliu-active.png',
           icon: '/resource/images/icon-tabnav-wuliu.png',
           path: 'pages/index/index',
@@ -99,6 +96,18 @@ App({
           text: '发布路线',
           selectedIcon: '/resource/images/icon-tabnav-line-active.png',
           icon: '/resource/images/icon-tabnav-line.png',
+          path: 'pages/comfrim/comfrim',
+          widthPx: '60',//rpx
+          heightPx: '60',//rpx
+          mode: 'aspectFit',
+          isShow: true,
+          isSelected: false
+        }, 
+        {
+          id: '3',
+          text: '发现',
+          selectedIcon: '/resource/images/icon-tabnav-line-active.png',
+          icon: '/resource/images/icon-tabnav-line.png',
           path: 'pages/publish/publish',
           widthPx: '60',//rpx
           heightPx: '60',//rpx
@@ -106,7 +115,7 @@ App({
           isShow: true,
           isSelected: false
         }, {
-          id: '3',
+          id: '4',
           text: '我的',
           selectedIcon: '/resource/images/icon-tabnav-me-active.png',
           icon: '/resource/images/icon-tabnav-me.png',

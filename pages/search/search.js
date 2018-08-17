@@ -17,6 +17,22 @@ Page({
     // 滚动区域的高度
     scrollHeight:0,
 
+    // 轮播图的信息
+    banner: {
+      imgUrls: [
+        'https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/BANNER-1.jpg',
+        'https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/BANNER-2.jpg',
+        'https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/BANNER-3.jpg',
+        'https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/BANNER-4.jpg'
+      ],
+      indicatorDots: true,
+      autoplay: false,
+      interval: 5000,
+      duration: 1000,
+      imgsInfo: [],
+      imgShowHeight: null
+    },
+
     // 区域的信息
     areaInfo:{
       region: ['北京市', '北京市', '东城区'],
@@ -27,7 +43,27 @@ Page({
     },
     
     // 热门路线
-    hotlineLists: []
+    hotlineLists: [],
+
+    // 导航
+    hotnavs: {
+      actived: 1,
+      group: [{
+        id: 1,
+        type: 'recommend',
+        text: '推荐'
+      },
+      {
+        id: 2,
+        type: 'near',
+        text: '附近'
+      },
+      {
+        id: 3,
+        type: 'hot',
+        text: '人气'
+      }]
+    },
   },
 
   /**
@@ -39,14 +75,15 @@ Page({
     // 改变底部导航栏
     const tabnavs = { ...app.globalData.tabnavs };
 
-    tabnavs.navLists[0].isShow = true;
-    tabnavs.navLists[1].isShow = true;
-    tabnavs.navLists[2].isShow = true;
+    let mainHeight = this.data.systemInfo.windowHeight - tabnavs.option.heightPx / (750 / this.data.systemInfo.windowWidth);
+
     tabnavs.navLists[0].isSelected = true;
     tabnavs.navLists[1].isSelected = false;
     tabnavs.navLists[2].isSelected = false;
+    tabnavs.navLists[3].isSelected = false;
 
     this.setData({
+      mainHeight:mainHeight,
       tabnavs: tabnavs
     })
 
@@ -75,14 +112,16 @@ Page({
       const data = res.data.data;
 
       if (res.statusCode == 200) {
-
-        if (data.length > 0) {
-          for (var i = 0; i < data.length; i++) {
-            hotlineLists.push(data[i]);
+        // 路线
+        const route = data.route;
+        if (route.length > 0) {
+          for (var i = 0; i < route.length; i++) {
+            hotlineLists.push(route[i]);
           }
           that.setData({
             hotlineLists: hotlineLists
           })
+          console.log(that.data.hotlineLists);
         }
       }
     })
@@ -100,6 +139,39 @@ Page({
       locationInfo:locationInfo
     })
   },
+
+  // 动态获取图片信息
+  imgInfo: function (e) {
+
+    let imgWidth = e.detail.width;
+    // 计算比例（16：9）
+    let radio = 16 / 9;
+    // 计算高度
+    let imgHeight = this.data.systemInfo.windowWidth / radio;
+
+    const imgInfo = {
+      id: e.target.dataset.id,
+      height: imgHeight
+    }
+    const imgsList = this.data.banner.imgsInfo;
+
+    imgsList.push(imgInfo);
+
+    this.setData({
+      imgsInfo: imgsList,
+      imgShowHeight: imgsList[0].height
+    });
+
+  },
+
+  // 轮播图计算高度
+  swiperChange: function (e) {
+    let height = this.data.imgsInfo[e.detail.current].height;
+    this.setData({
+      imgShowHeight: height
+    })
+  },
+
   bindinitArea: function (e) {
     const areaInfo = { ...this.data.areaInfo };
     areaInfo.initArea = e.detail.value[2];
@@ -130,7 +202,8 @@ Page({
       dest_district:areaInfo.targetDetail[2]
     };
 
-    const hotlineLists = [...this.data.hotlineLists];
+    let hotlineLists = [...this.data.hotlineLists];
+    hotlineLists = [];
 
     // 搜索路线
     const searchResult = fn.ajaxTo('api.php?entry=app&c=route&a=route',dataObject);
@@ -151,12 +224,44 @@ Page({
       })
     })
   },
-  lower:function(e){
-    console.log('触碰底部了..');
-    console.log(e);
+  // 切换选中状态
+  changeActive: function (e) {
+    let currentId = e.target.dataset.id;
+    let hotnavs = { ...this.data.hotnavs };
+
+    // 根据点击 加载不同的数据
+    switch (currentId) {
+      case 1:
+        console.log('推荐')
+        break;
+      case 2:
+        console.log('附近')
+        break;
+      case 3:
+        console.log('人气')
+        break;
+      default:
+        return false;
+    }
+
+    hotnavs.actived = currentId;
+    this.setData({
+      hotnavs: hotnavs
+    })
   },
-  upper:function(e){
-    console.log('触碰顶部了..');
-    console.log(e);
+  // 触底操作
+  reachBottom: function () {
+    const that = this;
+    if (!this.data.showLoading) {
+      that.setData({
+        showLoading: true
+      })
+      // 做操作信息
+      setTimeout(() => {
+        that.setData({
+          showLoading: false
+        })
+      }, 3000)
+    }
   }
 })

@@ -59,6 +59,7 @@
 }
 .icon-logo{
   width:100rpx;
+  height:100rpx;
   margin-right:16rpx;
 }
 .detail-companyInfo{
@@ -126,5 +127,7 @@
   border-bottom:1px solid #F2F2F2;
 }
 .rich-content{
-  font-size:26rpx;
+  box-sizing: border-box;
+  padding:12px 24px;
+  font-size:28rpx;
 }

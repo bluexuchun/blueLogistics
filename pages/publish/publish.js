@@ -11,10 +11,36 @@ Page({
       targetArea: '目的地',
       targetDetail: null
     },
+    // 选择 公斤&斤
+    unit:{
+      index:0,
+      array:['公斤','斤']
+    },
+    //重货价
+    weightPrice:[
+      {
+        yl:'',
+        price:''
+      }
+    ],
+    //轻货价
+    lightPrice: [
+      {
+        yl: '',
+        price: ''
+      }
+    ],
+    // 发车频率
+    carNum:{
+      day:'',
+      num:''
+    }
   },
 
   onLoad: function (options) {
     const that = this;
+    let mainHeight = app.globalData.systemInfo.windowHeight - (app.globalData.tabnavs.option.heightPx) / (750 / app.globalData.systemInfo.windowWidth);
+    console.log(mainHeight);
     let userInfo = wx.getStorageSync('userInfo');
     const showType = options.id;
 
@@ -52,15 +78,14 @@ Page({
     const tabnavs = { ...app.globalData.tabnavs };
     const systemInfo = {...app.globalData.systemInfo};
 
-    tabnavs.navLists[0].isShow = true;
-    tabnavs.navLists[1].isShow = true;
-    tabnavs.navLists[2].isShow = true;
     tabnavs.navLists[0].isSelected = false;
     tabnavs.navLists[1].isSelected = true;
     tabnavs.navLists[2].isSelected = false;
+    tabnavs.navLists[3].isSelected = false;
 
     this.setData({
-      tabnavs: tabnavs
+      tabnavs: tabnavs,
+      mainHeight:mainHeight
     })
 
   },
@@ -93,7 +118,6 @@ Page({
   },
   
   bindPickerChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       index: e.detail.value
     })
@@ -126,66 +150,177 @@ Page({
     let userInfo = wx.getStorageSync('userInfo');
     let stateData = {...this.data};
     let areaInfo = stateData.areaInfo;
-
+    console.log(stateData);
     // 判断审核是否通过
-    if(stateData.status.value != 1){
-      wx.showToast({
-        title: stateData.status.word,
-        icon: 'none',
-        duration: 1500,
-      })
-      setTimeout(() => {
-        wx.reLaunch({
-          url: '/pages/me/me',
-        })
-      },1500);
-      return false;
-    }
+    // if(stateData.status.value != 1){
+    //   wx.showToast({
+    //     title: stateData.status.word,
+    //     icon: 'none',
+    //     duration: 1500,
+    //   })
+    //   setTimeout(() => {
+    //     wx.reLaunch({
+    //       url: '/pages/me/me',
+    //     })
+    //   },1500);
+    //   return false;
+    // }
 
     // 判断信息是否填写
-    if(areaInfo.initDetail == null || areaInfo.targetDetail == null){
-      wx.showToast({
-        title: '请选择起始地或目的地',
-        icon:'none',
-        duration:2000
-      })
-      return false;
+    // if(areaInfo.initDetail == null || areaInfo.targetDetail == null){
+    //   wx.showToast({
+    //     title: '请选择起始地或目的地',
+    //     icon:'none',
+    //     duration:2000
+    //   })
+    //   return false;
+    // }
+    // areaInfo = {
+    //   origin_province: areaInfo.initDetail[0],
+    //   origin_city: areaInfo.initDetail[1],
+    //   origin_district: areaInfo.initDetail[2],
+    //   dest_province: areaInfo.targetDetail[0],
+    //   dest_city: areaInfo.targetDetail[1],
+    //   dest_district: areaInfo.targetDetail[2]
+    // }
+    // delete stateData.systemInfo;
+    // delete stateData.tabnavs;
+    // delete stateData.areaInfo;
+    // const data = {
+    //   ...stateData,
+    //   ...areaInfo,
+    //   'company_id':userInfo.company_id
+    // }
+    // const result = fn.ajaxTo('api.php?entry=app&c=route&a=route&do=add',data)
+    // .then((res) => {
+    //   const data = res.data
+    //   if(res.statusCode == 200){
+    //     if(data.status == 1){
+    //       setTimeout( () => {
+    //         wx.showToast({
+    //           title: '发布成功',
+    //           icon: 'success',
+    //           duration: 2000
+    //         });
+    //         setTimeout(() => {
+    //           wx.reLaunch({
+    //             url: '/pages/index/index'
+    //           })
+    //         }, 1000);
+    //       },1000)
+    //     }
+    //   }
+    // })
+  },
+  // 增加价格区间
+  addLine:function(e){
+    let name = e.currentTarget.dataset.name;
+    let newLists;
+    let newAry = {
+      yl: '',
+      price: ''
+    };
+    switch(name){
+      case 'weightPrice':
+        newLists = [...this.data.weightPrice];
+        newLists.push(newAry);
+        break;
+      case 'lightPrice':
+        newLists = [...this.data.lightPrice];
+        newLists.push(newAry);
+        break;
+      default:
+        return false;
     }
-    areaInfo = {
-      origin_province: areaInfo.initDetail[0],
-      origin_city: areaInfo.initDetail[1],
-      origin_district: areaInfo.initDetail[2],
-      dest_province: areaInfo.targetDetail[0],
-      dest_city: areaInfo.targetDetail[1],
-      dest_district: areaInfo.targetDetail[2]
-    }
-    delete stateData.systemInfo;
-    delete stateData.tabnavs;
-    delete stateData.areaInfo;
-    const data = {
-      ...stateData,
-      ...areaInfo,
-      'company_id':userInfo.company_id
-    }
-    const result = fn.ajaxTo('api.php?entry=app&c=route&a=route&do=add',data)
-    .then((res) => {
-      const data = res.data
-      if(res.statusCode == 200){
-        if(data.status == 1){
-          setTimeout( () => {
-            wx.showToast({
-              title: '发布成功',
-              icon: 'success',
-              duration: 2000
-            });
-            setTimeout(() => {
-              wx.reLaunch({
-                url: '/pages/index/index'
-              })
-            }, 1000);
-          },1000)
-        }
-      }
+
+    this.setData({
+      [name]:newLists
     })
-  }
+  },
+
+  // 删除价格区间
+  deleteLine:function(e){
+    let name = e.currentTarget.dataset.name;
+    let newLists;
+    switch (name) {
+      case 'weightPrice':
+        newLists = [...this.data.weightPrice];
+        if(newLists.length <= 1){
+          wx.showToast({
+            title: '不能删除最后一个价格区间!',
+            icon: 'none',
+            duration: 2000
+          });
+          return false;
+        }
+        newLists.pop();
+        break;
+      case 'lightPrice':
+        newLists = [...this.data.lightPrice];
+        if (newLists.length <= 1) {
+          wx.showToast({
+            title: '不能删除最后一个价格区间!',
+            icon: 'none',
+            duration: 2000
+          });
+          return false;
+        }
+        newLists.pop();
+        break;
+      default:
+        return false;
+    }
+
+    this.setData({
+      [name]: newLists
+    })
+  },
+
+  // input价格区间 改变
+  inputChange:function(e){
+    console.log(e);
+    let index = e.currentTarget.dataset.index;
+    let parent = e.currentTarget.dataset.parent;
+    let name = e.currentTarget.dataset.name;
+    let value = e.detail.value;
+    let newAry;
+
+    switch (parent){
+      case 'weightPrice':
+        newAry = [...this.data.weightPrice];
+        newAry[index][name] = value;
+        break;
+      case 'lightPrice':
+        newAry = [...this.data.lightPrice];
+        newAry[index][name] = value;
+        break;
+      default:
+        return false;
+    }
+
+    this.setData({
+      [parent]:newAry
+    })
+  },
+
+  // 发车频率填写
+  carNum:function(e){
+    let name = e.currentTarget.dataset.name;
+    let value = e.detail.value;
+
+    let carNum = {...this.data.carNum};
+    carNum[name] = value;
+    this.setData({
+      carNum:carNum
+    })
+  },
+  //单位转化
+  bindPickerChange:function(e){
+    let value = e.detail.value;
+    let unit = {...this.data.unit};
+    unit.index = value;
+    this.setData({
+      unit:unit
+    })
+  } 
 })

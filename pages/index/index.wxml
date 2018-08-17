@@ -1,28 +1,5 @@
 <!--index.wxml-->
-<view class="main" style="height:{{mainHeight}}px;">
-  <!--  搜索栏  -->
-  <view class="page__bd">
-      <view class="weui-search-bar">
-          <view class="weui-search-bar__form">
-              <view class="weui-search-bar__box">
-                  <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-                  <input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" />
-                  <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
-                      <icon type="clear" size="14"></icon>
-                  </view>
-              </view>
-              <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="moreTab">
-                  <icon class="weui-icon-search" type="search" size="14"></icon>
-                  <view class="weui-search-bar__text">搜索</view>
-              </label>
-          </view>
-
-          <view class="location-icon">
-            <image mode='widthFix' src="/resource/images/icon-location.png" bindtap='toMap'></image>
-          </view>
-      </view>
-  </view>
-
+<scroll-view scroll-y class="main" style="height:{{mainHeight}}px;" bindscrolltolower="reachBottom">
   <!--  轮播图  -->
   <swiper 
       indicator-dots="{{banner.indicatorDots}}"
@@ -52,20 +29,71 @@
       </view>
 
     </view>
+    <view class="nav-swiper">
+      <swiper indicator-dots="{{navInfo.indicatorDots}}"
+        autoplay="{{navInfo.autoplay}}" interval="{{navInfo.interval}}" duration="{{navInfo.duration}}" display-multiple-items="1">
+        <block wx:for="{{actLists}}">
+          <swiper-item class="nav-swiperitem">
+            <view class="nav-item" wx:for="{{item.list}}" wx:for-item="childItem">
+              <view class="nav-icon">
+                <image mode="aspectFit" class="nav-icon-img" src="{{childItem.icon}}"></image>
+              </view>
+              <view class="nav-word">{{childItem.text}}</view>
+            </view>
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+  </view>
+
+  <!--  搜索栏  -->
+  <!-- <view class="page__bd">
+    <view class="weui-search-bar">
+      <view class="weui-search-bar__form">
+        <view class="weui-search-bar__box">
+          <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+          <input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" />
+          <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+              <icon type="clear" size="14"></icon>
+          </view>
+        </view>
+        <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+          <icon class="weui-icon-search" type="search" size="14"></icon>
+          <view class="weui-search-bar__text">搜索</view>
+        </label>
+      </view>
+      <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+      <view class="location-icon">
+        <image mode='widthFix' src="/resource/images/icon-location.png" bindtap='toMap'></image>
+      </view>
+    </view>
+  </view> -->
+  <!-- 搜索框 -->
+  <view class="search-top">
+    <view class="search-word" bindtap='toCity'>上海 <image mode="widthFix" src="/resource/images/down-black.png"></image></view>
+    <view class="search-input">
+      <view class="search-detail" bindtap='toSearchDetail'>
+        <image mode="widthFix" src="/resource/images/search.png"></image>
+        <input type="text" disabled class="search-content" placeholder="搜索物流、专线或商家"></input>
+      </view>
+    </view>
   </view>
 
   <!--  热门路线  -->
   <view class="hotline">
-
+    <!-- 推荐企业 -->
+    <view class="recommend">
+      <view class="recommend-title">推荐企业</view>
+      <view class="recommend-content">
+        <view class="recitem" wx:for="{{commends}}">
+           <image mode='widthFix' class="recimg" src="{{item.icon}}"></image>
+           <view class="recword">{{item.title}}</view>
+        </view>
+      </view>
+    </view>
     <!--  路线标题  -->
     <view class="hotline-title">
-      <view class="hotline-icon">
-        <image mode="widthFix" class="icon-img" src="/resource/images/icon-fire.png"></image>
-        <view class="hotline-word">热门路线</view>
-      </view>
-      <view class="hotline-more">
-        <image mode="widthFix" bindtap='moreTab' class="icon-more" src="/resource/images/icon-more.png"></image>
-      </view>
+      <view class="hotnav {{item.id == hotnavs.actived ? 'nav-active' : ''}}" data-id="{{item.id}}" wx:for="{{hotnavs.group}}" bindtap='changeActive'>{{item.text}}</view>
     </view>
 
     <!--  路线数组  -->
@@ -79,15 +107,6 @@
           </view>
           <!--  company-info  -->
           <view class="hotline-info">
-            <!--  from & to  -->
-            <view class="hotline-direction">
-              <view class="from">{{item.origin_province}}</view>
-              <view class="line">
-                <image mode="widthFix" class="hotline-arrow" src="/resource/images/arrow.png"></image>
-              </view>
-              <view class="to">{{item.dest_province}}</view>
-            </view>
-
             <!--  公司名字  -->
             <view class="hotline-company">{{item.company}}</view>
 
@@ -106,42 +125,14 @@
 
           </view>
         </view>
-        <!--  right-content  -->
-        <view class="hotline-item-right">
-          <view class="hotline-icon-phone" data-mobile="{{item.mobile}}" bindtap='callTo'>
-            <image mode="widthFix" src="/resource/images/icon-phone.png"></image>
-            <view class="phone-word">打电话</view>
-          </view>
-        </view>
-      </view>
-    </view>
-  </view>
-
-  <!--  商家分类  -->
-  <view class="shopCate">
-    <!--  分类标题  -->
-    <view class="hotline-title">
-      <view class="hotline-icon">
-        <image mode="widthFix" class="icon-img" src="/resource/images/icon-shop.png"></image>
-        <view class="hotline-word">商家分类</view>
-      </view>
-      <view class="hotline-more">
-        <image mode="widthFix" class="icon-more" src="/resource/images/icon-more.png"></image>
       </view>
     </view>
 
-    <!--  分类内容  -->
-    <view class="shopCate-content">
-      <scroll-view class="shopCate-scroll" scroll-x="true" style="">
-        <view class="shopCate-scroll-item" wx:for="{{companys}}">
-          <view class="shopCate-item-content" data-id="{{item.id}}" bindtap='toCompany'>
-            <image mode="widthFix" src="{{item.facade_path}}"></image>
-            <view class="scroll-item-word">{{item.name}}</view>
-          </view>
-        </view>
-      </scroll-view>
+    <!-- loading -->
+    <view class="loading" wx:if="{{showLoading}}">
+      <image mode='widthFix' class="loading-img" src="/resource/images/loading.gif"></image>
     </view>
   </view>
-</view>
+</scroll-view>
 <!--  公共底部组件  -->
 <common-tabnav tabnavs="{{tabnavs}}"></common-tabnav>

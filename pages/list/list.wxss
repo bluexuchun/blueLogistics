@@ -1,0 +1,121 @@
+page{
+  background: #eaeaea;
+}
+.list-group{
+  width:100%;
+  background: #FFF;
+}
+.list-title{
+  width:100%;
+  border-top:1px solid #F2F2F2;
+  border-bottom:1px solid #F2F2F2;
+  font-size:28rpx;
+  color:#6b6b6b;
+  padding:4rpx 0rpx 4rpx 20rpx;
+  background: #efeff4;
+}
+.list-item{
+  width:100%;
+  box-sizing: border-box;
+  border-bottom:1px solid #F2F2F2;
+  font-size:26rpx;
+  height:60rpx;
+  line-height:60rpx;
+  padding:0rpx 20rpx;
+  color:#999;
+}
+.letter-group{
+  position: fixed;
+  width:35rpx;
+  height:910rpx;
+  background: rgba(0,0,0,0);
+  right:0px;
+  top:50%;
+  margin-top:-455rpx;
+  z-index:999;
+}
+.letter-item{
+  width:100%;
+  height:35rpx;
+  line-height:35rpx;
+  font-size:24rpx;
+  text-align: center;
+  color:#999;
+}
+.letter-active{
+  color:#fff;
+  border-radius: 50%;
+  background: #289ffa;
+}
+.weui-search-bar__form{
+  border-radius:50rpx;
+}
+.weui-search-bar__label{
+  border-radius:50rpx;
+}
+.weui-search-bar__cancel-btn {
+  font-size:28rpx;
+}
+.gps{
+  width:100%;
+  box-sizing: border-box;
+  padding:20rpx 20rpx;
+  font-size:32rpx;
+  background: #FFF;
+}
+.gps-title{
+  width:100%;
+  padding:16rpx 0rpx;
+  border-bottom:1px solid #F2F2F2;
+}
+.gps-tips{
+  color:#6b6b6b;
+  margin-left:10rpx;
+  font-size:26rpx;
+}
+.hotCity{
+  width:100%;
+  box-sizing: border-box;
+  padding:20rpx 0rpx;
+  font-size:26rpx;
+}
+.hotCity-title{
+  width:100%;
+  color:#999;
+  padding:8rpx 0rpx;
+}
+.hotCity-group{
+  width:100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.hotCity-item{
+  width:33.3%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding:4rpx 0rpx;
+}
+.hotCity-content{
+  width:90%;
+  height:60rpx;
+  border-radius: 4px;
+  text-align: center;
+  line-height: 60rpx;
+  color:#6b6b6b;
+  border:1px solid #eaeaea;
+}
+.search-result{
+  width:100%;
+  background: #FFF;
+}
+.search-item{
+  width:100%;
+  box-sizing: border-box;
+  padding:18rpx 20rpx;
+  font-size:28rpx;
+  color:#6b6b6b;
+  border-bottom: 1px solid #F2F2F2;
+}

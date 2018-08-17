@@ -1,9 +1,13 @@
 <view class="comfrim">
 
   <view class="comfrim-item">
-    <view class="comfrim-label">企业信息：</view>
+    <view class="comfrim-label">企业性质：</view>
     <view class="comfrim-input" style="width:70%;display:flex;flex-direction:row;justify-content:space-between;">
-      <input style="width:80%;" data-name="info" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" auto-focus value="{{info}}"/>
+      <picker class="picker-select" bindchange="bindPickerChangePro" data-name="company_propties" range="{{propties.group}}">
+        <view class="picker">
+          {{propties.group[propties.index]}}
+        </view>
+      </picker>
       <image class="icon-camera" mode='widthFix' src="/resource/images/camera.png" bindtap='scanCard'></image>
     </view>
   </view>
@@ -15,76 +19,565 @@
     </view>
   </view>
 
-  <view class="comfrim-item">
-    <view class="comfrim-label">注册地址：</view>
-    <view class="comfrim-input">
-      <input data-name="re_address" value="{{re_address}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
-    </view>
-  </view>
-
-  <view class="comfrim-item">
+    <view class="comfrim-item">
     <view class="comfrim-label">公司地址：</view>
     <view class="comfrim-input">
       <input data-name="address" value="{{address}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
     </view>
   </view>
 
-  <view class="comfrim-item">
-    <view class="comfrim-label">法人姓名：</view>
+  <view class="comfrim-item-spe">
+    <view class="line-lists" wx:for="{{contactLists}}" wx:for-item="cl" wx:for-index="clindex">
+      <view class="line-item">
+        <view class="publish-item">
+          <view class="icon-item-spe">
+            <view class="item-input-spe">
+              <view class="item-label">
+                <view class="label-word-spe">联系人：</view>
+                <input data-name="linkman" value="{{linkman}}" data-index="{{clindex}}" placeholder-class="inputPlace" bindinput="changeConForm" type="text" placeholder="请输入" />
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="publish-item">
+          <view class="icon-item-spe">
+            <view class="item-input-spe">
+              <view class="item-label">
+                <view class="label-word-spe">联系电话：</view>
+                <input data-name="phone" value="{{phone}}" data-index="{{clindex}}" placeholder-class="inputPlace" bindinput="changeConForm" type="text" placeholder="请输入" />
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <view class="line-tools">
+      <view class="tols-add" bindtap='addcontact'>
+        <image mode='widthFix' src="/resource/images/add.png"></image>
+        <view class="tools-word add-word">增加联系人</view>
+      </view>
+      <view class="tols-delete" bindtap='deletecontact'>
+        <image mode='widthFix' src="/resource/images/delete.png"></image>
+        <view class="tools-word delete-word">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="comfrim-item-spe">
+    <view class="comfrim-label">专线：</view>
+    <view class="line-lists">
+      <view class="line-item" wx:for="{{lineLists}}">
+        <view class="publish-item">
+          <view class="icon-item">
+            <view class="item-img">
+              <image mode='widthFix' class="icon-img" src="/resource/images/icon-start.png"></image>
+            </view>
+            <view class="item-input">
+              <view class="item-label">
+                <view class="label-word">起始地</view>
+                <picker mode="region" class="picker-content-area" data-name="init" data-index="{{index}}" bindchange="bindArea" value="{{item.areaInfo.initArea}}" custom-item="{{customItem}}">
+                  <view class="picker-detail">
+                    <view class="picker">
+                      {{item.areaInfo.init ? item.areaInfo.init : item.areaInfo.initArea}}
+                    </view>
+                    <view class="item-more">
+                      <image mode='widthFix' class="icon-img-more" src="/resource/images/icon-more.png"></image>
+                    </view>
+                  </view>
+                </picker>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="publish-item">
+          <view class="icon-item-spe">
+            <view class="item-img">
+              <image mode='widthFix' class="icon-img" src="/resource/images/icon-end.png"></image>
+            </view>
+            <view class="item-input">
+              <view class="item-label">
+                <view class="label-word">目的地</view>
+                <picker mode="region" class="picker-content-area" bindchange="bindArea" data-name="target" data-index="{{index}}" value="{{item.areaInfo.targetArea}}" custom-item="{{customItem}}">
+                  <view class="picker-detail">
+                    <view class="picker">
+                      {{item.areaInfo.target ? item.areaInfo.target : item.areaInfo.targetArea}}
+                    </view>
+                    <view class="item-more">
+                      <image mode='widthFix' class="icon-img-more" src="/resource/images/icon-more.png"></image>
+                    </view>
+                  </view>
+                </picker>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="publish-item">
+          <view class="icon-item-spe1">
+            <view class="item-input-spe">
+              <view class="item-label">
+                <view class="label-word-spe">公司名称</view>
+                <input placeholder-style="color:#C3CAD3" bindinput='changeForm' data-index="{{index}}" data-name="company_name" placeholder="请输入公司名称" value="{{company_name}}" />
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="publish-item">
+          <view class="icon-item-spe1">
+            <view class="item-input-spe">
+              <view class="item-label">
+                <view class="label-word-spe">联系人</view>
+                <input placeholder-style="color:#C3CAD3" bindinput='changeForm' data-index="{{index}}" data-name="name" placeholder="请输入联系人" value="{{name}}" />
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="publish-item">
+          <view class="icon-item-spe1">
+            <view class="item-input-spe">
+              <view class="item-label">
+                <view class="label-word-spe">手机号码</view>
+                <input placeholder-style="color:#C3CAD3" bindinput='changeForm' data-index="{{index}}" data-name="phone" placeholder="请输入手机号码" value="{{phone}}" />
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="publish-item">
+          <view class="icon-item-spe">
+            <view class="item-input-spe">
+              <view class="item-label">
+                <view class="label-word-spe">公司地址</view>
+                <input placeholder-style="color:#C3CAD3" bindinput='changeForm' data-index="{{index}}" data-name="address" placeholder="请输入公司地址" value="{{address}}" />
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <!-- 重货价 -->
+        <view class="publish-group">
+          <view class="pgroup-title">
+            <view class="pgroup-name">重货价</view>
+            <view class="pgroup-ques">什么是重货价？</view>
+          </view>
+          <view class="group-unit">
+            <view class="unit-word">单位：</view>
+            <view class="select-unit">
+              <view class="unit-picker">
+                <picker bindchange="bindPickerChange" data-index="{{index}}" value="{{item.unit.index}}" range="{{item.unit.array}}">
+                  <view class="unitpicker">
+                    <view class="picker">
+                      {{item.unit.array[item.unit.index]}}
+                    </view>
+                    <view class="icon-down">
+                      <image mode='widthFix' src="/resource/images/down.png"></image>
+                    </view>
+                  </view>
+                </picker>
+              </view>
+            </view>
+          </view>
+          <view class="group-between" wx:for="{{item.weightPrice}}" wx:for-item="zhprice" wx:for-index="pindex">
+            <view class="between-head">
+              <view class="bhead-yl">运量</view>
+              <view class="bhead-bj">网上报价</view>
+            </view>
+
+            <view class="between-content">
+              <view class="bcontent-yl">
+                <input data-index="{{pindex}}" bindinput="inputChange" data-pindex="{{index}}" data-name="yl" data-parent="weightPrice" value="{{zhprice.yl}}" />
+                <view class="content-tail">{{item.unit.array[item.unit.index]}}以上</view>
+              </view>
+              <view class="bcontent-bj">
+                <input data-index="{{pindex}}" bindinput="inputChange" data-pindex="{{index}}" data-name="price" data-parent="weightPrice" value="{{zhprice.price}}" />
+                <view class="content-tail">元/{{item.unit.array[item.unit.index]}}</view>
+              </view>
+            </view>
+          </view>
+
+          <view class="line-tools">
+            <view class="tols-add" data-index="{{index}}" data-name="weightPrice" bindtap='addLine'>
+              <image mode='widthFix' src="/resource/images/add.png"></image>
+              <view class="tools-word add-word">增加价格区间</view>
+            </view>
+            <view class="tols-delete" data-index="{{index}}" data-name="weightPrice" bindtap='deleteLine'>
+              <image mode='widthFix' src="/resource/images/delete.png"></image>
+              <view class="tools-word delete-word">删除</view>
+            </view>
+          </view>
+        </view>
+
+
+        <!-- 轻货价 -->
+        <view class="publish-group">
+          <view class="pgroup-title">
+            <view class="pgroup-name">轻货价</view>
+            <view class="pgroup-ques">什么是轻货价？</view>
+          </view>
+          <view class="group-between" wx:for="{{item.lightPrice}}" wx:for-item="qhprice" wx:for-index="qindex">
+            <view class="between-head">
+              <view class="bhead-yl">运量</view>
+              <view class="bhead-bj">网上报价</view>
+            </view>
+
+            <view class="between-content">
+              <view class="bcontent-yl">
+                <input data-index="{{qindex}}" data-pindex="{{index}}" data-parent="lightPrice" data-name="yl" bindinput="inputChange" value="{{qhprice.yl}}" />
+                <view class="content-tail">立方以上</view>
+              </view>
+              <view class="bcontent-bj">
+                <input data-index="{{qindex}}" data-pindex="{{index}}" data-parent="lightPrice" data-name="price" bindinput="inputChange" value="{{qhprice.price}}" />
+                <view class="content-tail">元/立方</view>
+              </view>
+            </view>
+          </view>
+
+          <view class="line-tools">
+            <view class="tols-add" data-index="{{index}}" data-name="lightPrice" bindtap='addLine'>
+              <image mode='widthFix' src="/resource/images/add.png"></image>
+              <view class="tools-word add-word">增加价格区间</view>
+            </view>
+            <view class="tols-delete" data-index="{{index}}" data-name="lightPrice" bindtap='deleteLine'>
+              <image mode='widthFix' src="/resource/images/delete.png"></image>
+              <view class="tools-word delete-word">删除</view>
+            </view>
+          </view>
+        </view>
+
+
+        <view class="publish-item">
+          <view class="icon-item-spe1">
+            <view class="item-input-spe">
+              <view class="item-label item-label-spe">
+                <view class="label-word-spe1">最低一票价格：</view>
+                <input style="width:55%;" placeholder-style="color:#C3CAD3" bindinput='changeForm' data-index="{{index}}" data-name="low_price" placeholder="请输入最低一票价格" value="{{low_price}}" />
+                <view class="label-tail">元</view>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="publish-item">
+          <view class="icon-item-spe">
+            <view class="item-input-spe">
+              <view class="item-label item-label-spe">
+                <view class="label-word-spe">运输时效：</view>
+                <input style="width:60%;" placeholder-style="color:#C3CAD3" bindinput='changeForm' data-index="{{index}}" data-name="tran_time" placeholder="请输入运输时效" value="{{tran_time}}" />
+                <view class="label-tail">小时</view>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="publish-item">
+          <view class="icon-item-spe">
+            <view class="item-input-spe">
+              <view class="item-label item-label-spe">
+                <view class="label-word-spe">发车频率：</view>
+                <view class="label-special">
+                  <view class="special-item">
+                    <input bindinput="carNum" data-index="{{index}}" data-name="day" value="{{item.carNum.day}}"></input>
+                    <view>天</view>
+                  </view>
+                  <view class="special-item">
+                    <input bindinput="carNum" data-index="{{index}}" data-name="num" value="{{item.carNum.num}}"></input>
+                    <view>次</view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="line-tools">
+      <view class="tols-add" bindtap='addLineLists'>
+        <image mode='widthFix' src="/resource/images/add.png"></image>
+        <view class="tools-word add-word">增加专线</view>
+      </view>
+      <view class="tols-delete" bindtap='deleteLineLists'>
+        <image mode='widthFix' src="/resource/images/delete.png"></image>
+        <view class="tools-word delete-word">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 类型为仓库 -->
+  <block wx:if="{{propties.index == '1'}}">
+    <view class="comfrim-item">
+      <view class="comfrim-label">仓储平方：</view>
+      <view class="comfrim-input">
+        <input data-name="cc_area" value="{{cc_area}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+      </view>
+    </view>
+
+    <view class="comfrim-item">
+      <view class="comfrim-label">仓储类型：</view>
+      <view class="comfrim-input">
+        <input data-name="cc_type" value="{{cc_type}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+      </view>
+    </view>
+  </block>
+
+  <!-- 类型为冷链 -->
+  <block wx:if="{{propties.index == '2'}}">
+    <view class="comfrim-item">
+      <view class="comfrim-label">冷链仓储平方：</view>
+      <view class="comfrim-input">
+        <input data-name="ll_area" value="{{ll_area}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+      </view>
+    </view>
+
+    <view class="comfrim-item">
+      <view class="comfrim-label">冷链仓储类型：</view>
+      <view class="comfrim-input">
+        <input data-name="ll_type" value="{{ll_type}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+      </view>
+    </view>
+  </block>
+
+  <!-- 类型为危化 -->
+  <block wx:if="{{propties.index == '3'}}">
+    <view class="comfrim-item">
+      <view class="comfrim-label">危化仓储平方：</view>
+      <view class="comfrim-input">
+        <input data-name="wh_area" value="{{wh_area}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+      </view>
+    </view>
+
+    <view class="comfrim-item">
+      <view class="comfrim-label">危化仓储类型：</view>
+      <view class="comfrim-input">
+        <input data-name="wh_type" value="{{wh_type}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+      </view>
+    </view>
+  </block>
+
+  <view class="comfrim-item" wx:if="{{propties.index != '1'}}">
+    <view class="comfrim-label">大宗货物：</view>
     <view class="comfrim-input">
-      <input data-name="legal_person" value="{{legal_person}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+      <input data-name="mass_goods" value="{{mass_goods}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+    </view>
+  </view>
+
+  <view class="comfrim-item" wx:if="{{propties.index == '1'}}">
+    <view class="comfrim-label">进仓电话：</view>
+    <view class="comfrim-input">
+      <input data-name="go_phone" value="{{go_phone}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
     </view>
   </view>
 
   <view class="comfrim-item">
-    <view class="comfrim-label">法人身份证号：</view>
+    <view class="comfrim-label">网址：</view>
     <view class="comfrim-input">
-      <input data-name="identify_number" value="{{identify_number}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+      <input data-name="web_address" value="{{web_address}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入网址" />
     </view>
   </view>
 
   <view class="comfrim-item">
-    <view class="comfrim-label">联系人：</view>
+    <view class="comfrim-label">邮箱：</view>
     <view class="comfrim-input">
-      <input data-name="linkman" value="{{linkman}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+      <input data-name="email" value="{{email}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入邮箱" />
     </view>
   </view>
 
   <view class="comfrim-item">
-    <view class="comfrim-label">联系电话：</view>
+    <view class="comfrim-label">投诉电话：</view>
     <view class="comfrim-input">
-      <input data-name="phone" value="{{phone}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入"/>
+      <input data-name="ts_phone" value="{{ts_phone}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入投诉电话" />
+    </view>
+  </view>
+
+  <!-- 专线 & 仓库 -->
+  <view class="comfrim-item" wx:if="{{propties.index == '0' || propties.index == '1'}}">
+    <view class="comfrim-label">仓储特色：</view>
+    <view class="comfrim-input comfrim-textarea">
+      <textarea data-name="shopstore" value="{{shopstore}}" placeholder-class="inputPlace" bindinput="changeForm" placeholder="请输入仓储特色"></textarea> 
+    </view>
+  </view>
+
+  <!-- 冷链 -->
+  <block wx:if="{{propties.index == '2'}}">
+    <view class="comfrim-item">
+      <view class="comfrim-label">冷链仓库：</view>
+      <view class="comfrim-input">
+        <input data-name="ll_lib" value="{{ll_lib}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+      </view>
+    </view>
+
+    <view class="comfrim-item">
+      <view class="comfrim-label">冷链车辆：</view>
+      <view class="comfrim-input">
+        <input data-name="ll_car" value="{{ll_car}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+      </view>
+    </view>
+  </block>
+
+
+  <!-- 危化 -->
+  <block wx:if="{{propties.index == '3'}}">
+    <view class="comfrim-item">
+      <view class="comfrim-label">危化仓库：</view>
+      <view class="comfrim-input">
+        <input data-name="wh_lib" value="{{wh_lib}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+      </view>
+    </view>
+
+    <view class="comfrim-item">
+      <view class="comfrim-label">危化车辆：</view>
+      <view class="comfrim-input">
+        <input data-name="wh_car" value="{{wh_car}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+      </view>
+    </view>
+  </block>
+
+  <!-- 网点 -->
+  <block wx:if="{{propties.index == '4'}}">
+    <view class="comfrim-item">
+      <view class="comfrim-label">网点仓库：</view>
+      <view class="comfrim-input">
+        <input data-name="wd_lib" value="{{wd_lib}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+      </view>
+    </view>
+
+    <view class="comfrim-item">
+      <view class="comfrim-label">网点车辆：</view>
+      <view class="comfrim-input">
+        <input data-name="wd_car" value="{{wd_car}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+      </view>
+    </view>
+  </block>
+
+
+  <view class="comfrim-item">
+    <view class="comfrim-label">公司简介：</view>
+    <view class="comfrim-input comfrim-textarea">
+      <textarea data-name="intro" value="{{intro}}" placeholder-class="inputPlace" bindinput="changeForm" placeholder="请输入公司简介"></textarea> 
     </view>
   </view>
 
   <view class="imgLists">
     <view class="img-item">
-      <image class="icon-img" mode='widthFix' wx:if="{{logo_path == undefined || logo_path == ''}}" src="https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/logo.png" data-name="logo_path" bindtap='uploadImg'></image>
-      <image class="icon-img" mode='widthFix' data-name="logo_path" wx:else src="{{logo_path}}" bindtap='uploadImg'></image>
+      <image class="icon-img-spe" mode='widthFix' wx:if="{{logo_path == undefined || logo_path == ''}}" src="https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/logo.png" data-name="logo_path" bindtap='uploadImg'></image>
+      <image class="icon-img-spe" mode='widthFix' data-name="logo_path" wx:else src="{{logo_path}}" bindtap='uploadImg'></image>
     </view>
     <view class="img-item">
-      <image class="icon-img" mode='widthFix' wx:if="{{license_path == undefined || license_path == ''}}" src="https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/yyzz.png" data-name="license_path" bindtap='uploadImg'></image>
-      <image class="icon-img" mode='widthFix' data-name="license_path" wx:else src="{{license_path}}" bindtap='uploadImg'></image>
+      <image class="icon-img-spe" mode='widthFix' wx:if="{{license_path == undefined || license_path == ''}}" src="https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/yyzz.png" data-name="license_path" bindtap='uploadImg'></image>
+      <image class="icon-img-spe" mode='widthFix' data-name="license_path" wx:else src="{{license_path}}" bindtap='uploadImg'></image>
     </view>
-    <view class="img-item">
-      <image class="icon-img" mode='widthFix' wx:if="{{positive_path == undefined || positive_path == ''}}" src="https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/iden.png" data-name="positive_path" bindtap='uploadImg'></image>
-      <image class="icon-img" mode='widthFix' data-name="positive_path" wx:else src="{{positive_path}}" bindtap='uploadImg'></image>
+  </view>
+
+  <!-- 门头照片 -->
+  <view class="img-pro">
+    <view class="imgpro-title">门头照片</view>
+    <view class="imgpro-group">
+      <view wx:if="{{mt_picture.length > 0}}" class="imgpro-item">
+        <view class="imgpro-picture" wx:for="{{mt_picture}}">
+          <view class="imgpro-picitem">
+            <image mode='widthFix' src="{{item}}"></image>
+            <view class="imgpro-delete">
+              <image mode='widthFix' src="/resource/images/delete.png"></image>
+              <view data-name="mt_picture" data-index="{{index}}" bindtap='deletePic'>删除</view>
+            </view>
+          </view>
+        </view>
+        <view class="imgpro-add" data-name="mt_picture" bindtap="uploadPic">
+          <image mode='widthFix' src="/resource/images/add.png"></image>
+        </view>
+      </view>
+      <view wx:else class="imgpro-addContent">
+        <view class="imgpro-add" data-name="mt_picture" bindtap="uploadPic">
+          <image mode='widthFix' src="/resource/images/add.png"></image>
+        </view>
+      </view>
     </view>
-    <view class="img-item">
-      <image class="icon-img" mode='widthFix' wx:if="{{reverse_path == undefined || reverse_path == ''}}" src="https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/iden-fan.png" data-name="reverse_path" bindtap='uploadImg'></image>
-      <image class="icon-img" mode='widthFix' data-name="reverse_path" wx:else src="{{reverse_path}}" bindtap='uploadImg'></image>
+  </view>
+
+  <!-- 办公照片 -->
+  <view class="img-pro">
+    <view class="imgpro-title">办公照片</view>
+    <view class="imgpro-group">
+      <view wx:if="{{bg_picture.length > 0}}" class="imgpro-item">
+        <view class="imgpro-picture" wx:for="{{bg_picture}}">
+          <view class="imgpro-picitem">
+            <image mode='widthFix' src="{{item}}"></image>
+            <view class="imgpro-delete">
+              <image mode='widthFix' src="/resource/images/delete.png"></image>
+              <view data-name="bg_picture" data-index="{{index}}" bindtap='deletePic'>删除</view>
+            </view>
+          </view>
+        </view>
+        <view class="imgpro-add" data-name="bg_picture" bindtap="uploadPic">
+          <image mode='widthFix' src="/resource/images/add.png"></image>
+        </view>
+      </view>
+      <view wx:else class="imgpro-addContent">
+        <view class="imgpro-add" data-name="bg_picture" bindtap="uploadPic">
+          <image mode='widthFix' src="/resource/images/add.png"></image>
+        </view>
+      </view>
     </view>
-    <view class="img-item">
-      <image class="icon-img" mode='widthFix' wx:if="{{facade_path == undefined || facade_path == ''}}" src="https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/mt.png" data-name="facade_path" bindtap='uploadImg'></image>
-      <image class="icon-img" mode='widthFix' data-name="facade_path" wx:else src="{{facade_path}}" bindtap='uploadImg'></image>
+  </view>
+
+  <!-- 场地照片 -->
+  <view class="img-pro">
+    <view class="imgpro-title">场地照片</view>
+    <view class="imgpro-group">
+      <view wx:if="{{cd_picture.length > 0}}" class="imgpro-item">
+        <view class="imgpro-picture" wx:for="{{cd_picture}}">
+          <view class="imgpro-picitem">
+            <image mode='widthFix' src="{{item}}"></image>
+            <view class="imgpro-delete">
+              <image mode='widthFix' src="/resource/images/delete.png"></image>
+              <view data-name="cd_picture" data-index="{{index}}" bindtap='deletePic'>删除</view>
+            </view>
+          </view>
+        </view>
+        <view class="imgpro-add" data-name="cd_picture" bindtap="uploadPic">
+          <image mode='widthFix' src="/resource/images/add.png"></image>
+        </view>
+      </view>
+      <view wx:else class="imgpro-addContent">
+        <view class="imgpro-add" data-name="cd_picture" bindtap="uploadPic">
+          <image mode='widthFix' src="/resource/images/add.png"></image>
+        </view>
+      </view>
     </view>
-    <view class="img-item">
-      <image class="icon-img" mode='widthFix' wx:if="{{reception_path == undefined || reception_path == ''}}" src="https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/qt.png" data-name="reception_path" bindtap='uploadImg'></image>
-      <image class="icon-img" mode='widthFix' data-name="reception_path" wx:else src="{{reception_path}}" bindtap='uploadImg'></image>
+  </view>
+
+  <!-- 其他照片 -->
+  <view class="img-pro">
+    <view class="imgpro-title">其他照片</view>
+    <view class="imgpro-group">
+      <view wx:if="{{other_picture.length > 0}}" class="imgpro-item">
+        <view class="imgpro-picture" wx:for="{{other_picture}}">
+          <view class="imgpro-picitem">
+            <image mode='widthFix' src="{{item}}"></image>
+            <view class="imgpro-delete">
+              <image mode='widthFix' src="/resource/images/delete.png"></image>
+              <view data-name="other_picture" data-index="{{index}}" bindtap='deletePic'>删除</view>
+            </view>
+          </view>
+        </view>
+        <view class="imgpro-add" data-name="other_picture" bindtap="uploadPic">
+          <image mode='widthFix' src="/resource/images/add.png"></image>
+        </view>
+      </view>
+      <view wx:else class="imgpro-addContent">
+        <view class="imgpro-add" data-name="other_picture" bindtap="uploadPic">
+          <image mode='widthFix' src="/resource/images/add.png"></image>
+        </view>
+      </view>
     </view>
   </view>
 
   <view class="btn">
-    <view class="btn-detail" bindtap='submitForm'>提交</view>
+    <view class="btn-detail" bindtap='submitForm'>保存</view>
   </view>
 </view>

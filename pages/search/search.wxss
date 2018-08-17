@@ -3,9 +3,16 @@ page{
   height:100%;
   background: #FFFFFF;
 }
+/* 轮播图 */
+.slide-image{
+  width:100%;
+  height:100%;
+}
 /* 头部搜索  */
 .search{
   width:100%;
+  overflow: hidden;
+  overflow-y: auto;
   background: #F2F7FA;
 }
 .search-header{
@@ -16,7 +23,7 @@ page{
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 0px 1px 4px rgba(0,0,0,0.3); 
+  /* box-shadow: 0px 1px 4px rgba(0,0,0,0.3);  */
 }
 .search-content{
   width:90%;
@@ -59,7 +66,7 @@ page{
 .hotline{
   width:100%;
   background: #FFFFFF;
-  box-shadow: 0px -1px 4px rgba(0,0,0,0.3);
+  /* box-shadow: 0px -1px 4px rgba(0,0,0,0.3); */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -102,6 +109,7 @@ page{
   width:100%;
   display: flex;
   flex-direction: column;
+  background: #F2F7FA;
 }
 .hotline-item{
   width:100%;
@@ -111,18 +119,12 @@ page{
   align-items: center;
   padding:40rpx 0rpx;
   position:relative;
-  border-bottom:1px solid rgba(0,0,0,0.1);
-}
-.hotline-item:after{
-  content:'';
-  width:1px;
-  height:100%;
-  background: rgba(0,0,0,0.1);
-  position: absolute;
-  right:18%;
+  /* border-bottom:1px solid rgba(0,0,0,0.1); */
+  margin-bottom:20rpx;
+  background: #FFFFFF;
 }
 .hotline-item-left{
-  width:80%;
+  width:90%;
   height:100%;
   display: flex;
   flex-direction: row;
@@ -139,7 +141,7 @@ page{
   height:100%;
   display:flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   position: absolute;
   right:0px;
 }
@@ -159,6 +161,7 @@ page{
   display:flex;
   flex-direction: row;
   align-items: center;
+  padding:16rpx 0rpx;
 }
 .hotline-position .icon-position{
   width:26rpx;
@@ -273,4 +276,38 @@ page{
   100%{
     bottom:-472rpx;
   }
+}
+
+/* 导航栏 */
+.hotline-title{
+  width:100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.hotnav{
+  width:33.3%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size:30rpx;
+  color:#898989;
+  height:100%;
+  line-height:100rpx;
+  text-align: center;
+}
+.nav-active{
+  color:#000000;
+  font-weight: 600;
+}
+.loading{
+  width:100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.loading .loading-img{
+  width:70rpx;
 }

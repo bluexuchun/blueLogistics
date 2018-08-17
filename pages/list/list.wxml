@@ -1,0 +1,62 @@
+<scroll-view scroll-y bindscroll="scrollList" class="list" scroll-into-view="{{aId}}" style="height:{{mainHeight}}px;">
+  <!-- 搜索框 -->
+  <view class="page__bd">
+      <view class="weui-search-bar">
+          <view class="weui-search-bar__form">
+              <view class="weui-search-bar__box">
+                  <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+                  <input type="text" class="weui-search-bar__input" placeholder="输入城市名或拼音查询" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" />
+                  <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+                      <icon type="clear" size="14"></icon>
+                  </view>
+              </view>
+              <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+                  <icon class="weui-icon-search" type="search" size="14"></icon>
+                  <view class="weui-search-bar__text">输入城市名或拼音查询</view>
+              </label>
+          </view>
+          <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+      </view>
+  </view>
+
+  <!-- GPS定位 -->
+  <view class="gps" wx:if="{{!inputShowed}}">
+    <view class="gps-title">
+       上海 <text class="gps-tips">GPS定位</text>
+    </view>
+
+    <!-- 国内热门城市 -->
+    <view class="hotCity">
+      <view class="hotCity-title">国内热门城市</view>
+      <view class="hotCity-group">
+        <view class="hotCity-item" wx:for="{{hotCitys}}">
+          <view class="hotCity-content">{{item}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+
+
+  <block wx:for="{{dataSource}}" wx:if="{{!inputShowed}}">
+    <view class="list-group" id="{{item.name}}">
+      <view class="list-title">{{item.name}}</view>
+      <block wx:for="{{item.group}}" wx:for-item="listitem">
+        <view class="list-item">{{listitem}}</view>
+      </block>
+    </view>
+  </block>
+
+  <!-- 右边的字母定位 -->
+  <view class="letter-group" wx:if="{{!inputShowed}}">
+    <view wx:for="{{letter}}" bindtap='clickLetter' data-id="{{item}}" class="letter-item {{currentId == item ? 'letter-active' : ''}}">{{item}}</view>
+  </view>
+
+  <!-- 搜索结果 -->
+  <view class="search-result" wx:if="{{inputShowed}}">
+    <view class="search-item">上海</view>
+    <view class="search-item">上海</view>
+    <view class="search-item">上海</view>
+  </view>
+
+</scroll-view>

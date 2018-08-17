@@ -6,10 +6,14 @@ import fn from '../../utils/axios.js';
 Page({
   data: {
     // 设备的基础信息
-    systemInfo:app.globalData.systemInfo,
+    systemInfo:null,
 
     // 整体页面高度
     mainHeight:null,
+
+    // 搜索框
+    inputShowed: false,
+    inputVal: "",
 
     // 轮播图的信息
     banner:{
@@ -21,10 +25,18 @@ Page({
       ],
       indicatorDots: true,
       autoplay: false,
-      interval: 5000,
-      duration: 1000,
+      interval: 3000,
+      duration: 2000,
       imgsInfo:[],
       imgShowHeight:null
+    },
+
+    // 导航的信息
+    navInfo:{
+      indicatorDots: false,
+      autoplay: true,
+      interval: 6000,
+      duration: 3000,
     },
 
     // 导航栏的信息
@@ -48,33 +60,108 @@ Page({
       icon: '/resource/images/icon-shangjia.png',
       text: '商家',
       path: '/pages/index/index'
-    }, {
-      id: 5,
-      icon: '/resource/images/icon-wuliu.png',
-      text: '物流',
-      path: '/pages/index/index'
-    }, {
-      id: 6,
-      icon: '/resource/images/icon-rencai.png',
-      text: '人才',
-      path: '/pages/index/index'
-    }, {
-      id: 7,
-      icon: '/resource/images/icon-baoxian.png',
-      text: '保险',
-      path: '/pages/index/index'
-    }, {
-      id: 8,
-      icon: '/resource/images/icon-shangjia.png',
-      text: '商家',
-      path: '/pages/index/index'
     }],
 
+    // 左右滑动导航栏
+    actLists:[
+      {
+        name:'group1',
+        list:[
+          {
+            id: 1,
+            icon: '/resource/images/icon-wuliu.png',
+            text: '物流',
+            path: '/pages/search/search'
+          }, {
+            id: 2,
+            icon: '/resource/images/icon-rencai.png',
+            text: '人才',
+            path: '/pages/index/index'
+          }, {
+            id: 3,
+            icon: '/resource/images/icon-baoxian.png',
+            text: '保险',
+            path: '/pages/index/index'
+          }, {
+            id: 4,
+            icon: '/resource/images/icon-shangjia.png',
+            text: '商家',
+            path: '/pages/index/index'
+          }
+        ]
+      },
+      {
+        name: 'group2',
+        list: [
+          {
+            id: 1,
+            icon: '/resource/images/icon-wuliu.png',
+            text: '物流',
+            path: '/pages/search/search'
+          }, {
+            id: 2,
+            icon: '/resource/images/icon-rencai.png',
+            text: '人才',
+            path: '/pages/index/index'
+          }, {
+            id: 3,
+            icon: '/resource/images/icon-baoxian.png',
+            text: '保险',
+            path: '/pages/index/index'
+          }, {
+            id: 4,
+            icon: '/resource/images/icon-shangjia.png',
+            text: '商家',
+            path: '/pages/index/index'
+          }
+        ]
+      },
+    ],
+
+    // 推荐企业
+    commends:[
+      {
+        id:1,
+        title:'上海速辉物流',
+        icon:'https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/BANNER-1.jpg'
+      }, {
+        id: 2,
+        title: '上海鸿宇物流',
+        icon: 'https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/BANNER-2.jpg'
+      }, {
+        id: 3,
+        title: '上海大鸿物流',
+        icon: 'https://lg-qn90ttes-1257045562.cos.ap-shanghai.myqcloud.com/BANNER-3.jpg'
+      }
+    ],
+
     tabnavs: null,
+
+    hotnavs:{
+      actived:1,
+      group:[{
+        id:1,
+        type: 'recommend',
+        text: '推荐'
+      },
+      {
+        id:2,
+        type: 'near',
+        text: '附近'
+      },
+      {
+        id:3,
+        type: 'hot',
+        text: '人气'
+      }]
+    },
+      
 
     // 热门路线
     hotlineLists:[],
 
+    // loading
+    showLoading: false
 
   },
   onLoad: function () {
@@ -83,15 +170,13 @@ Page({
 
     // 判断有没有设置底部导航栏 否则调用全局导航栏
     const tabNavOrign = app.globalData.tabnavs;
-    
-    let mainHeight = this.data.systemInfo.windowHeight - tabNavOrign.option.heightPx / (750 / this.data.systemInfo.windowWidth);
+    console.log(app.globalData.systemInfo);
+    let mainHeight = app.globalData.systemInfo.windowHeight - tabNavOrign.option.heightPx / (750 / app.globalData.systemInfo.windowWidth);
 
-    tabNavOrign.navLists[0].isShow = true;
-    tabNavOrign.navLists[1].isShow = false;
-    tabNavOrign.navLists[2].isShow = true;
     tabNavOrign.navLists[0].isSelected = true;
     tabNavOrign.navLists[1].isSelected = false;
     tabNavOrign.navLists[2].isSelected = false;
+    tabNavOrign.navLists[3].isSelected = false;
     
     this.setData({
       mainHeight:mainHeight,
@@ -139,7 +224,7 @@ Page({
     // 计算比例（16：9）
     let radio = 16 / 9;
     // 计算高度
-    let imgHeight = this.data.systemInfo.windowWidth / radio ;
+    let imgHeight = app.globalData.systemInfo.windowWidth / radio ;
 
     const imgInfo = {
       id:e.target.dataset.id,
@@ -164,11 +249,12 @@ Page({
     })
   },
 
-  moreTab:function(){
-    wx.navigateTo({
-      url: '/pages/search/search',
-    })
-  },
+  // 前往搜索框
+  // moreTab:function(){
+  //   wx.navigateTo({
+  //     url: '/pages/search/search',
+  //   })
+  // },
 
   // 跳转到详情页面
   toDetail:function(e){
@@ -200,6 +286,86 @@ Page({
     const path = e.currentTarget.dataset.path;
     wx.navigateTo({
       url: path,
+    })
+  },
+
+  // 搜索框
+  showInput: function () {
+    this.setData({
+      inputShowed: true
+    });
+  },
+  hideInput: function () {
+    this.setData({
+      inputVal: "",
+      inputShowed: false
+    });
+  },
+  clearInput: function () {
+    this.setData({
+      inputVal: ""
+    });
+  },
+  inputTyping: function (e) {
+    this.setData({
+      inputVal: e.detail.value
+    });
+  },
+
+  // 切换选中状态
+  changeActive:function(e){
+    let currentId = e.target.dataset.id;
+    let hotnavs = {...this.data.hotnavs};
+
+    // 根据点击 加载不同的数据
+    switch (currentId){
+      case 1:
+        console.log('推荐')
+        break;
+      case 2:
+        console.log('附近')
+        break;
+      case 3:
+        console.log('人气')
+        break;
+      default:
+        return false;
+    }
+
+    hotnavs.actived = currentId;
+    this.setData({
+      hotnavs:hotnavs
+    })
+  },
+
+  // 触底操作
+  reachBottom:function(){
+    const that = this;
+    if (!this.data.showLoading){
+      that.setData({
+        showLoading: true
+      })
+      // 做操作信息
+      setTimeout(() => {
+        that.setData({
+          showLoading:false
+        })
+      },3000)
+    }
+  },
+
+
+  // 选择城市
+  toCity:function(){
+    wx.navigateTo({
+      url: '/pages/list/list',
+    })
+  },
+
+  // 搜索详情页
+  toSearchDetail:function(){
+    wx.navigateTo({
+      url: '/pages/detailSearch/detailSearch',
     })
   }
 })

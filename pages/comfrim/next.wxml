@@ -1,0 +1,327 @@
+<view class="next">
+  <!-- 本地联系方式 -->
+  <view class="comfrim-item-spe">
+    <view class="comfrim-label">本地联系方式：</view>
+    <view class="line-lists">
+      <view class="line-item" wx:for="{{bd_contact}}">
+        <view class="line-style line-start">
+          <input data-name="bd_contact" data-index="{{index}}" value="{{item.text}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder='请输入本地联系方式'/>
+        </view>
+      </view>
+    </view>
+
+    <view class="line-tools">
+      <view class="tols-add" data-name="bd_contact" bindtap='addLine'>
+        <image mode='widthFix' src="/resource/images/add.png"></image>
+        <view class="tools-word add-word">增加本地联系方式</view>
+      </view>
+      <view class="tols-delete" data-name="bd_contact" bindtap='deleteLine'>
+        <image mode='widthFix' src="/resource/images/delete.png"></image>
+        <view class="tools-word delete-word">删除</view>
+      </view>
+    </view>
+  </view>
+
+
+  <!-- 本地地址 -->
+  <view class="comfrim-item-spe">
+    <view class="comfrim-label">本地地址：</view>
+    <view class="line-lists">
+      <view class="line-item" wx:for="{{bd_address}}">
+        <view class="line-style line-start">
+          <input data-name="bd_address" data-index="{{index}}" value="{{item.text}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder='请输入本地地址'/>
+        </view>
+      </view>
+    </view>
+
+    <view class="line-tools">
+      <view class="tols-add" data-name="bd_address" bindtap='addLine'>
+        <image mode='widthFix' src="/resource/images/add.png"></image>
+        <view class="tools-word add-word">增加本地地址</view>
+      </view>
+      <view class="tols-delete" data-name="bd_address" bindtap='deleteLine'>
+        <image mode='widthFix' src="/resource/images/delete.png"></image>
+        <view class="tools-word delete-word">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 电话 -->
+  <view class="comfrim-item-spe">
+    <view class="comfrim-label">电话：</view>
+    <view class="line-lists">
+      <view class="line-item" wx:for="{{lo_phone}}">
+        <view class="line-style line-start">
+          <input data-name="lo_phone" data-index="{{index}}" value="{{item.text}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder='请输入电话'/>
+        </view>
+      </view>
+    </view>
+
+    <view class="line-tools">
+      <view class="tols-add" data-name="lo_phone" bindtap='addLine'>
+        <image mode='widthFix' src="/resource/images/add.png"></image>
+        <view class="tools-word add-word">增加电话</view>
+      </view>
+      <view class="tols-delete" data-name="lo_phone" bindtap='deleteLine'>
+        <image mode='widthFix' src="/resource/images/delete.png"></image>
+        <view class="tools-word delete-word">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 手机 -->
+  <view class="comfrim-item-spe">
+    <view class="comfrim-label">手机：</view>
+    <view class="line-lists">
+      <view class="line-item" wx:for="{{mobile}}">
+        <view class="line-style line-start">
+          <input data-name="mobile" data-index="{{index}}" value="{{item.text}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder='请输入手机'/>
+        </view>
+      </view>
+    </view>
+
+    <view class="line-tools">
+      <view class="tols-add" data-name="mobile" bindtap='addLine'>
+        <image mode='widthFix' src="/resource/images/add.png"></image>
+        <view class="tools-word add-word">增加手机</view>
+      </view>
+      <view class="tols-delete" data-name="mobile" bindtap='deleteLine'>
+        <image mode='widthFix' src="/resource/images/delete.png"></image>
+        <view class="tools-word delete-word">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 传真 -->
+  <view class="comfrim-item-spe">
+    <view class="comfrim-label">传真：</view>
+    <view class="line-lists">
+      <view class="line-item" wx:for="{{fax}}">
+        <view class="line-style line-start">
+          <input data-name="fax" data-index="{{index}}" value="{{item.text}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder='请输入传真'/>
+        </view>
+      </view>
+    </view>
+
+    <view class="line-tools">
+      <view class="tols-add" data-name="fax" bindtap='addLine'>
+        <image mode='widthFix' src="/resource/images/add.png"></image>
+        <view class="tools-word add-word">增加传真</view>
+      </view>
+      <view class="tols-delete" data-name="fax" bindtap='deleteLine'>
+        <image mode='widthFix' src="/resource/images/delete.png"></image>
+        <view class="tools-word delete-word">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 外地联系方式 -->
+  <view class="comfrim-item-spe">
+    <view class="comfrim-label">外地联系方式：</view>
+    <view class="line-lists">
+      <view class="line-item" wx:for="{{wd_contact}}">
+        <view class="line-style line-start">
+          <input data-name="wd_contact" data-index="{{index}}" value="{{item.text}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder='请输入外地联系方式'/>
+        </view>
+      </view>
+    </view>
+
+    <view class="line-tools">
+      <view class="tols-add" data-name="wd_contact" bindtap='addLine'>
+        <image mode='widthFix' src="/resource/images/add.png"></image>
+        <view class="tools-word add-word">增加外地联系方式</view>
+      </view>
+      <view class="tols-delete" data-name="wd_contact" bindtap='deleteLine'>
+        <image mode='widthFix' src="/resource/images/delete.png"></image>
+        <view class="tools-word delete-word">删除</view>
+      </view>
+    </view>
+  </view>
+
+
+  <!-- 外地地址 -->
+  <view class="comfrim-item-spe">
+    <view class="comfrim-label">外地地址：</view>
+    <view class="line-lists">
+      <view class="line-item" wx:for="{{wd_address}}">
+        <view class="line-style line-start">
+          <input data-name="wd_address" data-index="{{index}}" value="{{item.text}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder='请输入外地地址'/>
+        </view>
+      </view>
+    </view>
+
+    <view class="line-tools">
+      <view class="tols-add" data-name="wd_address" bindtap='addLine'>
+        <image mode='widthFix' src="/resource/images/add.png"></image>
+        <view class="tools-word add-word">增加外地地址</view>
+      </view>
+      <view class="tols-delete" data-name="wd_address" bindtap='deleteLine'>
+        <image mode='widthFix' src="/resource/images/delete.png"></image>
+        <view class="tools-word delete-word">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 电话 -->
+  <view class="comfrim-item-spe">
+    <view class="comfrim-label">电话：</view>
+    <view class="line-lists">
+      <view class="line-item" wx:for="{{wd_phone}}">
+        <view class="line-style line-start">
+          <input data-name="wd_phone" data-index="{{index}}" value="{{item.text}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder='请输入电话'/>
+        </view>
+      </view>
+    </view>
+
+    <view class="line-tools">
+      <view class="tols-add" data-name="wd_phone" bindtap='addLine'>
+        <image mode='widthFix' src="/resource/images/add.png"></image>
+        <view class="tools-word add-word">增加电话</view>
+      </view>
+      <view class="tols-delete" data-name="wd_phone" bindtap='deleteLine'>
+        <image mode='widthFix' src="/resource/images/delete.png"></image>
+        <view class="tools-word delete-word">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 手机 -->
+  <view class="comfrim-item-spe">
+    <view class="comfrim-label">手机：</view>
+    <view class="line-lists">
+      <view class="line-item" wx:for="{{wd_mobile}}">
+        <view class="line-style line-start">
+          <input data-name="wd_mobile" data-index="{{index}}" value="{{item.text}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder='请输入手机'/>
+        </view>
+      </view>
+    </view>
+
+    <view class="line-tools">
+      <view class="tols-add" data-name="wd_mobile" bindtap='addLine'>
+        <image mode='widthFix' src="/resource/images/add.png"></image>
+        <view class="tools-word add-word">增加手机</view>
+      </view>
+      <view class="tols-delete" data-name="wd_mobile" bindtap='deleteLine'>
+        <image mode='widthFix' src="/resource/images/delete.png"></image>
+        <view class="tools-word delete-word">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 外地传真 -->
+  <view class="comfrim-item-spe">
+    <view class="comfrim-label">传真：</view>
+    <view class="line-lists">
+      <view class="line-item" wx:for="{{wd_fax}}">
+        <view class="line-style line-start">
+          <input data-name="wd_fax" data-index="{{index}}" value="{{item.text}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder='请输入传真'/>
+        </view>
+      </view>
+    </view>
+
+    <view class="line-tools">
+      <view class="tols-add" data-name="wd_fax" bindtap='addLine'>
+        <image mode='widthFix' src="/resource/images/add.png"></image>
+        <view class="tools-word add-word">增加传真</view>
+      </view>
+      <view class="tols-delete" data-name="wd_fax" bindtap='deleteLine'>
+        <image mode='widthFix' src="/resource/images/delete.png"></image>
+        <view class="tools-word delete-word">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="comfrim-item">
+    <view class="comfrim-label">网址：</view>
+    <view class="comfrim-input">
+      <input data-name="web_address" value="{{web_address}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入网址" />
+    </view>
+  </view>
+
+  <view class="comfrim-item">
+    <view class="comfrim-label">邮箱：</view>
+    <view class="comfrim-input">
+      <input data-name="email" value="{{email}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入邮箱" />
+    </view>
+  </view>
+
+  <view class="comfrim-item">
+    <view class="comfrim-label">投诉电话：</view>
+    <view class="comfrim-input">
+      <input data-name="ts_phone" value="{{ts_phone}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入投诉电话" />
+    </view>
+  </view>
+
+  <!-- 专线 & 仓库 -->
+  <view class="comfrim-item" wx:if="{{type == '0' || type == '1'}}">
+    <view class="comfrim-label">仓储特色：</view>
+    <view class="comfrim-input comfrim-textarea">
+      <textarea data-name="shopstore" value="{{shopstore}}" placeholder-class="inputPlace" bindinput="changeForm" placeholder="请输入仓储特色"></textarea> 
+    </view>
+  </view>
+
+  <!-- 冷链 -->
+  <block wx:if="{{type == '2'}}">
+    <view class="comfrim-item">
+      <view class="comfrim-label">冷链仓库：</view>
+      <view class="comfrim-input">
+        <input data-name="ll_lib" value="{{ll_lib}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+      </view>
+    </view>
+
+    <view class="comfrim-item">
+      <view class="comfrim-label">冷链车辆：</view>
+      <view class="comfrim-input">
+        <input data-name="ll_car" value="{{ll_car}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+      </view>
+    </view>
+  </block>
+
+
+  <!-- 危化 -->
+  <block wx:if="{{type == '3'}}">
+    <view class="comfrim-item">
+      <view class="comfrim-label">危化仓库：</view>
+      <view class="comfrim-input">
+        <input data-name="wh_lib" value="{{wh_lib}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+      </view>
+    </view>
+
+    <view class="comfrim-item">
+      <view class="comfrim-label">危化车辆：</view>
+      <view class="comfrim-input">
+        <input data-name="wh_car" value="{{wh_car}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+      </view>
+    </view>
+  </block>
+
+  <!-- 网点 -->
+  <block wx:if="{{type == '4'}}">
+    <view class="comfrim-item">
+      <view class="comfrim-label">网点仓库：</view>
+      <view class="comfrim-input">
+        <input data-name="wd_lib" value="{{wd_lib}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+      </view>
+    </view>
+
+    <view class="comfrim-item">
+      <view class="comfrim-label">网点车辆：</view>
+      <view class="comfrim-input">
+        <input data-name="wd_car" value="{{wd_car}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
+      </view>
+    </view>
+  </block>
+
+
+  <view class="comfrim-item">
+    <view class="comfrim-label">公司简介：</view>
+    <view class="comfrim-input comfrim-textarea">
+      <textarea data-name="intro" value="{{intro}}" placeholder-class="inputPlace" bindinput="changeForm" placeholder="请输入公司简介"></textarea> 
+    </view>
+  </view>
+
+
+  <view class="btn">
+    <view class="btn-detail" bindtap='submitForm'>保存</view>
+  </view>
+</view>

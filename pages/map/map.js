@@ -4,7 +4,7 @@ import fn from '../../utils/axios.js';
 Page({
   data: {
     options:{
-      height: app.globalData.systemInfo.windowHeight,
+      height: 0,
       longitude:0,
       latitude:0
     },
@@ -15,7 +15,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    console.log(app.globalData.systemInfo);
+    let mainHeight = app.globalData.systemInfo.windowHeight;
     // 获取地图坐标
     const that = this;
 
@@ -28,6 +29,7 @@ Page({
 
         options.latitude = res.latitude;
         options.longitude = res.longitude;
+        options.height = mainHeight;
 
         // 获取所有路线
         const lineLists = fn.ajaxTo('api.php?entry=app&c=lbs&a=lbs', {

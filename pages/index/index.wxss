@@ -4,6 +4,54 @@ page{
   height:100%;
   background: #FFFFFF;
 }
+.search-top{
+  width:100%;
+  height:100rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #FFFFFF;
+}
+.search-word{
+  width:20%;
+  display: flex;
+  flex-direction: row;
+  height:100%;
+  align-items: center;
+  justify-content: center;
+  font-size:28rpx;
+}
+.search-word image{
+  width:30rpx;
+  margin-left:6rpx;
+}
+.search-input{
+  width:80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.search-detail{
+  width:90%;
+  height:70rpx;
+  border-radius: 50px;
+  background: #efeff4;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.search-detail image{
+  width:40rpx;
+  margin-right:8rpx;
+}
+.search-detail .search-content{
+  width:70%;
+}
+.page__bd{
+  margin:8px 0px;
+}
 
 .main{
   width:100%;
@@ -32,10 +80,10 @@ swiper{
   padding:15px 0px 5px 0px;
   width:100%;
   background: #FFFFFF;
-  box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+  /* box-shadow: 0px 1px 3px rgba(0,0,0,0.3); */
 }
 .nav-content{
-  padding:15px 12px;
+  padding:15px 12px 0px 12px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -55,12 +103,21 @@ swiper{
   height:64rpx;
 }
 
+.weui-search-bar{
+  background: #FFFFFF;
+}
+.weui-search-bar__form{
+  background: #efeff4;
+}
+.weui-search-bar__label{
+  background: #efeff4;
+}
+
 /*  热门路线  */
 .hotline{
   width:100%;
-  margin-top:30rpx;
-  background: #FFFFFF;
-  box-shadow: 0px -1px 4px rgba(0,0,0,0.3);
+  background: #F2F7FA;
+  /* box-shadow: 0px -1px 4px rgba(0,0,0,0.3); */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -72,6 +129,7 @@ swiper{
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  border-top:1px solid rgba(0,0,0,0.1);
   border-bottom:1px solid rgba(0,0,0,0.1);
 }
 .hotline-icon{
@@ -103,6 +161,7 @@ swiper{
   width:100%;
   display: flex;
   flex-direction: column;
+  background: #F2F7FA;
 }
 .hotline-item{
   width:100%;
@@ -112,18 +171,11 @@ swiper{
   align-items: center;
   padding:40rpx 0rpx;
   position:relative;
-  border-bottom:1px solid rgba(0,0,0,0.1);
-}
-.hotline-item:after{
-  content:'';
-  width:1px;
-  height:100%;
-  background: rgba(0,0,0,0.1);
-  position: absolute;
-  right:18%;
+  background: #FFFFFF;
+  margin-bottom:20rpx;
 }
 .hotline-item-left{
-  width:80%;
+  width:90%;
   height:100%;
   display: flex;
   flex-direction: row;
@@ -140,7 +192,7 @@ swiper{
   height:100%;
   display:flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   position: absolute;
   right:0px;
 }
@@ -160,6 +212,7 @@ swiper{
   display:flex;
   flex-direction: row;
   align-items: center;
+  padding:16rpx 0rpx;
 }
 .hotline-position .icon-position{
   width:26rpx;
@@ -282,4 +335,108 @@ swiper{
 }
 .location-icon image{
   width:30rpx;
+}
+.nav-swiperitem{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.nav-swiper{
+  padding:0px 12px 15px 12px;
+
+}
+swiper{
+  width:100%;
+  min-height: auto;
+  height:150rpx;
+}
+
+/* 推荐企业 */
+.recommend{
+  width:100%;
+  background: #FFFFFF;
+  box-sizing: border-box;
+  padding:20rpx 12rpx 40rpx;
+}
+.recommend-title{
+  width:100%;
+  height:60rpx;
+  font-size:30rpx;
+  line-height: 60rpx;
+  padding:12rpx 0rpx;
+  position: relative;
+  text-align: center;
+  color:#666666;
+}
+.recommend-title:before{
+  content:"";
+  width:50rpx;
+  height:3rpx;
+  background: #666666;
+  position: absolute;
+  top:50%;
+  margin-top:-1.5rpx;
+  left:60%;
+}
+.recommend-title:after{
+  content:"";
+  width:50rpx;
+  height:3rpx;
+  background: #666666;
+  position: absolute;
+  top:50%;
+  margin-top:-1.5rpx;
+  right:60%;
+}
+.recommend-content{
+  width:100%;
+  display: flex;
+  flex-direction: row;
+}
+.recitem{
+  width:33.3%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.recimg{
+  width:90%;
+  box-shadow: 0px 0px 8px rgba(0,0,0,0.7);
+  margin:16rpx 0rpx;
+}
+.hotline-title{
+  width:100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #FFFFFF;
+}
+.hotnav{
+  width:33.3%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size:30rpx;
+  color:#898989;
+  height:100%;
+  line-height:100rpx;
+  text-align: center;
+}
+.nav-active{
+  color:#000000;
+  font-weight: 600;
+}
+.loading{
+  width:100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0);
+}
+.loading .loading-img{
+  width:70rpx;
 }

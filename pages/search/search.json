@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "搜索路线",
   "usingComponents": {
     "common-tabnav": "/components/common-tabnav"
   }
