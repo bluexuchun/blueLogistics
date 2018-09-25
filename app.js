@@ -49,16 +49,28 @@ App({
       success: function (res) {
         const latitude = res.latitude;
         const longitude = res.longitude;
+        let lonlat = {
+          lat: latitude,
+          lng: longitude
+        }
+        that.globalData.locationManage = lonlat
+        wx.setStorage({
+          key: 'lonlat',
+          data: lonlat,
+        })
         mapInfo.reverseGeocoder({
           location:{
             latitude: latitude,
             longitude: longitude
           },
           success:function(res){
-            console.log(res);
             if(res.status == 0){
               const locationInfo = res.result.address_component;
               that.globalData.locationInfo = locationInfo;
+              wx.setStorage({
+                key: 'location',
+                data: locationInfo,
+              })
             }
           }
         })
@@ -69,6 +81,10 @@ App({
     systemInfo: null,
     userInfo: null,
     locationInfo:null,
+    locationManage:{
+      lat:0,
+      lng:0
+    },
     // 底部导航栏的信息
     tabnavs: {
       option: {
@@ -101,14 +117,15 @@ App({
           heightPx: '60',//rpx
           mode: 'aspectFit',
           isShow: true,
-          isSelected: false
+          isSelected: false,
+          loginBtn: true,
         }, 
         {
           id: '3',
           text: '发现',
           selectedIcon: '/resource/images/icon-tabnav-line-active.png',
           icon: '/resource/images/icon-tabnav-line.png',
-          path: 'pages/publish/publish',
+          // path: 'pages/publish/publish',
           widthPx: '60',//rpx
           heightPx: '60',//rpx
           mode: 'aspectFit',

@@ -36,9 +36,9 @@
           <swiper-item class="nav-swiperitem">
             <view class="nav-item" wx:for="{{item.list}}" wx:for-item="childItem">
               <view class="nav-icon">
-                <image mode="aspectFit" class="nav-icon-img" src="{{childItem.icon}}"></image>
+                <image mode="aspectFit" class="nav-icon-img" src="{{imgUrl + childItem.img_path}}"></image>
               </view>
-              <view class="nav-word">{{childItem.text}}</view>
+              <view class="nav-word">{{childItem.name}}</view>
             </view>
           </swiper-item>
         </block>
@@ -70,11 +70,11 @@
   </view> -->
   <!-- 搜索框 -->
   <view class="search-top">
-    <view class="search-word" bindtap='toCity'>上海 <image mode="widthFix" src="/resource/images/down-black.png"></image></view>
+    <view class="search-word" bindtap='toCity'>{{cityName}} <image mode="widthFix" src="/resource/images/down-black.png"></image></view>
     <view class="search-input">
       <view class="search-detail" bindtap='toSearchDetail'>
         <image mode="widthFix" src="/resource/images/search.png"></image>
-        <input type="text" disabled class="search-content" placeholder="搜索物流、专线或商家"></input>
+        <input type="text" disabled class="search-content" placeholder="搜索专线或公司"></input>
       </view>
     </view>
   </view>
@@ -85,9 +85,9 @@
     <view class="recommend">
       <view class="recommend-title">推荐企业</view>
       <view class="recommend-content">
-        <view class="recitem" wx:for="{{commends}}">
-           <image mode='widthFix' class="recimg" src="{{item.icon}}"></image>
-           <view class="recword">{{item.title}}</view>
+        <view class="recitem" wx:for="{{commends}}" data-id="{{item.id}}" bindtap='toDetail'>
+           <image mode='widthFix' class="recimg" src="{{item.logo_path}}"></image>
+           <view class="recword">{{item.name}}</view>
         </view>
       </view>
     </view>
@@ -100,27 +100,25 @@
     <view class="hotline-lists">
       <view class="hotline-item" wx:for="{{hotlineLists}}">
         <!--  left-content  -->
-        <view class="hotline-item-left" data-id="{{item.company_id}}" bindtap='toDetail'>
+        <view class="hotline-item-left" data-id="{{item.id}}" bindtap='toDetail'>
           <!--  company-pic  -->
           <view class='hotline-img'>
-            <image src="{{item.img}}"></image>
+            <image src="{{item.logo_path}}"></image>
           </view>
           <!--  company-info  -->
           <view class="hotline-info">
             <!--  公司名字  -->
-            <view class="hotline-company">{{item.company}}</view>
+            <view class="hotline-company">{{item.name}}</view>
 
             <!--  地址  -->
             <view class="hotline-position">
-              <image mode='widthFix' class="icon-position" src="/resource/images/icon-location.png"></image>
-              <view class="position-word">{{item.distance}}km {{item.address}}</view>
+              <view class="position-word">{{item.address}}</view>
             </view>
 
-            <!--  运费  -->
+            <!-- 浏览量 -->
             <view class="hotline-cost">
-              <view class="cost-name">运费：</view>
-              <view class="yd">¥ {{item.weight_price}}元/吨</view>
-              <view class="yf">¥ {{item.area_price}}元/方</view>
+              <view class="hotline-pop">浏览量：{{item.popularity}}</view>
+              <view class="hotline-distance">{{item.distance}}km</view>
             </view>
 
           </view>

@@ -3,7 +3,7 @@
   <view class="search-top">
     <view class="picker-content">
       <picker bindchange="bindPickerChange" value="{{index}}" range="{{category}}">
-        <view class="search-word" bindtap='toCity'>{{index ? category[index] : '所有'}} <image mode="widthFix" src="/resource/images/down-black.png"></image></view>
+        <view class="search-word" bindtap='toCity'>{{index ? category[index] : '专线'}} <image mode="widthFix" src="/resource/images/down-black.png"></image></view>
       </picker>
     </view>
     
@@ -11,16 +11,16 @@
     <view class="search-input">
       <view class="search-detail">
         <image mode="widthFix" src="/resource/images/search.png"></image>
-        <input type="text" auto-focus	 class="search-content" placeholder-style="font-size:26rpx;" placeholder="搜索物流、专线或商家" value="{{searchThing}}" bindinput="searchInput"></input>
+        <input type="text" auto-focus	 class="search-content" placeholder-style="font-size:26rpx;" placeholder="搜索专线或公司" value="{{searchThing}}" bindinput="searchInput"></input>
       </view>
     </view>
   </view>
 
   <!-- 热搜索列表&搜索完成后的列表 -->
   <view class="showList">
-    <view class="list-item">上海</view>
-    <view class="list-item">上海</view>
-    <view class="list-item">上海</view>
+    <block wx:for="{{lists}}">
+      <view class="list-item" >{{item.name}}</view>
+    </block>
   </view>
   
 </view>

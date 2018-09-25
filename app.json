@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/store/store",
+    
     "pages/detailSearch/detailSearch",
     "pages/list/list",
     "pages/publish/publish",
@@ -9,7 +11,8 @@
     "pages/me/me",
     "pages/map/map",
     "pages/search/search",
-    "pages/detail/detail"
+    "pages/detail/detail",
+    "pages/sellerinfo/sellerinfo"
   ],
   "window": {
     "backgroundTextStyle": "light",

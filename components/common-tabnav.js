@@ -37,15 +37,27 @@ Component({
    */
   methods: {
     navigateTo:function(e){
+      console.log(e);
+      // 如果id为1的话 则用navigateTo
+      let id = e.currentTarget.dataset.id;
       let url = e.currentTarget.dataset.url;
       // 获取当前路由
       const p = getCurrentPages();
       const route = p.pop().__route__;
-      if(url != route){
-        url = '/' + url;
-        wx.reLaunch({
-          url: url,
-        })
+      if(id == 1){
+        if (url != route) {
+          url = '/' + url;
+          wx.navigateTo({
+            url: url,
+          })
+        }
+      }else{
+        if (url != route) {
+          url = '/' + url;
+          wx.reLaunch({
+            url: url,
+          })
+        }
       }
     },
     _propertyChange: function (newVal, oldVal) {
@@ -63,9 +75,11 @@ Component({
     },
     
     onGotUserInfo:function(e){
+      console.log(e);
       let userDetail = wx.getStorageSync('userInfo');
       let userInfo = e.detail.userInfo;
       let url = e.currentTarget.dataset.url;
+      let id = e.currentTarget.dataset.id;
       if(!userDetail){
         if (userInfo != undefined) {
           // 获取code
@@ -107,13 +121,21 @@ Component({
                     // 获取当前路由
                     const p = getCurrentPages();
                     const route = p.pop().__route__;
-                    if (url != route) {
-                      url = '/' + url;
-                      wx.reLaunch({
-                        url: url,
-                      })
+                    if(id == 1){
+                      if (url != route) {
+                        url = '/' + url;
+                        wx.navigateTo({
+                          url: url,
+                        })
+                      }
+                    }else{
+                      if (url != route) {
+                        url = '/' + url;
+                        wx.reLaunch({
+                          url: url,
+                        })
+                      }
                     }
-
                   }
                 })
               })
@@ -124,12 +146,22 @@ Component({
         // 获取当前路由
         const p = getCurrentPages();
         const route = p.pop().__route__;
-        if (url != route) {
-          url = '/' + url;
-          wx.reLaunch({
-            url: url,
-          })
+        if(id == 1){
+          if (url != route) {
+            url = '/' + url;
+            wx.navigateTo({
+              url: url,
+            })
+          }
+        }else{
+          if (url != route) {
+            url = '/' + url;
+            wx.reLaunch({
+              url: url,
+            })
+          }
         }
+        
       }
     }
   }

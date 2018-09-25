@@ -2,7 +2,7 @@
   <view class="tabnav-item" wx:for="{{tabnavLists}}" style="width:{{navWidth}}%" >
 
     <view class="tabnav-item-content tabnav-login" wx:if="{{item.loginBtn}}" data-url="{{item.path}}">
-      <button open-type="getUserInfo" data-url="{{item.path}}" lang="zh_CN" bindgetuserinfo="onGotUserInfo" class='btn'>获取用户信息</button>
+      <button open-type="getUserInfo" data-url="{{item.path}}" data-id="{{index}}" lang="zh_CN" bindgetuserinfo="onGotUserInfo" class='btn'>获取用户信息</button>
       <view class="tabnav-icon">
         <image wx:if="{{item.isSelected}}" mode="{{item.mode}}" src="{{item.selectedIcon}}" style="width:{{item.widthPx}}rpx;height:{{item.heightPx}}rpx;"></image>
         <image wx:else mode="{{item.mode}}" src="{{item.icon}}" style="width:{{item.widthPx}}rpx;height:{{item.heightPx}}rpx;"></image>
@@ -10,7 +10,7 @@
       <view wx:if="{{item.isSelected}}" style="font-size:{{tabnavs.option.fontSize}}rpx;color:{{tabnavs.option.selectedColor}};">{{item.text}}</view>
       <view wx:else style="font-size:{{tabnavs.option.fontSize}}rpx;color:{{tabnavs.option.defaultColor}};">{{item.text}}</view>
     </view>
-    <view class="tabnav-item-content" wx:else data-url="{{item.path}}"  bindtap="navigateTo">
+    <view class="tabnav-item-content" wx:else data-id="{{index}}" data-url="{{item.path}}"  bindtap="navigateTo">
       <view class="tabnav-icon">
         <image wx:if="{{item.isSelected}}" mode="{{item.mode}}" src="{{item.selectedIcon}}" style="width:{{item.widthPx}}rpx;height:{{item.heightPx}}rpx;"></image>
         <image wx:else mode="{{item.mode}}" src="{{item.icon}}" style="width:{{item.widthPx}}rpx;height:{{item.heightPx}}rpx;"></image>

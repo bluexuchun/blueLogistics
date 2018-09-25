@@ -1,4 +1,5 @@
 const app = getApp();
+import fn from '../../utils/axios.js';
 Page({
   data: {
     // 搜索框
@@ -47,128 +48,46 @@ Page({
     // 目前位置是
     currentId:'A',
     // 所有数据
-    dataSource:[
-      {
-        name:'A',
-        group:[
-          '啊',
-          '阿',
-          '吖',
-          '嗄',
-          '锕',
-          '啊',
-          '阿',
-          '吖',
-          '嗄',
-          '锕',
-          '啊',
-          '阿',
-          '吖',
-          '嗄',
-          '锕',
-          '啊',
-          '阿',
-          '吖',
-          '嗄',
-          '锕'
-        ]
-      },
-      {
-        name:'B',
-        group:[
-          '吧',
-          '把',
-          '呗',
-          '不',
-          '半',
-          '吧',
-          '把',
-          '呗',
-          '不',
-          '半',
-          '吧',
-          '把',
-          '呗',
-          '不',
-          '半',
-          '吧',
-          '把',
-          '呗',
-          '不',
-          '半',
-        ]
-      },
-      {
-        name:'C',
-        group:[
-          '从',
-          '吃',
-          '车',
-          '传',
-          '次',
-          '从',
-          '吃',
-          '车',
-          '传',
-          '次',
-          '从',
-          '吃',
-          '车',
-          '传',
-          '次'
-        ]
-      },
-      {
-        name: 'D',
-        group: [
-          '从',
-          '吃',
-          '车',
-          '传',
-          '次',
-          '从',
-          '吃',
-          '车',
-          '传',
-          '次'
-        ]
-      },
-      {
-        name: 'E',
-        group: [
-          '从',
-          '吃',
-          '车',
-          '传',
-          '次', 
-          '从',
-          '吃',
-          '车',
-          '传',
-          '次'
-        ]
-      }
-    ],
+    dataSource:[],
     // 跳转到指定的Id
     aId:null
   },
 
   onLoad: function (options) {
+    console.log(app.globalData);
     const that = this;
     wx.getSystemInfo({
       success: function(res) {
         // 给scroll-view高度
         that.setData({
-          mainHeight: res.windowHeight
+          mainHeight: res.windowHeight,
+          cityName: app.globalData.locationInfo.city
         })
       },
+    })
+    const cityLists = fn.ajaxTo('api.php?entry=app&c=logistics&a=company&do=city',{})
+    .then((res) => {
+      let dataSource = [...that.data.dataSource];
+      let item;
+      // 英文26个字母
+      that.data.letter.map((v,i) => {
+        if (res.data.data[v]){
+          item = {
+            name: v,
+            group: res.data.data[v]
+          }
+          dataSource.push(item);
+        }
+      })
+      that.setData({
+        dataSource: dataSource
+      })
     })
     
   },
 
   // 滚动
   scrollList:function(e){
-    console.log(e);
     const that = this;
 
     // 获取所有id的位置
@@ -180,13 +99,13 @@ Page({
         // 计算范围值
 
         let minDir,
-            maxDir = 5,
-            height = 35;
+            maxDir = 0,
+            height = 30;
 
         let dataSource = [...that.data.dataSource]
         dataSource.map((v,i) => {
           if(v.name == id){
-            minDir = -1 * v.group.length * height;
+            minDir = -1 * v.group.length * height - 28;
           }
         })
         // console.log('id:'+id + 'top:' + top)
@@ -200,6 +119,7 @@ Page({
       })
     }).exec()
   },
+
 
   // 点击头标签跳到指定的位置
   clickLetter:function(e){
@@ -216,26 +136,72 @@ Page({
       aId:aid
     })
   },
+
+
   // 搜索框
   showInput: function () {
     this.setData({
       inputShowed: true
     });
   },
+
   hideInput: function () {
     this.setData({
       inputVal: "",
-      inputShowed: false
+      inputShowed: false,
+      citys:[]
     });
   },
+
   clearInput: function () {
     this.setData({
       inputVal: ""
     });
   },
+
+  // 热搜索
   inputTyping: function (e) {
-    this.setData({
-      inputVal: e.detail.value
-    });
+    const that = this;
+    let value = e.detail.value;
+    // 正则检测英文
+    let engReg = new RegExp("[A-Za-z]+");
+
+    let isEng = engReg.test(value);
+
+    if(!isEng && value != ""){
+      let result = fn.ajaxTo('api.php?entry=app&c=logistics&a=company&do=seh_city',{
+        city:value
+      })
+      .then((res) => {
+        console.log(res);
+        if(res.data.status == 1){
+          that.setData({
+            citys:res.data.data
+          })
+        }
+      })
+    }
   },
+
+  // 改变城市
+  changeCity: function(e){
+    let name = e.currentTarget.dataset.name;
+    wx.showModal({
+      title: '提示',
+      content: '确定要切换到该城市么？',
+      success: function (res) {
+        if (res.confirm) {
+          let location = wx.getStorageSync('location');
+          location.city = name;
+          wx.setStorageSync('location', location)
+          wx.reLaunch({
+            url: '/pages/index/index?type=change',
+          })
+        } else if (res.cancel) {
+          console.log('取消了')
+        }
+      }
+    })
+    
+  }
 })

@@ -19,14 +19,15 @@ Page({
       imgsInfo: [],
       imgShowHeight: null,
       currentPage:1,
-      totalPage:1
+      totalPage:1,
     },
 
     // 公司信息
     company: null,
 
     // 路线信息
-    lineInfo: null
+    lineInfo: null,
+    unitAry: ['公斤', '斤']
   },
 
   /**
@@ -38,7 +39,7 @@ Page({
 
     // 获取id 并请求数据
     const id = options.id;
-    const detail = fn.ajaxTo('api.php?entry=app&c=company&a=display',{
+    const detail = fn.ajaxTo('api.php?entry=app&c=logistics&a=company&do=display',{
       id:id
     });
     detail.then(function(res){
@@ -48,22 +49,22 @@ Page({
         console.log(data);
         // banner设置
         const bannerInfo = { ...that.data.banner};
-        const bannerLists = data.companyInfo.banner;
+        const bannerLists = data.banner;
         if (bannerLists){
           for(var i = 0; i < bannerLists.length; i++){
             bannerInfo.imgUrls.push(bannerLists[i].imgURL);
           }
         };
         wx.setNavigationBarTitle({
-          title: data.companyInfo.name
+          title: data.name
         })
-        const companyRich = data.companyInfo.introduce;
+        const companyRich = data.introduce;
         WxParse.wxParse('content', 'html', companyRich,that, 5);
 
         that.setData({
           banner:bannerInfo,
-          company:data.companyInfo,
-          lineInfo:data.routeInfo
+          company:data,
+          lineInfo: data.lineLists
         })
 
         that.calculateBanner();

@@ -11,8 +11,10 @@ page{
   border-bottom:1px solid #F2F2F2;
   font-size:28rpx;
   color:#6b6b6b;
-  padding:4rpx 0rpx 4rpx 20rpx;
+  padding:0rpx 0rpx 0rpx 20rpx;
   background: #efeff4;
+  height:60rpx;
+  line-height: 60rpx;
 }
 .list-item{
   width:100%;

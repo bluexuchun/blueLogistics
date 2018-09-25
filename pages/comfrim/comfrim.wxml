@@ -19,7 +19,7 @@
     </view>
   </view>
 
-    <view class="comfrim-item">
+  <view class="comfrim-item">
     <view class="comfrim-label">公司地址：</view>
     <view class="comfrim-input">
       <input data-name="address" value="{{address}}" placeholder-class="inputPlace" bindinput="changeForm" type="text" placeholder="请输入" />
@@ -34,7 +34,7 @@
             <view class="item-input-spe">
               <view class="item-label">
                 <view class="label-word-spe">联系人：</view>
-                <input data-name="linkman" value="{{linkman}}" data-index="{{clindex}}" placeholder-class="inputPlace" bindinput="changeConForm" type="text" placeholder="请输入" />
+                <input data-name="linkman" value="{{cl.linkman}}" data-index="{{clindex}}" placeholder-class="inputPlace" bindinput="changeConForm" type="text" placeholder="请输入" />
               </view>
             </view>
           </view>
@@ -44,8 +44,8 @@
           <view class="icon-item-spe">
             <view class="item-input-spe">
               <view class="item-label">
-                <view class="label-word-spe">联系电话：</view>
-                <input data-name="phone" value="{{phone}}" data-index="{{clindex}}" placeholder-class="inputPlace" bindinput="changeConForm" type="text" placeholder="请输入" />
+                <view class="label-word-spe">联系方式：</view>
+                <input data-name="phone" value="{{cl.phone}}" data-index="{{clindex}}" placeholder-class="inputPlace" bindinput="changeConForm" type="text" placeholder="请输入" />
               </view>
             </view>
           </view>
@@ -59,6 +59,47 @@
         <view class="tools-word add-word">增加联系人</view>
       </view>
       <view class="tols-delete" bindtap='deletecontact'>
+        <image mode='widthFix' src="/resource/images/delete.png"></image>
+        <view class="tools-word delete-word">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="comfrim-item-spe">
+    <view class="line-lists" wx:for="{{phonelits}}" wx:for-item="cl" wx:for-index="clindex">
+      <view class="line-item">
+
+        <view class="publish-item">
+          <view class="icon-item-spe">
+            <view class="item-input-spe">
+              <view class="item-label">
+                <view class="label-word-spe">公司电话：</view>
+                <input data-name="phone" value="{{cl.phone}}" data-index="{{clindex}}" placeholder-class="inputPlace" bindinput="changeCompanyPhone" type="text" placeholder="请输入" />
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="publish-item">
+          <view class="icon-item-spe">
+            <view class="item-input-spe">
+              <view class="item-label">
+                <view class="label-word-spe">公司地址：</view>
+                <input data-name="address" value="{{cl.address}}" data-index="{{clindex}}" placeholder-class="inputPlace" bindinput="changeCompanyPhone" type="text" placeholder="请输入" />
+              </view>
+            </view>
+          </view>
+        </view>
+
+      </view>
+    </view>
+    
+    <view class="line-tools">
+      <view class="tols-add" bindtap='addCompanyPhone'>
+        <image mode='widthFix' src="/resource/images/add.png"></image>
+        <view class="tools-word add-word">增加公司电话</view>
+      </view>
+      <view class="tols-delete" bindtap='deleteCompanyPhone'>
         <image mode='widthFix' src="/resource/images/delete.png"></image>
         <view class="tools-word delete-word">删除</view>
       </view>
@@ -119,8 +160,19 @@
           <view class="icon-item-spe1">
             <view class="item-input-spe">
               <view class="item-label">
-                <view class="label-word-spe">公司名称</view>
-                <input placeholder-style="color:#C3CAD3" bindinput='changeForm' data-index="{{index}}" data-name="company_name" placeholder="请输入公司名称" value="{{company_name}}" />
+                <view class="label-word-spe">分部名称</view>
+                <input placeholder-style="color:#C3CAD3" bindinput='changeForm' data-index="{{index}}" data-name="line_company" placeholder="请输入分部名称" value="{{item.line_company}}" />
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="publish-item">
+          <view class="icon-item-spe1">
+            <view class="item-input-spe">
+              <view class="item-label">
+                <view class="label-word-spe">分部电话</view>
+                <input placeholder-style="color:#C3CAD3" bindinput='changeFormAry' data-index="{{index}}" data-name="landline" data-label="number" placeholder="请输入分部电话" value="{{item.landline[0].number}}" />
               </view>
             </view>
           </view>
@@ -131,7 +183,7 @@
             <view class="item-input-spe">
               <view class="item-label">
                 <view class="label-word-spe">联系人</view>
-                <input placeholder-style="color:#C3CAD3" bindinput='changeForm' data-index="{{index}}" data-name="name" placeholder="请输入联系人" value="{{name}}" />
+                <input placeholder-style="color:#C3CAD3" bindinput='changeFormAry' data-index="{{index}}" data-name="lineContact" data-label="name" placeholder="请输入联系人" value="{{item.lineContact[0].name}}" />
               </view>
             </view>
           </view>
@@ -142,7 +194,7 @@
             <view class="item-input-spe">
               <view class="item-label">
                 <view class="label-word-spe">手机号码</view>
-                <input placeholder-style="color:#C3CAD3" bindinput='changeForm' data-index="{{index}}" data-name="phone" placeholder="请输入手机号码" value="{{phone}}" />
+                <input placeholder-style="color:#C3CAD3" bindinput='changeFormAry' data-index="{{index}}" data-name="lineContact" data-label="phone" placeholder="请输入手机号码" value="{{item.lineContact[0].phone}}" />
               </view>
             </view>
           </view>
@@ -152,8 +204,8 @@
           <view class="icon-item-spe">
             <view class="item-input-spe">
               <view class="item-label">
-                <view class="label-word-spe">公司地址</view>
-                <input placeholder-style="color:#C3CAD3" bindinput='changeForm' data-index="{{index}}" data-name="address" placeholder="请输入公司地址" value="{{address}}" />
+                <view class="label-word-spe">分部地址</view>
+                <input placeholder-style="color:#C3CAD3" bindinput='changeForm' data-index="{{index}}" data-name="line_address" placeholder="请输入分部地址" value="{{item.line_address}}" />
               </view>
             </view>
           </view>
@@ -182,7 +234,7 @@
               </view>
             </view>
           </view>
-          <view class="group-between" wx:for="{{item.weightPrice}}" wx:for-item="zhprice" wx:for-index="pindex">
+          <view class="group-between" wx:for="{{item.weight_price}}" wx:for-item="zhprice" wx:for-index="pindex">
             <view class="between-head">
               <view class="bhead-yl">运量</view>
               <view class="bhead-bj">网上报价</view>
@@ -190,22 +242,22 @@
 
             <view class="between-content">
               <view class="bcontent-yl">
-                <input data-index="{{pindex}}" bindinput="inputChange" data-pindex="{{index}}" data-name="yl" data-parent="weightPrice" value="{{zhprice.yl}}" />
+                <input data-index="{{pindex}}" bindinput="inputChange" data-pindex="{{index}}" data-name="yl" data-parent="weight_price" value="{{zhprice.yl}}" />
                 <view class="content-tail">{{item.unit.array[item.unit.index]}}以上</view>
               </view>
               <view class="bcontent-bj">
-                <input data-index="{{pindex}}" bindinput="inputChange" data-pindex="{{index}}" data-name="price" data-parent="weightPrice" value="{{zhprice.price}}" />
+                <input data-index="{{pindex}}" bindinput="inputChange" data-pindex="{{index}}" data-name="price" data-parent="weight_price" value="{{zhprice.price}}" />
                 <view class="content-tail">元/{{item.unit.array[item.unit.index]}}</view>
               </view>
             </view>
           </view>
 
           <view class="line-tools">
-            <view class="tols-add" data-index="{{index}}" data-name="weightPrice" bindtap='addLine'>
+            <view class="tols-add" data-index="{{index}}" data-name="weight_price" bindtap='addLine'>
               <image mode='widthFix' src="/resource/images/add.png"></image>
               <view class="tools-word add-word">增加价格区间</view>
             </view>
-            <view class="tols-delete" data-index="{{index}}" data-name="weightPrice" bindtap='deleteLine'>
+            <view class="tols-delete" data-index="{{index}}" data-name="weight_price" bindtap='deleteLine'>
               <image mode='widthFix' src="/resource/images/delete.png"></image>
               <view class="tools-word delete-word">删除</view>
             </view>
@@ -219,7 +271,7 @@
             <view class="pgroup-name">轻货价</view>
             <view class="pgroup-ques">什么是轻货价？</view>
           </view>
-          <view class="group-between" wx:for="{{item.lightPrice}}" wx:for-item="qhprice" wx:for-index="qindex">
+          <view class="group-between" wx:for="{{item.light_price}}" wx:for-item="qhprice" wx:for-index="qindex">
             <view class="between-head">
               <view class="bhead-yl">运量</view>
               <view class="bhead-bj">网上报价</view>
@@ -227,22 +279,22 @@
 
             <view class="between-content">
               <view class="bcontent-yl">
-                <input data-index="{{qindex}}" data-pindex="{{index}}" data-parent="lightPrice" data-name="yl" bindinput="inputChange" value="{{qhprice.yl}}" />
+                <input data-index="{{qindex}}" data-pindex="{{index}}" data-parent="light_price" data-name="yl" bindinput="inputChange" value="{{qhprice.yl}}" />
                 <view class="content-tail">立方以上</view>
               </view>
               <view class="bcontent-bj">
-                <input data-index="{{qindex}}" data-pindex="{{index}}" data-parent="lightPrice" data-name="price" bindinput="inputChange" value="{{qhprice.price}}" />
+                <input data-index="{{qindex}}" data-pindex="{{index}}" data-parent="light_price" data-name="price" bindinput="inputChange" value="{{qhprice.price}}" />
                 <view class="content-tail">元/立方</view>
               </view>
             </view>
           </view>
 
           <view class="line-tools">
-            <view class="tols-add" data-index="{{index}}" data-name="lightPrice" bindtap='addLine'>
+            <view class="tols-add" data-index="{{index}}" data-name="light_price" bindtap='addLine'>
               <image mode='widthFix' src="/resource/images/add.png"></image>
               <view class="tools-word add-word">增加价格区间</view>
             </view>
-            <view class="tols-delete" data-index="{{index}}" data-name="lightPrice" bindtap='deleteLine'>
+            <view class="tols-delete" data-index="{{index}}" data-name="light_price" bindtap='deleteLine'>
               <image mode='widthFix' src="/resource/images/delete.png"></image>
               <view class="tools-word delete-word">删除</view>
             </view>
@@ -255,7 +307,7 @@
             <view class="item-input-spe">
               <view class="item-label item-label-spe">
                 <view class="label-word-spe1">最低一票价格：</view>
-                <input style="width:55%;" placeholder-style="color:#C3CAD3" bindinput='changeForm' data-index="{{index}}" data-name="low_price" placeholder="请输入最低一票价格" value="{{low_price}}" />
+                <input style="width:55%;" placeholder-style="color:#C3CAD3" bindinput='changeForm' data-index="{{index}}" data-name="low_price" placeholder="请输入最低一票价格" value="{{item.low_price}}" />
                 <view class="label-tail">元</view>
               </view>
             </view>
@@ -267,7 +319,7 @@
             <view class="item-input-spe">
               <view class="item-label item-label-spe">
                 <view class="label-word-spe">运输时效：</view>
-                <input style="width:60%;" placeholder-style="color:#C3CAD3" bindinput='changeForm' data-index="{{index}}" data-name="tran_time" placeholder="请输入运输时效" value="{{tran_time}}" />
+                <input style="width:60%;" placeholder-style="color:#C3CAD3" bindinput='changeForm' data-index="{{index}}" data-name="tran_time" placeholder="请输入运输时效" value="{{item.tran_time}}" />
                 <view class="label-tail">小时</view>
               </view>
             </view>
@@ -281,11 +333,11 @@
                 <view class="label-word-spe">发车频率：</view>
                 <view class="label-special">
                   <view class="special-item">
-                    <input bindinput="carNum" data-index="{{index}}" data-name="day" value="{{item.carNum.day}}"></input>
+                    <input bindinput="carNum" data-index="{{index}}" data-name="day" value="{{item.car_num.day}}"></input>
                     <view>天</view>
                   </view>
                   <view class="special-item">
-                    <input bindinput="carNum" data-index="{{index}}" data-name="num" value="{{item.carNum.num}}"></input>
+                    <input bindinput="carNum" data-index="{{index}}" data-name="num" value="{{item.car_num.num}}"></input>
                     <view>次</view>
                   </view>
                 </view>
@@ -480,7 +532,7 @@
       <view wx:if="{{mt_picture.length > 0}}" class="imgpro-item">
         <view class="imgpro-picture" wx:for="{{mt_picture}}">
           <view class="imgpro-picitem">
-            <image mode='widthFix' src="{{item}}"></image>
+            <image mode='widthFix' src="{{item.imgURL ? item.imgURL : item}}"></image>
             <view class="imgpro-delete">
               <image mode='widthFix' src="/resource/images/delete.png"></image>
               <view data-name="mt_picture" data-index="{{index}}" bindtap='deletePic'>删除</view>
@@ -506,7 +558,7 @@
       <view wx:if="{{bg_picture.length > 0}}" class="imgpro-item">
         <view class="imgpro-picture" wx:for="{{bg_picture}}">
           <view class="imgpro-picitem">
-            <image mode='widthFix' src="{{item}}"></image>
+            <image mode='widthFix' src="{{item.imgURL ? item.imgURL : item}}"></image>
             <view class="imgpro-delete">
               <image mode='widthFix' src="/resource/images/delete.png"></image>
               <view data-name="bg_picture" data-index="{{index}}" bindtap='deletePic'>删除</view>
@@ -532,7 +584,7 @@
       <view wx:if="{{cd_picture.length > 0}}" class="imgpro-item">
         <view class="imgpro-picture" wx:for="{{cd_picture}}">
           <view class="imgpro-picitem">
-            <image mode='widthFix' src="{{item}}"></image>
+            <image mode='widthFix' src="{{item.imgURL ? item.imgURL : item}}"></image>
             <view class="imgpro-delete">
               <image mode='widthFix' src="/resource/images/delete.png"></image>
               <view data-name="cd_picture" data-index="{{index}}" bindtap='deletePic'>删除</view>
@@ -558,7 +610,7 @@
       <view wx:if="{{other_picture.length > 0}}" class="imgpro-item">
         <view class="imgpro-picture" wx:for="{{other_picture}}">
           <view class="imgpro-picitem">
-            <image mode='widthFix' src="{{item}}"></image>
+            <image mode='widthFix' src="{{item.imgURL ? item.imgURL : item}}"></image>
             <view class="imgpro-delete">
               <image mode='widthFix' src="/resource/images/delete.png"></image>
               <view data-name="other_picture" data-index="{{index}}" bindtap='deletePic'>删除</view>

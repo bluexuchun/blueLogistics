@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    imgUrl: 'https://blue.widiazine.cn/BLueLogistics',
     // 设备信息
     systemInfo:app.globalData.systemInfo,
 
@@ -105,7 +106,7 @@ Page({
     // 首页的获取信息
     const hotlineLists = [...this.data.hotlineLists];
 
-    const indexInfo = fn.ajaxTo('api.php?entry=app&c=index&a=index', {});
+    const indexInfo = fn.ajaxTo('api.php?entry=app&c=route&a=display', {});
 
     indexInfo.then(function (res) {
 
@@ -113,7 +114,7 @@ Page({
 
       if (res.statusCode == 200) {
         // 路线
-        const route = data.route;
+        const route = data;
         if (route.length > 0) {
           for (var i = 0; i < route.length; i++) {
             hotlineLists.push(route[i]);
@@ -206,7 +207,7 @@ Page({
     hotlineLists = [];
 
     // 搜索路线
-    const searchResult = fn.ajaxTo('api.php?entry=app&c=route&a=route',dataObject);
+    const searchResult = fn.ajaxTo('api.php?entry=app&c=route&a=route&do=search',dataObject);
     searchResult.then(function(res){
       console.log(res);
       const data = res.data.data;

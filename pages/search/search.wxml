@@ -51,9 +51,9 @@
         </view>
       </view> -->
       <!--  路线标题  -->
-    <view class="hotline-title">
+    <!-- <view class="hotline-title">
       <view class="hotnav {{item.id == hotnavs.actived ? 'nav-active' : ''}}" data-id="{{item.id}}" wx:for="{{hotnavs.group}}" bindtap='changeActive'>{{item.text}}</view>
-    </view>
+    </view> -->
 
       <!--  路线数组  -->
       <view class="hotline-lists">
@@ -63,7 +63,7 @@
             <view class="hotline-item-left">
               <!--  company-pic  -->
               <view class='hotline-img'>
-                <image src="{{item.img}}"></image>
+                <image src="{{imgUrl + item.img}}"></image>
               </view>
               <!--  company-info  -->
               <view class="hotline-info">
@@ -77,20 +77,21 @@
                 </view> -->
 
                 <!--  公司名字  -->
-                <view class="hotline-company">{{item.company}}</view>
+                <view class="hotline-company">{{item.line_company}}</view>
 
                 <!--  地址  -->
                 <view class="hotline-position">
-                  <image mode='widthFix' class="icon-position" src="/resource/images/icon-location.png"></image>
-                  <view class="position-word">{{item.distance}}km {{item.address}}</view>
+                  <!-- <image mode='widthFix' class="icon-position" src="/resource/images/icon-location.png"></image>
+                  <view class="position-word">{{item.distance}}km {{item.line_address}}</view> -->
+                  <view class="position-word">{{item.line_address}}</view>
                 </view>
 
                 <!--  运费  -->
-                <view class="hotline-cost">
+                <!-- <view class="hotline-cost">
                   <view class="cost-name">运费：</view>
                   <view class="yd">¥ {{item.weight_price}}元/吨</view>
                   <view class="yf">¥ {{item.area_price}}元/方</view>
-                </view>
+                </view> -->
 
               </view>
             </view>

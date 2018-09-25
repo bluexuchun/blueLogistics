@@ -9,6 +9,13 @@ Page({
       index:"0",
       group:['专线','仓库','冷链','危化','网点']
     },
+    // 公司电话
+    phonelits:[
+      {
+        phone:'',
+        address:''
+      }
+    ],
     // 专线
     lineLists:[
       {
@@ -18,34 +25,45 @@ Page({
           target: null,
           targetArea: '请选择目的地'
         },
-        company_name:'',
-        name:'',
-        phone:'',
-        address:'',
+        line_company:'',
+        line_name:'',
+        line_phone:'',
+        line_address:'',
+        landline:[{
+          label:'',
+          number:''
+        }],
+        lineContact:[{
+          name:'',
+          phone:''
+        }],
         // 选择 公斤&斤
         unit: {
           index: 0,
           array: ['公斤', '斤']
         },
         //重货价
-        weightPrice: [
+        weight_price: [
           {
             yl: '',
             price: ''
           }
         ],
         //轻货价
-        lightPrice: [
+        light_price: [
           {
             yl: '',
             price: ''
           }
         ],
         // 发车频率
-        carNum: {
+        car_num: {
           day: '',
           num: ''
-        }
+        },
+        low_price:'',
+        tran_time:'',
+        id:''
       }
     ],
 
@@ -70,26 +88,95 @@ Page({
   onLoad: function (options) {
     const that = this;
     let id = options.id;
+    let company_id = wx.getStorageSync('userInfo')['company_id'];
     if(!id){
       id = wx.getStorageSync('userInfo')['id'];
     }
+    console.log(id);
     const infoList = fn.ajaxTo('api.php?entry=app&c=authenticate&a=authenticate&do=display',{
       uid:id
     }).then(function(res){
       console.log(res);
-      if(res.data.length == 0){
+      if(!company_id){
 
       }else{
         let ajaxUrl = 'api.php?entry=app&c=authenticate&a=authenticate&do=edit';
-        res.data.areaInfo = JSON.parse(res.data.areaInfo);
-        res.data.bg_picture = JSON.parse(res.data.bg_picture);
-        res.data.cd_picture = JSON.parse(res.data.cd_picture);
-        res.data.mt_picture = JSON.parse(res.data.mt_picture);
-        res.data.other_picture = JSON.parse(res.data.other_picture);
+
+        res.data.bg_picture = res.data.bg_picture ? res.data.bg_picture : [];
+        res.data.cd_picture = res.data.cd_picture ? res.data.cd_picture : [];
+        res.data.mt_picture = res.data.mt_picture ? res.data.mt_picture : [];
+        res.data.other_picture = res.data.other_picture ? res.data.other_picture : [];
+
+        res.data.contactLists = res.data.contactLists ? res.data.contactLists : [
+          {
+            linkman: '',
+            phone: ''
+          }
+        ];
+
+        res.data.phonelits = res.data.phonelits ? res.data.phonelits : [
+          {
+            phone: '',
+            address: ''
+          }
+        ];
+
+        res.data.lineLists = res.data.lineLists.length > 0 ? res.data.lineLists : [
+          {
+            areaInfo: {
+              init: null,
+              initArea: '请选择起始地',
+              target: null,
+              targetArea: '请选择目的地'
+            },
+            line_company: '',
+            line_name: '',
+            line_phone: '',
+            line_address: '',
+            landline: [{
+              label: '',
+              number: ''
+            }],
+            lineContact: [{
+              name: '',
+              phone: ''
+            }],
+            // 选择 公斤&斤
+            unit: {
+              index: 0,
+              array: ['公斤', '斤']
+            },
+            //重货价
+            weight_price: [
+              {
+                yl: '',
+                price: ''
+              }
+            ],
+            //轻货价
+            light_price: [
+              {
+                yl: '',
+                price: ''
+              }
+            ],
+            // 发车频率
+            car_num: {
+              day: '',
+              num: ''
+            },
+            low_price: '',
+            tran_time: '',
+            id: ''
+          }
+        ];
+
+
         res.data.propties = {
           index: res.data.propties - 1,
           group: ['专线', '仓库', '冷链', '危化', '网点']
         }
+
         that.setData({
           ajaxUrl:ajaxUrl,
           ...res.data
@@ -122,6 +209,29 @@ Page({
       })
     }
     console.log(this.data);
+  },
+
+  // 数组中的数组修改（因为只需要修改第一条数据 其余不显示 不修改）
+  changeFormAry:function(e){
+    console.log(e);
+    let index = e.currentTarget.dataset.index;
+    let name = e.currentTarget.dataset.name;
+    let label = e.currentTarget.dataset.label;
+    let lineLists = [...this.data.lineLists];
+    let value = e.detail.value;
+    switch(name){
+      case 'landline':
+        lineLists[index][name][0][label] = value;
+        break;
+      case 'lineContact':
+        lineLists[index][name][0][label] = value;
+        break;
+      default:
+        return false;
+    }
+    this.setData({
+      lineLists:lineLists
+    })
   },
 
 
@@ -201,16 +311,24 @@ Page({
     let userInfo = wx.getStorageSync('userInfo');
     let data = {...this.data};
     data.propties = Number(data.propties.index) + 1;
-    data.areaInfo = JSON.stringify(data.areaInfo);
-    data.bg_picture = JSON.stringify(data.bg_picture);
-    data.cd_picture = JSON.stringify(data.cd_picture);
-    data.mt_picture = JSON.stringify(data.mt_picture);
-    data.other_picture = JSON.stringify(data.other_picture);
+
+    console.log(data.bg_picture);
+
+    // data.areaInfo = JSON.stringify(data.areaInfo);
+    // data.bg_picture = JSON.stringify(data.bg_picture);
+    // data.cd_picture = JSON.stringify(data.cd_picture);
+    // data.mt_picture = JSON.stringify(data.mt_picture);
+    // data.other_picture = JSON.stringify(data.other_picture);
+    data.contactLists = JSON.stringify(data.contactLists);
+    data.phonelits = JSON.stringify(data.phonelits);
+    // data.lineLists = JSON.stringify(data.lineLists);
+
+    console.log(data.bg_picture);
     // 删除多余的
     delete data.infoList;
     data = {...data,...this.data.infoList,uid:userInfo.id};
 
-
+    console.log(data);
     // 获取动态的接口api
     const ajaxUrl = this.data.ajaxUrl;
 
@@ -218,31 +336,30 @@ Page({
     //   url: '/pages/comfrim/next?type=' + that.data.propties.index,
     // })
 
-    // const result = fn.ajaxTo(ajaxUrl,data);
-    // result.then(function(res){
-    //   const data = res.data;
-    //   if(res.statusCode == 200){
-    //     if(data.status == 1){
-    //       userInfo.company_id = data.data;
-    //       wx.setStorage({
-    //         key: 'userInfo',
-    //         data: userInfo,
-    //       })
-    //       setTimeout(() => {
-    //         wx.showToast({
-    //           title: '保存成功',
-    //           icon: 'success',
-    //           duration: 2000
-    //         })
-    //         wx.navigateTo({
-    //           url: 'pages/comfrim/next?id='+data.data,
-    //         })
-    //       },1000)
-    //     }
-    //   }
-    // })
-    wx.navigateTo({
-      url: '/pages/comfrim/next'
+    const result = fn.ajaxTo(ajaxUrl,data);
+    console.log(data);
+    result.then(function(res){
+      console.log(res);
+      const data = res.data;
+      if(res.statusCode == 200){
+        if(data.status == 1){
+          userInfo.company_id = data.data;
+          wx.setStorage({
+            key: 'userInfo',
+            data: userInfo,
+          })
+          setTimeout(() => {
+            wx.showToast({
+              title: '保存成功',
+              icon: 'success',
+              duration: 2000
+            })
+            // wx.navigateTo({
+            //   url: 'pages/comfrim/next?id='+data.data,
+            // })
+          },1000)
+        }
+      }
     })
   },
 
@@ -310,34 +427,45 @@ Page({
         target: null,
         targetArea: '请选择目的地'
       },
-      company_name: '',
-      name: '',
-      phone: '',
-      address: '',
+      line_company: '',
+      line_name: '',
+      line_phone: '',
+      line_address: '',
+      landline: [{
+        label: '',
+        number: ''
+      }],
+      lineContact: [{
+        name: '',
+        phone: ''
+      }],
       // 选择 公斤&斤
       unit: {
         index: 0,
         array: ['公斤', '斤']
       },
       //重货价
-      weightPrice: [
+      weight_price: [
         {
           yl: '',
           price: ''
         }
       ],
       //轻货价
-      lightPrice: [
+      light_price: [
         {
           yl: '',
           price: ''
         }
       ],
       // 发车频率
-      carNum: {
+      car_num: {
         day: '',
         num: ''
-      }
+      },
+      low_price: '',
+      tran_time: '',
+      id: ''
     }
     lineLists.push(newLine);
     this.setData({
@@ -499,11 +627,11 @@ Page({
     let lineLists = [...this.data.lineLists];
 
     switch (parent) {
-      case 'weightPrice':
-        lineLists[index]['weightPrice'][pindex][name] = value;
+      case 'weight_price':
+        lineLists[index]['weight_price'][pindex][name] = value;
         break;
-      case 'lightPrice':
-        lineLists[index]['lightPrice'][pindex][name] = value;
+      case 'light_price':
+        lineLists[index]['light_price'][pindex][name] = value;
         break;
       default:
         return false;
@@ -517,6 +645,7 @@ Page({
 
   // 增加价格区间
   addLine: function (e) {
+    console.log(e);
     let index = e.currentTarget.dataset.index;
     let name = e.currentTarget.dataset.name;
 
@@ -526,11 +655,11 @@ Page({
       price: ''
     };
     switch (name) {
-      case 'weightPrice':
+      case 'weight_price':
         lineLists = [...this.data.lineLists];
         lineLists[index][name].push(newAry);
         break;
-      case 'lightPrice':
+      case 'light_price':
         lineLists = [...this.data.lineLists];
         lineLists[index][name].push(newAry);
         break;
@@ -574,7 +703,7 @@ Page({
     let value = e.detail.value;
 
     let lineLists = [...this.data.lineLists];
-    lineLists[index]['carNum'][name] = value; 
+    lineLists[index]['car_num'][name] = value; 
     this.setData({
       lineLists: lineLists
     })
@@ -629,5 +758,43 @@ Page({
     })
 
     console.log(this.data);
+  },
+
+  // 公司电话
+  changeCompanyPhone:function(e){
+    let index = e.currentTarget.dataset.index;
+    let name = e.currentTarget.dataset.name;
+    let value = e.detail.value;
+    let phonelits = [...this.data.phonelits];
+    phonelits[index][name] = value;
+    this.setData({
+      phonelits: phonelits
+    })
+  },
+  // 增加公司电话
+  addCompanyPhone:function(e){
+    let phonelits = [...this.data.phonelits];
+    phonelits.push({
+      phone:''
+    });
+    this.setData({
+      phonelits: phonelits
+    })
+  },
+  // 删除公司电话
+  deleteCompanyPhone:function(e){
+    let phonelits = [...this.data.phonelits];
+    if(phonelits.length <= 1){
+      wx.showToast({
+        title: '不能删除最后一个公司电话!',
+        icon: 'none',
+        duration: 2000
+      });
+      return false;
+    }
+    phonelits.pop();
+    this.setData({
+      phonelits: phonelits
+    })
   }
 })
