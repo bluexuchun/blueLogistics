@@ -113,6 +113,8 @@
 }
 .info-list-spe{
   display: flex;
+  width:100%;
+  box-sizing: border-box;
   flex-direction: row;
   padding:36rpx 50rpx;
   align-items: center;

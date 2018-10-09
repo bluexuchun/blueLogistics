@@ -21,11 +21,11 @@
   <view class="nav">
     <view class="nav-content">
 
-      <view class="nav-item" wx:for="{{navsLists}}" bindtap='toNavs' data-path="{{item.path}}">
+      <view class="nav-item" wx:for="{{navFix}}" bindtap='toNavs' data-path="{{item.url}}">
         <view class="nav-icon">
-          <image mode="aspectFit" class="nav-icon-img" src="{{item.icon}}"></image>
+          <image mode="aspectFit" class="nav-icon-img" src="{{imgUrl + item.img_path}}"></image>
         </view>
-        <view class="nav-word">{{item.text}}</view>
+        <view class="nav-word">{{item.name}}</view>
       </view>
 
     </view>

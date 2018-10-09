@@ -53,28 +53,28 @@
           </view>
         </view>
 
-        <view class="info-list-spe1">
+        <view class="info-list-spe1" style="display:{{item.line_layer ? 'flex' : 'none'}}">
           <view class="info-item-content">
             <view class="info-label">辐射区域：</view>
             <view class="info-content">{{item.line_layer}}</view>
           </view>
         </view>
 
-        <view class="info-list-spe1">
-          <view class="info-item-content">
+        <view class="info-list-spe1" style="display:{{item.line_company ? 'flex' : 'none'}}">
+          <view class="info-item-content" >
             <view class="info-label">分部名称：</view>
             <view class="info-content">{{item.line_company}}</view>
           </view>
         </view>
 
-        <view class="info-list-spe1">
+        <view class="info-list-spe1" style="display:{{item.line_address ? 'flex' : 'none'}}">
           <view class="info-item-content">
             <view class="info-label">分部公司地址：</view>
             <view class="info-content">{{item.line_address}}</view>
           </view>
         </view>
         
-        <view class="info-list-spe1">
+        <view class="info-list-spe1" style="display:{{land.number ? 'flex' : 'none'}}">
           <view class="info-item-content" wx:for-index="landindex" wx:for="{{item.landline}}" wx:for-item="land" style="padding:16rpx 0rpx;border-top:{{landindex > 0 ? '1px dotted #eaeaea' : ''}}">
             <view class="info-label" wx:if="{{land.label}}">{{land.label}}：</view>
             <view class="info-label" wx:else>座机号码：</view>
@@ -83,14 +83,14 @@
           
         </view>
 
-        <view class="info-list-spe1">
-          <view class="info-item-content1" wx:for-index="lineindex" wx:for="{{item.lineContact}}" wx:for-item="line" style="padding:16rpx 0rpx;border-top:{{lineindex > 0 ? '1px dotted #eaeaea' : ''}}">
-            <view class="info-item-label">
+        <view class="info-list-spe1" style="display:{{item.lineContact.length > 0 ? 'flex' : 'none'}}">
+          <view class="info-item-content1" wx:for-index="lineindex" wx:for="{{item.lineContact}}" wx:for-item="line" style="padding:16rpx 0rpx;border-top:{{lineindex > 0 ? '1px dotted #eaeaea' : ''}};">
+            <view class="info-item-label" style="display:{{line.name ? 'flex' : 'none'}}">
               <view class="info-label">联系人：</view>
               <view class="info-content">{{line.name}}</view>
             </view>
 
-            <view class="info-item-label">
+            <view class="info-item-label" style="display:{{line.phone ? 'flex' : 'none'}}">
               <view class="info-label" wx:if="{{land.label}}">{{line.label}}：</view>
               <view class="info-label" wx:else>手机号码：</view>
               <view class="info-content">{{line.phone}}</view>
@@ -99,7 +99,7 @@
           </view>
         </view>
 
-        <view class="info-list-spe1">
+        <view class="info-list-spe1" style="display:{{item.weight_price.length > 0 ? 'flex' : 'none'}}">
           <view class="info-item-content1" wx:for-index="wpindex" wx:for="{{item.weight_price}}" wx:for-item="wp" style="padding:16rpx 0rpx;border-top:{{lineindex > 0 ? '1px dotted #eaeaea' : ''}}">
             <view class="info-item-label">
               <view class="info-label">重货价：</view>
@@ -111,33 +111,33 @@
           </view>
         </view>
 
-        <view class="info-list-spe1">
+        <view class="info-list-spe1" style="display:{{item.light_price.length > 0 ? 'flex' : 'none'}}">
           <view class="info-item-content1" wx:for-index="lpindex" wx:for="{{item.light_price}}" wx:for-item="lp" style="padding:16rpx 0rpx;border-top:{{lineindex > 0 ? '1px dotted #eaeaea' : ''}}">
             <view class="info-item-label">
               <view class="info-label">轻货价：</view>
               <view class="info-content">
-                <view>运量：{{lp.yl}}&nbsp;(立方)</view>
-                <view>网上报价：{{lp.price}}&nbsp;(元/立方)</view>    
+                <view>运量：{{lp.yl}}(立方)</view>
+                <view>网上报价：{{lp.price}}(元/立方)</view>    
               </view>
             </view>
           </view>
         </view>
 
-        <view class="info-list-spe1">
+        <view class="info-list-spe1" style="display:{{item.low_price ? 'flex' : 'none'}}">
           <view class="info-item-content">
             <view class="info-label">最低一票价格：</view>
             <view class="info-content">{{item.low_price}} 元</view>
           </view>
         </view>
 
-        <view class="info-list-spe1">
+        <view class="info-list-spe1" style="display:{{item.tran_time ? 'flex' : 'none'}}">
           <view class="info-item-content">
             <view class="info-label">运输时效：</view>
             <view class="info-content">{{item.tran_time}} 小时</view>
           </view>
         </view>
 
-        <view class="info-list-spe1">
+        <view class="info-list-spe1" style="display:{{item.car_num.day ? 'flex' : 'none'}}">
           <view class="info-item-content1" style="padding:16rpx 0rpx;">
             <view class="info-item-label">
               <view class="info-label">发车频率：</view>
@@ -150,16 +150,16 @@
       </block>
     </view>
 
-    <view class="detail-Info">
+    <view class="detail-Info" style="display:{{company.contactLists.length > 0 ? 'flex' : 'none'}}">
       <view class="info-list-spe" wx:for="{{company.contactLists}}">
 
         <view class="info-item">
-          <view class="info-item-content">
+          <view class="info-item-content" style="display:{{item.linkman ? 'flex' : 'none'}}">
             <view class="info-label">联系人：</view>
             <view class="info-content">{{item.linkman}}</view>
           </view>
           
-          <view class="info-item-content">
+          <view class="info-item-content" style="display:{{item.phone ? 'flex' : 'none'}}">
             <view class="info-label" wx:if="{{item.label}}">{{item.label}}：</view>
             <view class="info-label" wx:else>联系方式：</view>
             <view class="info-content">{{item.phone}}</view>
@@ -169,17 +169,17 @@
       </view>
     </view>
 
-    <view class="detail-Info">
+    <view class="detail-Info" style="display:{{company.phonelits.length > 0 ? 'flex' : 'none'}}">
       <view class="info-list-spe" wx:for="{{company.phonelits}}">
         <view class="info-item">
 
-          <view class="info-item-content">
+          <view class="info-item-content" style="display:{{item.phone ? 'flex' : 'none'}}">
             <view class="info-label" wx:if="{{item.label}}">{{item.label}}：</view>
             <view class="info-label" wx:else>公司电话：</view>
             <view class="info-content">{{item.phone}}</view>
           </view>
 
-          <view class="info-item-content">
+          <view class="info-item-content" style="display:{{item.address ? 'flex' : 'none'}}">
             <view class="info-label">公司地址：</view>
             <view class="info-content">{{item.address}}</view>
           </view>
@@ -190,7 +190,7 @@
 
     <view class="detail-Info">
 
-      <view class="info-list-spe1">
+      <view class="info-list-spe1" style="display:{{company.mass_goods ? 'flex' : 'none'}}">
         <view class="info-item-content">
           <view class="info-label">大宗货物：</view>
           <view class="info-content">{{company.mass_goods}}</view>
@@ -198,14 +198,14 @@
       </view>
 
       <view class="info-list-spe2" wx:if="{{company.propties == 5}}">
-        <view class="info-list-spe1">
+        <view class="info-list-spe1" style="display:{{company.wd_lib ? 'flex' : 'none'}}">
           <view class="info-item-content">
             <view class="info-label">网点仓库：</view>
             <view class="info-content">{{company.wd_lib}}</view>
           </view>
         </view>
 
-        <view class="info-list-spe1">
+        <view class="info-list-spe1" style="display:{{company.wd_car ? 'flex' : 'none'}}">
           <view class="info-item-content">
             <view class="info-label">网点车辆：</view>
             <view class="info-content">{{company.wd_car}}</view>
@@ -214,28 +214,28 @@
       </view>
 
       <view class="info-list-spe1" wx:if="{{company.propties == 4}}">
-        <view class="info-item">
+        <view class="info-item" style="display:{{company.wh_area ? 'flex' : 'none'}}">
           <view class="info-item-content">
             <view class="info-label">危化仓储平方：</view>
             <view class="info-content">{{company.wh_area}}</view>
           </view>
         </view>
 
-        <view class="info-item">
+        <view class="info-item" style="display:{{company.wh_type ? 'flex' : 'none'}}">
           <view class="info-item-content">
             <view class="info-label">危化仓储类型：</view>
             <view class="info-content">{{company.wh_type}}</view>
           </view>
         </view>
 
-        <view class="info-item">
+        <view class="info-item" style="display:{{company.wh_lib ? 'flex' : 'none'}}">
           <view class="info-item-content">
             <view class="info-label">危化仓库：</view>
             <view class="info-content">{{company.wh_lib}}</view>
           </view>
         </view>
 
-        <view class="info-item">
+        <view class="info-item" style="display:{{company.wh_car ? 'flex' : 'none'}}">
           <view class="info-item-content">
             <view class="info-label">危化车辆：</view>
             <view class="info-content">{{company.wh_car}}</view>
@@ -244,28 +244,28 @@
       </view>
 
       <view class="info-list-spe1" wx:if="{{company.propties == 3}}">
-        <view class="info-item">
+        <view class="info-item" style="display:{{company.ll_area ? 'flex' : 'none'}}">
           <view class="info-item-content">
             <view class="info-label">冷链仓储平方：</view>
             <view class="info-content">{{company.ll_area}}</view>
           </view>
         </view>
 
-        <view class="info-item">
+        <view class="info-item" style="display:{{company.ll_type ? 'flex' : 'none'}}">
           <view class="info-item-content">
             <view class="info-label">冷链仓储类型：</view>
             <view class="info-content">{{company.ll_type}}</view>
           </view>
         </view>
 
-        <view class="info-item">
+        <view class="info-item" style="display:{{company.ll_lib ? 'flex' : 'none'}}">
           <view class="info-item-content">
             <view class="info-label">冷链仓库：</view>
             <view class="info-content">{{company.ll_lib}}</view>
           </view>
         </view>
 
-        <view class="info-item">
+        <view class="info-item" style="display:{{company.ll_car ? 'flex' : 'none'}}">
           <view class="info-item-content">
             <view class="info-label">冷链车辆：</view>
             <view class="info-content">{{company.ll_car}}</view>
@@ -274,21 +274,21 @@
       </view>
 
       <view class="info-list-spe1" wx:if="{{company.propties == 2}}">
-        <view class="info-item">
+        <view class="info-item" style="display:{{company.cc_area ? 'flex' : 'none'}}">
           <view class="info-item-content">
             <view class="info-label">仓储平方：</view>
             <view class="info-content">{{company.cc_area}}</view>
           </view>
         </view>
 
-        <view class="info-item">
+        <view class="info-item" style="display:{{company.cc_type ? 'flex' : 'none'}}">
           <view class="info-item-content">
             <view class="info-label">仓储类型：</view>
             <view class="info-content">{{company.cc_type}}</view>
           </view>
         </view>
 
-        <view class="info-item">
+        <view class="info-item" style="display:{{company.go_phone ? 'flex' : 'none'}}">
           <view class="info-item-content">
             <view class="info-label">进仓电话：</view>
             <view class="info-content">{{company.go_phone}}</view>
@@ -296,35 +296,35 @@
         </view>
       </view>
 
-      <view class="info-list-spe1">
+      <view class="info-list-spe1" style="display:{{company.web_address ? 'flex' : 'none'}}">
         <view class="info-item-content">
           <view class="info-label">网址：</view>
           <view class="info-content">{{company.web_address}}</view>
         </view>
       </view>
 
-      <view class="info-list-spe1">
+      <view class="info-list-spe1" style="display:{{company.shopstore ? 'flex' : 'none'}}">
         <view class="info-item-content">
           <view class="info-label">仓储特色：</view>
           <view class="info-content">{{company.shopstore}}</view>
         </view>
       </view>
 
-      <view class="info-list-spe1">
+      <view class="info-list-spe1" style="display:{{company.ts_phone ? 'flex' : 'none'}}">
         <view class="info-item-content">
           <view class="info-label">投诉电话：</view>
           <view class="info-content">{{company.ts_phone}}</view>
         </view>
       </view>
 
-      <view class="info-list-spe1">
+      <view class="info-list-spe1" style="display:{{company.email ? 'flex' : 'none'}}">
         <view class="info-item-content">
           <view class="info-label">邮箱：</view>
           <view class="info-content">{{company.email}}</view>
         </view>
       </view>
 
-      <view class="info-list-spe1">
+      <view class="info-list-spe1" style="display:{{company.intro ? 'flex' : 'none'}}">
         <view class="info-item-content">
           <view class="info-label">公司简介：</view>
           <view class="info-content">{{company.intro}}</view>

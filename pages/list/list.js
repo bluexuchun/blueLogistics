@@ -7,14 +7,7 @@ Page({
     inputVal: "",
 
     // 国内热门城市
-    hotCitys:[
-      '上海',
-      '北京',
-      '杭州',
-      '广州',
-      '成都',
-      '苏州',
-    ],
+    hotCitys:[],
     // 高度
     mainHeight:0,
     letter:[
@@ -65,6 +58,17 @@ Page({
         })
       },
     })
+    // 获取热门城市
+    const hotCity = fn.ajaxTo('api.php?entry=app&c=logistics&a=company&do=city_hot',{})
+    .then((res) => {
+      console.log(res)
+      
+      this.setData({
+        hotCitys:res.data.data
+      })
+    })
+    
+    // 获取所有城市
     const cityLists = fn.ajaxTo('api.php?entry=app&c=logistics&a=company&do=city',{})
     .then((res) => {
       let dataSource = [...that.data.dataSource];

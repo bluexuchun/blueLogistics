@@ -2,6 +2,11 @@
 //获取应用实例
 const app = getApp();
 import fn from '../../utils/axios.js';
+//app.js
+var QQMapWX = require('../../utils/qqmap-wx-jssdk.js');
+var mapInfo = new QQMapWX({
+  key: 'V4DBZ-RJREV-EULPZ-UR4BK-TOYU6-TXFTK'
+});
 
 Page({
   data: {
@@ -38,27 +43,7 @@ Page({
     },
 
     // 导航栏的信息
-    navsLists:[{
-      id:1,
-      icon:'/resource/images/icon-wuliu.png',
-      text:'物流',
-      path:'/pages/search/search'
-    },{
-      id:2,
-      icon:'/resource/images/icon-rencai.png',
-      text:'人才',
-      path:'/pages/index/index'
-    },{
-      id: 3,
-      icon: '/resource/images/icon-baoxian.png',
-      text: '保险',
-      path: '/pages/index/index'
-    },{
-      id: 4,
-      icon: '/resource/images/icon-shangjia.png',
-      text: '商家',
-      path: '/pages/store/store'
-    }],
+    navsLists:[],
 
     // 左右滑动导航栏
     actLists:[],
@@ -96,7 +81,7 @@ Page({
 
   },
   onLoad: function (option) {
-    console.log(option)
+    console.log(option);
 
     const that = this;
 
@@ -129,7 +114,19 @@ Page({
           success: function (res) {
             location.lat = res.latitude;
             location.lng = res.longitude;
-            that.getIndexInfo('default',location.lat, location.lng);
+            mapInfo.reverseGeocoder({
+              location: {
+                latitude: res.latitude,
+                longitude: res.longitude
+              },
+              success: function (res) {
+                if (res.status == 0) {
+                  let locationInfo = res.result.address_component;
+                  that.getIndexInfo('default', location.lat, location.lng, locationInfo);
+                }
+              }
+            })
+            
           },
         })
       } else {
@@ -139,11 +136,11 @@ Page({
   },
 
   // 获取首页信息
-  getIndexInfo:function(type,lat,lng){
+  getIndexInfo:function(type,lat,lng,lifo){
 
     const that = this;
 
-    let location = wx.getStorageSync('location')
+    let location = wx.getStorageSync('location') ? wx.getStorageSync('location') : lifo;
 
     let indexInfo;
 
@@ -185,9 +182,27 @@ Page({
         }) : []
 
         // 导航信息
+        // {
+        //   id: 1,
+        //   icon: '/resource/images/icon-wuliu.png',
+        //   text: '物流',
+        //   path: '/pages/search/search'
+        // }
+
         let actLists = [...that.data.actLists];
         let navLists = res.data.data.nav;
+        let navAuto = [];
+        let navFix = [];
         navLists ? navLists.map((v,i) => {
+          if(v.category == 2){
+            navAuto.push(v);
+          }else if(v.category == 1){
+            navFix.push(v);
+          }
+        }) : [];
+
+        navAuto ? navAuto.map((v,i) => {
+          
           let index = i + 1;
           // 向下取整
           let navId = Math.ceil(index / 4);
@@ -203,14 +218,14 @@ Page({
           }
         }) : []
 
-        console.log(location);
 
         that.setData({
           hotlineLists: hotlineLists,
           commends: commends,
           banner:banner,
           actLists: actLists,
-          cityName:location.city
+          cityName:location.city,
+          navFix:navFix
         })
       }
     })
